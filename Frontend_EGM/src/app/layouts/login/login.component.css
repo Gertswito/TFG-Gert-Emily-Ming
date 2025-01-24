@@ -1,0 +1,66 @@
+.bg-img {
+    background-image: url('/login_background_img.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    margin-top: -6em;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.bg-img-2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.formulario-login-div {
+    background-color: hsla(0, 0%, 100%, 0.95);
+    width: 30%;
+}
+.custom-padding {
+    padding-top: 5rem;
+}
+.formulario-registro-div {
+    background-color: hsla(0, 0%, 100%, 0.95);
+    width: 30%;
+    margin-top: 1em;
+}
+
+form {
+    padding: 1em 2em 1em 2em;
+}
+
+p {
+    color: rgb(154, 154, 154);
+}
+
+@media screen and (max-width: 1350px) {
+    .formulario-registro-div {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .formulario-login-div {
+        width: 100%;
+    }
+    .custom-padding {
+        padding-top: 8rem;
+    }
+    .formulario-registro-div {
+        width: 80%;
+    }
+    
+    .nombre-apellidos-div {
+        flex-direction: column!important;
+    }
+
+    .contrasenha-div {
+        flex-direction: column!important;
+    }
+}

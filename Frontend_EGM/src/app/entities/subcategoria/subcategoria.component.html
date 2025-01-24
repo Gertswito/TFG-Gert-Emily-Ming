@@ -1,0 +1,11 @@
+<br>
+@if (subcategoriaList.length > 0) {
+    <ng-container *ngFor="let subcategoria of subcategoriaList">
+        {{subcategoria.id}}
+        {{subcategoria.nombre}}
+        {{subcategoria.categoria?.nombre}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

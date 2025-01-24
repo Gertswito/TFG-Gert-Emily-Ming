@@ -1,0 +1,13 @@
+<br>
+@if (pagoList.length > 0) {
+    <ng-container *ngFor="let pago of pagoList">
+        {{pago.id}}
+        {{pago.numeroTarjeta}}
+        {{pago.fechaCaducidad}}
+        {{pago.cvv}}
+        {{pago.cliente?.usuario}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

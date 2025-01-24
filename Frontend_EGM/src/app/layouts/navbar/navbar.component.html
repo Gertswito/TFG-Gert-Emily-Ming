@@ -1,0 +1,33 @@
+<div id="nav_bar">
+    <div>
+        <a [routerLink]="''">
+            <img src="logo_ejemplo.png" alt="" class="logo">
+        </a>
+    </div>
+    <div class="lista-cosas">
+        <div>
+            <a [routerLink]="''"><fa-icon [icon]="faHome"></fa-icon></a>
+        </div>
+        <div ngbDropdown class="d-inline-block">
+            <a href="javascript:void(0);" id="entidades" ngbDropdownToggle>
+                <fa-icon [icon]="faThList"></fa-icon> Entidades
+            </a>
+            <div ngbDropdownMenu aria-labelledby="entidades">
+                <a ngbDropdownItem [routerLink]="'/categoria'">Categoría</a>
+                <a ngbDropdownItem [routerLink]="'/subcategoria'">Subcategoría</a>
+                <a ngbDropdownItem [routerLink]="'/producto'">Producto</a>
+                <a ngbDropdownItem [routerLink]="'/cliente'">Cliente</a>
+                <a ngbDropdownItem [routerLink]="'/direccion'">Dirección</a>
+                <a ngbDropdownItem [routerLink]="'/pago'">Pago</a>
+                <a ngbDropdownItem [routerLink]="'/venta'">Venta</a>
+                <a ngbDropdownItem [routerLink]="'/lineasVenta'">Líneas de Venta</a>
+            </div>
+        </div>
+        <div>
+            <a href=""><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+        </div>
+        <div>
+            <a [routerLink]="'/login'"><fa-icon [icon]="faUser"></fa-icon></a>
+        </div>
+    </div>
+</div>

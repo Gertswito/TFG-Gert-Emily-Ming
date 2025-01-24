@@ -1,0 +1,10 @@
+<br>
+@if (categoriaList.length > 0) {
+    <ng-container *ngFor="let categoria of categoriaList">
+        {{categoria.id}}
+        {{categoria.nombre}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

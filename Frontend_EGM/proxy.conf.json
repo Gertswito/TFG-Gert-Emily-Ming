@@ -1,0 +1,34 @@
+{
+  "/clientes": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/categorias": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/subcategorias": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/productos": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/ventas": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/pagos": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/direcciones": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/lineas-ventas": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
+}

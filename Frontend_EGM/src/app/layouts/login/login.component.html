@@ -1,0 +1,34 @@
+<div class="bg-img">
+    <div class="formulario-login-div d-flex align-items-center justify-content-start flex-column custom-padding">
+        @if (estaRegistrado) {
+            <div class="alert alert-success alert-dismissible fade show alerta-personalizada mt-2 me-2 ms-2" role="alert">
+                <strong>¡Bienvenido!</strong> Tu cuenta se ha creado con éxito. Ya puedes iniciar sesión.
+            </div>
+        }
+        <div class="mt-5">
+            <h1 class="container d-flex align-items-center justify-content-center">Iniciar Sesión</h1>
+            <form [formGroup]="loginFormulario" (ngSubmit)="comprobarLogin()" class="d-flex flex-column form justify-content-center container">
+                <div class="mb-3">
+                    <label>Nombre de usuario</label>
+                    <input type="text" class="form-control" formControlName="usuario">
+                    <div *ngIf="loginFormulario.get('usuario')?.touched && loginFormulario.get('usuario')?.invalid" class="text-danger">
+                        <span *ngIf="loginFormulario.get('usuario')?.errors?.['required']">El nombre de usuario es obligatorio.</span>
+                        <span *ngIf="loginFormulario.get('usuario')?.errors?.['usuarioNoExiste']">Usuario no encontrado</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Contraseña</label>
+                    <input type="password" class="form-control" formControlName="contrasenha">
+                    <div *ngIf="loginFormulario.get('contrasenha')?.touched && loginFormulario.get('contrasenha')?.invalid" class="text-danger">
+                        <span *ngIf="loginFormulario.get('contrasenha')?.errors?.['required']">La contraseña es obligatoria.</span>
+                        <span *ngIf="loginFormulario.get('contrasenha')?.errors?.['contrasenhaIncorrecta']">La contraseña es incorrecta, vuelve a intentarlo.</span>
+                    </div>
+                </div>
+                <div class="mt-1">
+                    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+                    <p class="mt-2 text-center">¿No tienes usuario? <a [routerLink]="'/registro'">Crea una cuenta ahora</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

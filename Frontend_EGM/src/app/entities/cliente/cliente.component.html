@@ -1,0 +1,19 @@
+<br>
+@if (clienteList.length > 0) {
+    <ng-container *ngFor="let cliente of clienteList">
+        {{cliente.id}}
+        {{cliente.nombre}}
+        {{cliente.apellidos}}
+        {{cliente.contrasenha}}
+        {{cliente.dni}}
+        {{cliente.email}}
+        {{cliente.telefono}}
+        {{cliente.direccion?.id}}
+        {{cliente.pago?.id}}
+        {{cliente.fechaNacimiento}}
+        {{cliente.rol}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

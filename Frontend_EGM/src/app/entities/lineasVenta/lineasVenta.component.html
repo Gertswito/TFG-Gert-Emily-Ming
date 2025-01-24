@@ -1,0 +1,14 @@
+<br>
+@if (lineasVentaList.length > 0) {
+    <ng-container *ngFor="let lineaVenta of lineasVentaList">
+        {{lineaVenta.id}}
+        {{lineaVenta.venta?.id}}
+        {{lineaVenta.producto?.nombre}}
+        {{lineaVenta.cantidadPedida}}
+        {{lineaVenta.precioUnitario}}
+        {{lineaVenta.precioTotal}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

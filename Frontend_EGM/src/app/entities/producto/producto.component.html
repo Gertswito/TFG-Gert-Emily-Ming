@@ -1,0 +1,21 @@
+<br>
+@if (productoList.length > 0) {
+    <ng-container *ngFor="let producto of productoList">
+        {{producto.id}}
+        {{producto.urlImagen}}
+        {{producto.referencia}}
+        {{producto.nombre}}
+        {{producto.marca}}
+        {{producto.categoria?.nombre}}
+        {{producto.subcategoria?.nombre}}
+        {{producto.descripcion}}
+        {{producto.ingredientes}}
+        {{producto.tipoIVA}}
+        {{producto.cantidad}}
+        {{producto.stock}}
+        {{producto.precio}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

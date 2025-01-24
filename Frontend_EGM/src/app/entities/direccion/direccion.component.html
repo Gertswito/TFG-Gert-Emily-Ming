@@ -1,0 +1,14 @@
+<br>
+@if (direccionList.length > 0) {
+    <ng-container *ngFor="let direccion of direccionList">
+        {{direccion.id}}
+        {{direccion.direccion}}
+        {{direccion.codigoPostal}}
+        {{direccion.localidad}}
+        {{direccion.comunidadAutonoma}}
+        {{direccion.cliente?.usuario}}
+        <hr>
+    </ng-container>
+} @else {
+    <p>NADA</p>
+}

@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EgmApplication<egm>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.tfg.egm.EgmApplication",
+            "projectName": "egm",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "console": "internalConsole"
+        }
+    ]
+}
