@@ -24,11 +24,20 @@ export class AuthService {
     return this.isTokenValid();
   }
 
-  getUsername(): string | null {
+  getUsuario(): string | null {
     const token = sessionStorage.getItem('jwtToken');
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.sub || null; 
+    }
+    return null;
+  }
+
+  getRol(): string | null {
+    const token = sessionStorage.getItem('jwtToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.rol || null;  
     }
     return null;
   }

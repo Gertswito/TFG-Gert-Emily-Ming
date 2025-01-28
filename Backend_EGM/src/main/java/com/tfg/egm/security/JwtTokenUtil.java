@@ -19,9 +19,10 @@ public class JwtTokenUtil {
     }
 
     // Generar el JWT
-    public String generateToken(String username) {
+    public String generateToken(String username, String rol) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("rol", rol)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey()) 
@@ -38,9 +39,19 @@ public class JwtTokenUtil {
         return claims.getSubject();
     }
 
+    // Extraer el rol del JWT
+    public String extractRole(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())  
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("rol", String.class); 
+    }
+
     // Validar el token
-    public Boolean validateToken(String token, String username) {
-        return (username.equals(extractUsername(token)) && !isTokenExpired(token));
+    public Boolean validateToken(String token, String username, String rol) {
+        return (username.equals(extractUsername(token)) && rol.equals(extractRole(token)) && !isTokenExpired(token));
     }
 
     // Verificar si el token está expirado

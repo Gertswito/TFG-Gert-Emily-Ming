@@ -14,6 +14,7 @@ import { ICliente } from '../../entities/cliente/cliente.model';
 export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
   usuario: string | null = '';
+  rol: string | null = '';
 
   protected authService = inject(AuthService);
 
@@ -28,9 +29,11 @@ export class HomeComponent implements OnInit {
       this.isLoggedIn = status;
 
       if (status) {
-        this.usuario = this.authService.getUsername(); 
+        this.usuario = this.authService.getUsuario(); 
+        this.rol = this.authService.getRol();
       } else {
         this.usuario = null;
+        this.rol = null;
       }
     });
   }

@@ -21,6 +21,7 @@ export class NavBarComponent implements OnInit {
   faUser = faUser;
   faShoppingCart = faShoppingCart;
   isLoggedIn: boolean = false;
+  rol: string | null = '';
 
   protected authService = inject(AuthService);
   protected router = inject(Router);
@@ -28,6 +29,12 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.loggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
+
+      if (status) {
+        this.rol = this.authService.getRol();
+      } else {
+        this.rol = null;
+      }
     });
   }
 

@@ -65,6 +65,6 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "contrasenhaIncorrecta");
         }
 
-        return jwtTokenUtil.generateToken(usuario.getUsuario());
+        return jwtTokenUtil.generateToken(usuario.getUsuario(), usuario.getRol());
     }
 }
