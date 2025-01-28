@@ -37,8 +37,11 @@ export class LoginComponent implements OnInit {
 
     this.clienteService.login(this.loginFormulario.value).subscribe({
       next: (response) => {
-        // this.router.navigate(['/']);
         console.log('Login correcto');
+        if (response.body && response.body.token) {
+          sessionStorage.setItem('jwtToken', response.body.token);  
+          this.router.navigate(['/']);  
+        }
       },
       error: (error) => {
         if (error.error && error.error.error) {

@@ -27,7 +27,20 @@
             <a href=""><fa-icon [icon]="faShoppingCart"></fa-icon></a>
         </div>
         <div>
-            <a [routerLink]="'/login'"><fa-icon [icon]="faUser"></fa-icon></a>
+            @if (!isLoggedIn) {
+                <a [routerLink]="'/login'"><fa-icon [icon]="faUser"></fa-icon></a>
+            } @else {
+                <div ngbDropdown class="d-inline-block">
+                    <a href="javascript:void(0);" id="usuarioMenu" ngbDropdownToggle>
+                        <fa-icon [icon]="faUser"></fa-icon>
+                    </a>
+                    <div ngbDropdownMenu aria-labelledby="usuarioMenu">
+                        <a ngbDropdownItem [routerLink]="'/categoria'">Cuenta</a>
+                        <a ngbDropdownItem [routerLink]="'/categoria'">Ajustes</a>
+                        <a ngbDropdownItem (click)="logout()">Cerrar sesión</a>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHome, faThList, faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons'; 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   standalone: true,
@@ -14,9 +15,24 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   faHome = faHome;
   faThList = faThList;
   faUser = faUser;
   faShoppingCart = faShoppingCart;
+  isLoggedIn: boolean = false;
+
+  protected authService = inject(AuthService);
+  protected router = inject(Router);
+
+  ngOnInit(): void {
+    this.authService.loggedIn$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);  
+  }
 }

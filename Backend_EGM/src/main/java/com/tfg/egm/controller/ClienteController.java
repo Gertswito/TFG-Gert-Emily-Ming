@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,13 +47,10 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes/login")
-    public ResponseEntity<Object> loginCliente(@RequestBody Cliente cliente) throws URISyntaxException {    
-        try {
-            Cliente usuario = clienteService.login(cliente);
-            URI location = new URI("/clientes/new/" + usuario.getId());
-            return ResponseEntity.created(location).body(usuario);
-        } catch (ResponseStatusException ex) {
-            return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
-        }
+    public ResponseEntity<Map<String, String>> login(@RequestBody Cliente cliente) {
+        String token = clienteService.login(cliente);
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
     }
 }

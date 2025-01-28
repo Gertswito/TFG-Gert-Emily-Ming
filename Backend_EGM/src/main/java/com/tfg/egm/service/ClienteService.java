@@ -2,7 +2,7 @@ package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.repository.ClienteRepository;
-
+import com.tfg.egm.security.JwtTokenUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,9 +18,12 @@ public class ClienteService {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public ClienteService(ClienteRepository clienteRepository, BCryptPasswordEncoder passwordEncoder) {
+    private final JwtTokenUtil jwtTokenUtil;
+
+    public ClienteService(ClienteRepository clienteRepository, BCryptPasswordEncoder passwordEncoder, JwtTokenUtil jwtTokenUtil) {
         this.clienteRepository = clienteRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     public List<Cliente> obtenerClientes() {
@@ -52,16 +55,16 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente login(Cliente cliente) {
+    public String login(Cliente cliente) {
         if (!clienteRepository.existsByUsuario(cliente.getUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "usuarioNoExiste");
         }
         Cliente usuario = clienteRepository.findByUsuario(cliente.getUsuario());
-    
+
         if (!passwordEncoder.matches(cliente.getContrasenha(), usuario.getContrasenha())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "contrasenhaIncorrecta");
         }
 
-        return usuario;
+        return jwtTokenUtil.generateToken(usuario.getUsuario());
     }
 }
