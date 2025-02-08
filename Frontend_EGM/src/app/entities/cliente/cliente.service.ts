@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICliente } from './cliente.model';
+import { environment } from '../../../environments/environment';
 
 export type EntityResponseType = HttpResponse<ICliente>;
 
@@ -9,7 +10,11 @@ export type EntityResponseType = HttpResponse<ICliente>;
   providedIn: 'root',
 })
 export class ClienteService {
+<<<<<<< Updated upstream
   private resourceUrl = '/clientes';
+=======
+  private resourceUrl = `${environment.apiUrl}/clientes`;
+>>>>>>> Stashed changes
   protected http = inject(HttpClient);
 
   getAllClientes(): Observable<ICliente[]> {
