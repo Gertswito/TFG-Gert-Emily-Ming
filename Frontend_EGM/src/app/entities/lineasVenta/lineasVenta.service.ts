@@ -7,7 +7,7 @@ import { ILineasVenta } from './lineasVenta.model';
   providedIn: 'root',
 })
 export class LineasVentaService {
-  private resourceUrl = '/lineas-ventas';
+  private resourceUrl = 'http://localhost:8080/lineas-ventas';
   protected http = inject(HttpClient);
 
   getAllLineasVentas(): Observable<ILineasVenta[]> {

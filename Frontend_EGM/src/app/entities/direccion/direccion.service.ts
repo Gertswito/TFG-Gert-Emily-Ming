@@ -7,7 +7,7 @@ import { IDireccion } from './direccion.model';
   providedIn: 'root',
 })
 export class DireccionService {
-  private resourceUrl = '/direcciones';
+  private resourceUrl = 'http://localhost:8080/direcciones';
   protected http = inject(HttpClient);
 
   getAllDirecciones(): Observable<IDireccion[]> {

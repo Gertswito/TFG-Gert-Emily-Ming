@@ -9,7 +9,7 @@ export type EntityResponseType = HttpResponse<ICliente>;
   providedIn: 'root',
 })
 export class ClienteService {
-  private resourceUrl = '/clientes';
+  private resourceUrl = 'http://localhost:8080/clientes';
   protected http = inject(HttpClient);
 
   getAllClientes(): Observable<ICliente[]> {

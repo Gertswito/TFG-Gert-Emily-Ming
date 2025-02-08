@@ -7,7 +7,7 @@ import { IVenta } from './venta.model';
   providedIn: 'root',
 })
 export class VentaService {
-  private resourceUrl = '/ventas';
+  private resourceUrl = 'http://localhost:8080/ventas';
   protected http = inject(HttpClient);
 
   getAllVentas(): Observable<IVenta[]> {
