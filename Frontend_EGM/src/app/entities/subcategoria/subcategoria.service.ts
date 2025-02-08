@@ -7,7 +7,7 @@ import { ISubcategoria } from './subcategoria.model';
   providedIn: 'root',
 })
 export class SubcategoriaService {
-  private resourceUrl = '/subcategorias';
+  private resourceUrl = 'http://localhost:8080/subcategorias';
   protected http = inject(HttpClient);
 
   getAllSubcategorias(): Observable<ISubcategoria[]> {

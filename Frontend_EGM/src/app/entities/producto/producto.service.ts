@@ -7,7 +7,7 @@ import { IProducto } from './producto.model';
   providedIn: 'root',
 })
 export class ProductoService {
-  private resourceUrl = '/productos';
+  private resourceUrl = 'http://localhost:8080/productos';
   protected http = inject(HttpClient);
 
   getAllProductos(): Observable<IProducto[]> {

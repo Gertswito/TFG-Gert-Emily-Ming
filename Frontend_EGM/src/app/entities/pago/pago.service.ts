@@ -7,7 +7,7 @@ import { IPago } from './pago.model';
   providedIn: 'root',
 })
 export class PagoService {
-  private resourceUrl = '/pagos';
+  private resourceUrl = 'http://localhost:8080/pagos';
   protected http = inject(HttpClient);
 
   getAllPagos(): Observable<IPago[]> {

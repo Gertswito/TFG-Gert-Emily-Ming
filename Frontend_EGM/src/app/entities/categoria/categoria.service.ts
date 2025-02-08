@@ -7,7 +7,7 @@ import { ICategoria } from './categoria.model';
   providedIn: 'root',
 })
 export class CategoriaService {
-  private resourceUrl = '/categorias';
+  private resourceUrl = 'http://localhost:8080/categorias';
   protected http = inject(HttpClient);
 
   getAllCategorias(): Observable<ICategoria[]> {
