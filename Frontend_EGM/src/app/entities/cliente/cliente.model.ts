@@ -13,5 +13,5 @@ export interface ICliente {
   direccion: IDireccion | null;
   pago: IPago | null;
   contrasenha: string | null;
-  fechaNacimiento: Date | null;
+  fechaNac: Date | null;
 }

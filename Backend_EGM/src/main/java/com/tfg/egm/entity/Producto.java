@@ -18,7 +18,7 @@ public class Producto implements Serializable {
     private String referencia;
 
     @Column(name = "url_imagen")
-    private String imagenURL;
+    private String urlImagen;
 
     @Column(name = "nombre")
     private String nombre;
@@ -68,12 +68,12 @@ public class Producto implements Serializable {
         this.referencia = referencia;
     }
 
-    public String getImagenURL() {
-        return imagenURL;
+    public String getUrlImagen() {
+        return urlImagen;
     }
 
-    public void setImagenURL(String imagenURL) {
-        this.imagenURL = imagenURL;
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
     }
 
     public String getNombre() {

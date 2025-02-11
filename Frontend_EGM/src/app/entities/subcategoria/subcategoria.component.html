@@ -1,11 +1,30 @@
-<br>
-@if (subcategoriaList.length > 0) {
-    <ng-container *ngFor="let subcategoria of subcategoriaList">
-        {{subcategoria.id}}
-        {{subcategoria.nombre}}
-        {{subcategoria.categoria?.nombre}}
-        <hr>
-    </ng-container>
-} @else {
-    <p>NADA</p>
-}
+<div class="body-entidades">
+    <h1 class="titulo">Subcategorías</h1>
+
+    @if (subcategoriaList.length > 0) {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Subcategoría</th>
+                    <th>Categría pertinente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let subcategoria of subcategoriaList">
+                    <tr>
+                        <td>{{subcategoria.id}}</td>
+                        <td>{{subcategoria.nombre}}</td>
+                        @if (subcategoria.categoria != null) {
+                            <td>{{subcategoria.categoria.nombre}}</td>
+                        } @else {
+                            <td>Sin categoría</td>
+                        }
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    } @else {
+        <p>NADA</p>
+    }
+</div>
