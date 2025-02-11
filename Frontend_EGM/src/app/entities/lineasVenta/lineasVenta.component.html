@@ -1,14 +1,32 @@
-<br>
-@if (lineasVentaList.length > 0) {
-    <ng-container *ngFor="let lineaVenta of lineasVentaList">
-        {{lineaVenta.id}}
-        {{lineaVenta.venta?.id}}
-        {{lineaVenta.producto?.nombre}}
-        {{lineaVenta.cantidadPedida}}
-        {{lineaVenta.precioUnitario}}
-        {{lineaVenta.precioTotal}}
-        <hr>
-    </ng-container>
-} @else {
-    <p>NADA</p>
-}
+<div class="body-entidades">
+    <h1 class="titulo">Líneas de venta</h1>
+
+    @if (lineasVentaList.length > 0) {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>ID venta</th>
+                    <th>Producto</th>
+                    <th>Cantidad pedida</th>
+                    <th>Precio unitario</th>
+                    <th>Precio total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let lineaVenta of lineasVentaList">
+                    <tr>
+                        <td>{{lineaVenta.id}}</td>
+                        <td>{{lineaVenta.venta?.id}}</td>
+                        <td>{{lineaVenta.producto?.nombre}}</td>
+                        <td>{{lineaVenta.cantidadPedida}}</td>
+                        <td>{{lineaVenta.precioUnitario}}</td>
+                        <td>{{lineaVenta.precioTotal}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    } @else {
+        <p>NADA</p>
+    }
+</div>

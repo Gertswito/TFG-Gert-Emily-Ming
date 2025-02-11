@@ -1,14 +1,32 @@
-<br>
-@if (direccionList.length > 0) {
-    <ng-container *ngFor="let direccion of direccionList">
-        {{direccion.id}}
-        {{direccion.direccion}}
-        {{direccion.codigoPostal}}
-        {{direccion.localidad}}
-        {{direccion.comunidadAutonoma}}
-        {{direccion.cliente?.usuario}}
-        <hr>
-    </ng-container>
-} @else {
-    <p>NADA</p>
-}
+<div class="body-entidades">
+    <h1 class="titulo">Direcciones</h1>
+
+    @if (direccionList.length > 0) {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Código postal</th>
+                    <th>Calle</th>
+                    <th>Localidad</th>
+                    <th>Comunidad autónoma</th>
+                    <th>Cliente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let direccion of direccionList">
+                    <tr>
+                        <td>{{direccion.id}}</td>
+                        <td>{{direccion.codigoPostal}}</td>
+                        <td>{{direccion.direccion}}</td>
+                        <td>{{direccion.localidad}}</td>
+                        <td>{{direccion.comunidadAutonoma}}</td>
+                        <td>{{direccion.cliente?.usuario}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    } @else {
+        <p>NADA</p>
+    }
+</div>

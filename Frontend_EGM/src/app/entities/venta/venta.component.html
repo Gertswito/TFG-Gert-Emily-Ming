@@ -1,13 +1,30 @@
-<br>
-@if (ventaList.length > 0) {
-    <ng-container *ngFor="let venta of ventaList">
-        {{venta.id}}
-        {{venta.cliente?.id}}
-        {{venta.fecha}}
-        {{venta.hora}}
-        {{venta.precioFinal}}
-        <hr>
-    </ng-container>
-} @else {
-    <p>NADA</p>
-}
+<div class="body-entidades">
+    <h1 class="titulo">Ventas</h1>
+
+    @if (ventaList.length > 0) {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Precio final</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let venta of ventaList">
+                    <tr>
+                        <td>{{venta.id}}</td>
+                        <td>{{venta.cliente?.nombre}}</td>
+                        <td>{{venta.fecha}}</td>
+                        <td>{{venta.hora}}</td>
+                        <td>{{venta.precioFinal}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    } @else {
+        <p>NADA</p>
+    }
+</div>
