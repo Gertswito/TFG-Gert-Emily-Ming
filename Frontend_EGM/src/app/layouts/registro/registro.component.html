@@ -47,12 +47,21 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label>DNI*</label>
-                <input type="text" class="form-control" formControlName="dni" required>
+                <label for="">Tipo de documento</label>
+                <div class="d-flex flex-row">
+                    <select name="tipoDoc" class="form-control w-25 me-2" formControlName="tipoDoc" required>
+                        <option value="dni">DNI</option>
+                        <option value="nie">NIE</option>
+                    </select>
+                    <input type="text" class="form-control" formControlName="dni" required>
+                </div>
                 <div *ngIf="registroFormulario.get('dni')?.touched && registroFormulario.get('dni')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['required']">El DNI es obligatorio.</span>
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['maxlength'] || registroFormulario.get('dni')?.errors?.['minlength']">El DNI debe de tener 9 caracteres</span>
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['dniExiste']">Este DNI ya está registrado.</span>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['required']">El documento de identidad es obligatorio.</span>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado.</span>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto.</span>
+                </div>
+                <div *ngIf="registroFormulario.get('tipoDoc')?.touched && registroFormulario.get('tipoDoc')?.invalid" class="text-danger">
+                    <span *ngIf="registroFormulario.get('tipoDoc')?.errors?.['required']">Por favor seleccione un tipo de documentación.</span>
                 </div>
             </div>
             <div class="mb-2">

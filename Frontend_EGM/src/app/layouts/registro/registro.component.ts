@@ -30,7 +30,8 @@ export class RegistroComponent implements OnInit {
       nombre: new FormControl(null, [Validators.required, Validators.maxLength(50),]),
       apellidos: new FormControl(null, [Validators.required, Validators.maxLength(50),]),
       email: new FormControl(null, [Validators.required, Validators.email, Validators.maxLength(100),]),
-      telefono: new FormControl(null, [Validators.required, Validators.pattern(/^\d{9}$/)]),
+      telefono: new FormControl(null, [Validators.required, Validators.pattern(/^\d{9}$/)]), 
+      tipoDoc: new FormControl(null, [Validators.required]), 
       dni: new FormControl(null, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
       fechaNac: new FormControl(null, [Validators.required]),
       contrasenha: new FormControl(null, [Validators.required]),
@@ -39,11 +40,19 @@ export class RegistroComponent implements OnInit {
   }
 
   comprobarRegistro(): void {
+    this.registroFormulario.get('dni')?.clearValidators();
+    if (this.registroFormulario.get('tipoDoc')?.value === 'dni') {
+      this.registroFormulario.get('dni')?.setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern(/^\d{8}[A-Z]$/)]);
+    } else if (this.registroFormulario.get('tipoDoc')?.value === 'nie') {
+      this.registroFormulario.get('dni')?.setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern(/^[XYZ]\d{7}[A-Z]$/)]);
+    } 
+    this.registroFormulario.get('dni')?.updateValueAndValidity();
+    
     if (this.registroFormulario.invalid) {
       this.registroFormulario.markAllAsTouched();
       return;
     }
-  
+
     const contrasenha1 = this.registroFormulario.get('contrasenha')?.value;
     const contrasenha2 = this.registroFormulario.get('repiteContrasenha')?.value;
     if (contrasenha1 !== contrasenha2) {
