@@ -1,0 +1,69 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.entidades {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 6.5em;
+    width: 95%;
+    margin-top: 1em;
+}
+
+.pareja {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.margen-derecho {
+    margin-right: 2em;
+}
+
+.btn {
+    width: 100%;
+    height: 3em;
+}
+
+@media screen and (max-width: 850px) {
+    h1 {
+        font-size: 2em;
+        margin-left: 5%;
+        margin-top: 0.5em;
+    }
+
+    .entidades {
+        flex-direction: column;
+        height: 100%;
+        width: 85%;
+    }
+
+    .margen-derecho {
+        margin-right: 0em;
+    }
+
+    .pareja {
+        margin-top: 1em;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        font-size: 1.3em;
+    }
+
+    .primer-btn {
+        margin-bottom: 1em;
+    }
+
+    .margen-abajo {
+        margin-bottom: 3em;
+    }
+}

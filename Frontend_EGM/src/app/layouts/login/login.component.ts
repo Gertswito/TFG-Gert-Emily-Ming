@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit {
       },
       error: (error) => {
         if (error.error && error.error.error) {
-          if (error.error.error === 'usuarioNoExiste') {
+          if (error.status === 400) {
             this.loginFormulario.get('usuario')?.setErrors({ 'usuarioNoExiste': true });
-          } else if (error.error.error === 'contrasenhaIncorrecta') {
+          } else if (error.status === 401) {
             this.loginFormulario.get('contrasenha')?.setErrors({ 'contrasenhaIncorrecta': true });
           }
         }
