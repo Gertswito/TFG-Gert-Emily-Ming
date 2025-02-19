@@ -10,6 +10,9 @@ import { VentaComponent } from './entities/venta/venta.component';
 import { HomeComponent } from './layouts/home/home.component';
 import { LoginComponent } from './layouts/login/login.component';
 import { RegistroComponent } from './layouts/registro/registro.component';
+import { AdminHomeComponent } from './layouts/admin-home/admin-home.component';
+import { AuthGuard } from './guard/auth.guard';
+import { ErrorComponent } from './error/error.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,5 +26,7 @@ export const routes: Routes = [
     { path: 'lineasVenta', component: LineasVentaComponent },
     { path: 'venta', component: VentaComponent},
     { path: 'login', component: LoginComponent },
-    { path: 'registro', component: RegistroComponent }
+    { path: 'registro', component: RegistroComponent },
+    { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
+    { path: 'error-sin-autorizacion', component: ErrorComponent },
 ];
