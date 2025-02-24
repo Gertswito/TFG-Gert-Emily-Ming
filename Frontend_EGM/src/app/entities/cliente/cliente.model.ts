@@ -10,8 +10,8 @@ export interface ICliente {
   usuario: string | null;
   email: string | null;
   telefono: string | null;
-  direccion: IDireccion | null;
-  pago: IPago | null;
+  direcciones: IDireccion[] | null;
+  pagos: IPago[] | null;
   contrasenha: string | null;
   fechaNac: Date | null;
 }

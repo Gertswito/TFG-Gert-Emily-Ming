@@ -13,6 +13,8 @@ import { RegistroComponent } from './layouts/registro/registro.component';
 import { AdminHomeComponent } from './layouts/admin-home/admin-home.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ErrorComponent } from './error/error.component';
+import { ClienteAjustesComponent } from './entities/cliente/cliente-ajustes/cliente-ajustes.component';
+import { ClienteCuentaComponent } from './entities/cliente/cliente-cuenta/cliente-cuenta.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +22,8 @@ export const routes: Routes = [
     { path: 'categoria', component: CategoriaComponent },
     { path: 'subcategoria', component: SubcategoriaComponent },
     { path: 'cliente', component: ClienteComponent },
+    { path: 'cliente-ajustes', component: ClienteAjustesComponent },
+    { path: 'cliente-cuenta', component: ClienteCuentaComponent },
     { path: 'direccion', component: DireccionComponent },
     { path: 'pago', component: PagoComponent },
     { path: 'producto', component: ProductoComponent },

@@ -30,6 +30,10 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    public Cliente obtenerClientePorUsuario(String usuario) {
+        return clienteRepository.findByUsuario(usuario);
+    }
+
     public Cliente save(Cliente cliente) {
         if (clienteRepository.existsByUsuario(cliente.getUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreUsuarioExiste");
