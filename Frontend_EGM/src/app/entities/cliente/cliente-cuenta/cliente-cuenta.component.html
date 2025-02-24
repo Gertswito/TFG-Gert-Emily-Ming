@@ -1,0 +1,64 @@
+<div class="body-entidades">
+    @if (usuarioEncontrado) {
+        @if (cliente !== null) {
+            <h1 class="titulo">¡Bienvenido, {{cliente.usuario}}!</h1>
+
+            <h3>Tus datos:</h3>
+            <div class="mb-3">
+                <ul>
+                    <li><strong>DNI:</strong> {{ cliente.dni }}</li>
+                    <li><strong>Nombre completo:</strong> {{ cliente.nombre }} {{ cliente.apellidos }}</li>
+                    <li><strong>Fecha de nacimiento:</strong> {{ cliente.fechaNac | date: 'dd/MM/yyyy' }}</li>
+                    <li><strong>Email:</strong> {{ cliente.email }}</li>
+                    <li><strong>Teléfono:</strong> {{ cliente.telefono }}</li>
+
+                    <li>Tus direcciones asociadas: </li>
+                    @if (cliente.direcciones && cliente.direcciones.length > 0) {
+                        <table class="table table-striped table-bordered">
+                            <thead  class="table table-striped table-bordered">
+                                <tr>
+                                    <th></th>
+                                    <th>Dirección</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let direccion of cliente.direcciones; let i = index">
+                                    <tr>
+                                        <td>{{ i + 1 }}</td> 
+                                        <td>{{ direccion.direccion }}, {{ direccion.localidad }}, {{ direccion.comunidadAutonoma }} | {{ direccion.codigoPostal }}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>                
+                        </table>
+                    } @else {
+                        <small>No tienes direcciones asociadas</small>
+                    }
+
+                    <li>Tus métodos de pago asociados: </li>
+                    @if (cliente.pagos && cliente.pagos.length > 0) {
+                        <table class="table table-striped table-bordered">
+                            <thead  class="table table-striped table-bordered">
+                                <tr>
+                                    <th></th>
+                                    <th>Número de tarjeta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let pago of cliente.pagos; let i = index">
+                                    <tr>
+                                        <td>{{ i + 1 }}</td> 
+                                        <td>{{ pago.numeroTarjeta }}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>                
+                        </table>
+                    } @else {
+                        <small>No tienes métodos de pago asociados</small>
+                    }
+                </ul>
+            </div>
+        }
+    } @else {
+        <h1 class="titulo">Error al encontrar el usuario</h1>
+    }
+</div>

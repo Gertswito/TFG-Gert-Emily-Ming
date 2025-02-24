@@ -31,6 +31,11 @@ public class ClienteController {
         return clienteService.obtenerClientes();
     }
 
+    @GetMapping("/clientes/usuario/{usuario}")
+    public Cliente obtenerCliente(@PathVariable String usuario) {
+        return clienteService.obtenerClientePorUsuario(usuario);
+    }
+
     @PostMapping("/clientes/new")
     public ResponseEntity<Object> createCliente(@RequestBody Cliente cliente) throws URISyntaxException {
         if (cliente.getId() != null) {

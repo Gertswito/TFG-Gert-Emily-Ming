@@ -64,3 +64,13 @@ p {
         flex-direction: column!important;
     }
 }
+
+@media screen and (max-height: 530px) {
+    .bg-img {
+        height: fit-content;
+    }
+
+    .custom-padding[_ngcontent-ng-c2586687065] {
+        padding-top: 3rem;
+    }
+}
