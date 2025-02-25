@@ -13,4 +13,8 @@ export class SubcategoriaService {
   getAllSubcategorias(): Observable<ISubcategoria[]> {
     return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/all`);
   }
+
+  getSubcategoriasConIdCategoria(id: number): Observable<ISubcategoria[]> {
+    return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/categoria/${id}`);
+  }
 }

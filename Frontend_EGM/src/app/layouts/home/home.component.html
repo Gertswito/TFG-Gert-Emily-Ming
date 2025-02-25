@@ -1,8 +1,35 @@
-<div>
-    @if (!isLoggedIn) {
-        <h1 class="container">ESTO ES EL HOME</h1>
+<div class="body-entidades">
+    @if (usuario !== null) {
+        <h1 class="titulo">¡Bienvenido {{usuario}}!</h1>
     } @else {
-        <h1 class="container">HAS INICIADO SESIÓN -- {{usuario}} | {{rol}} --</h1>
+        <h1 class="titulo">¡Bienvenido!</h1>
     }
-    <p class="container">Esto es el home genérico, faltan cosas por cambiar</p>
-</div>
+  
+    @if (categoriaList.length > 0) {
+        <h2 class="subtitulo">Nuestra selección de productos</h2>
+
+        <div class="cards-categorias">
+            <ng-container *ngFor="let categoria of categoriaList">
+                <div class="card-categoria">
+                    <h2>{{categoria.nombre}}</h2>
+                    <div class="subcategorias-container">
+                        <div class="subcategorias">
+                            <ng-container *ngFor="let subcategoria of categoria.subcategorias">
+                                <a [routerLink]="'/producto'" [queryParams]="{ id: subcategoria.id }" class="card-subcategoria-link">
+                                    <div class="card-subcategoria">
+                                        @if (subcategoria.imagenSubcategoria !== null){
+                                            <img [src]="subcategoria.imagenSubcategoria" class="subcategoria-imagen" alt="">
+                                        }
+                                        <span class="texto">{{subcategoria.nombre}}</span>
+                                    </div>
+                                </a>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    } @else {
+        <p>NADA</p>
+    }
+  </div>

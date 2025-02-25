@@ -1,0 +1,127 @@
+hr {
+    opacity: 1;
+}
+
+h2 {
+    margin-bottom: 0.5em;
+}
+  
+.titulo {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.subtitulo {
+    text-align: left;
+
+}
+  
+.body-entidades {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-categoria {
+    margin-bottom: 1em;
+}
+
+.subcategorias-container {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+  
+.subcategorias {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    max-width: 67em; 
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.subcategorias::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px; 
+}
+
+.subcategorias::-webkit-scrollbar-track {
+    background: #f0f0f0; 
+    border-radius: 4px;
+}
+
+.subcategorias::-webkit-scrollbar-thumb {
+    background-color: #aaa; 
+    border-radius: 4px;
+    border: 1px solid #f0f0f0; 
+}
+
+.subcategorias::-webkit-scrollbar-thumb:hover {
+    background-color: #999; 
+}
+  
+.card-subcategoria-link {
+    flex: 0 0 14.5em;
+    text-decoration: none;
+}
+
+.card-subcategoria-link:hover {
+    transform: scale(1.01);
+}
+
+.card-subcategoria {
+    flex: 0 0 14.5em; 
+    padding: 0.5rem;
+    border: 1px solid #afc8ff;
+    border-radius: 5px;
+    background-color: #ecf1ff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 19em;
+    text-align: center;
+} 
+
+.subcategoria-imagen {
+    width: 100%; 
+    height: 70%; 
+    object-fit: cover; 
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #afc8ff;
+}
+
+.texto {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 850px) {
+    .card-subcategoria-link {
+        flex: 0 0 9em;
+    }
+    
+    .card-subcategoria {
+        flex: 0 0 9em;
+        height: 12em;
+    }
+
+    .cards-categorias {
+        width: 100%;
+    }
+
+    h2 {
+        margin-bottom: 0.75em;
+    }
+
+    .card-categoria {
+        margin-bottom: 0.75em;
+    }
+}

@@ -6,14 +6,20 @@
             <thead>
                 <tr class="table-primary">
                     <th>ID</th>
+                    <th>Imagen</th>
                     <th>Subcategoría</th>
-                    <th>Categría pertinente</th>
+                    <th>Categoría pertinente</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let subcategoria of subcategoriaList">
                     <tr>
                         <td>{{subcategoria.id}}</td>
+                        @if (subcategoria.imagenSubcategoria != null) {
+                            <td><img class="resto-imagenes" [src]="subcategoria.imagenSubcategoria" alt=""></td>
+                        } @else {
+                            <td>Sin imagen</td>
+                        }
                         <td>{{subcategoria.nombre}}</td>
                         @if (subcategoria.categoria != null) {
                             <td>{{subcategoria.categoria.nombre}}</td>

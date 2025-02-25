@@ -18,6 +18,9 @@ public class Subcategoria implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "imagen_subcategoria")
+    private String imagenSubcategoria;
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")    
     @JsonIgnoreProperties(value = { "subcategorias" }, allowSetters = true)
@@ -37,6 +40,14 @@ public class Subcategoria implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getImagenSubcategoria() {
+        return imagenSubcategoria;
+    }
+
+    public void setImagenSubcategoria(String imagenSubcategoria) {
+        this.imagenSubcategoria = imagenSubcategoria;
     }
 
     public Categoria getCategoria() {

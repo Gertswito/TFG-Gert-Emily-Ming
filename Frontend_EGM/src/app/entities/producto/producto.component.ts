@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IProducto } from './producto.model';
 import { ProductoService } from './producto.service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -15,8 +16,27 @@ export class ProductoComponent implements OnInit {
   productoList: IProducto[] = [];
 
   private productoService = inject(ProductoService);
+  private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const id = params['id'];
+
+      if (id) {
+        this.cargarProducttosConId(id);
+      } else {
+        this.cargarAllProductos();
+      }
+    });
+  }
+
+  cargarProducttosConId(id: number) {
+    this.productoService.getProductosConIdSubcategoria(id).subscribe((res) => {
+      this.productoList = res || [];
+    });
+  }
+
+  cargarAllProductos() {
     this.productoService.getAllProductos().subscribe((res) => {
       this.productoList = res || [];
     });

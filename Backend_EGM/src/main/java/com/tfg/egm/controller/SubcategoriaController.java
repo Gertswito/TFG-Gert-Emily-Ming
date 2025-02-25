@@ -3,6 +3,7 @@ package com.tfg.egm.controller;
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.SubcategoriaService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,5 +20,10 @@ public class SubcategoriaController {
     @GetMapping("/subcategorias/all")
     public List<Subcategoria> obtenerSubcategorias() {
         return subcategoriaService.obtenerSubcategorias();
+    }
+
+    @GetMapping("/subcategorias/categoria/{id}")
+    public List<Subcategoria> obtenerSubcategoriasConIdCategoria(@PathVariable int id) {
+        return subcategoriaService.obtenerSubcategoriasConIdCategoria(id);
     }
 }
