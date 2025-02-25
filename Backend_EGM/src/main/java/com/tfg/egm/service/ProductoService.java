@@ -18,4 +18,8 @@ public class ProductoService {
     public List<Producto> obtenerProductos() {
         return productoRepository.findAll();
     }
+
+    public List<Producto> obtenerProductosConIdSubcategoria(int id) {
+        return productoRepository.findBySubcategoriaId(id);
+    }
 }

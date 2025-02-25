@@ -1,46 +1,27 @@
 <div class="body-entidades">
     <h1 class="titulo">Productos</h1>
-
+  
     @if (productoList.length > 0) {
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>ID</th>
-                    <th>Imagen</th>
-                    <th>Referencia</th>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Categoría</th>
-                    <th>Subcategoría</th>
-                    <th>Descripción</th>
-                    <th>Ingredientes</th>
-                    <th>IVA</th>
-                    <th>Cantidad</th>
-                    <th>Stock</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let producto of productoList">
-                    <tr>
-                        <td>{{producto.id}}</td>
-                        <td><img [src]="producto.urlImagen" alt="" class="imagen-productos"></td>
-                        <td>{{producto.referencia}}</td>
-                        <td>{{producto.nombre}}</td>
-                        <td>{{producto.marca}}</td>
-                        <td>{{producto.categoria?.nombre}}</td>
-                        <td>{{producto.subcategoria?.nombre}}</td>
-                        <td>{{producto.descripcion}}</td>
-                        <td>{{producto.ingredientes}}</td>
-                        <td>{{producto.tipoIVA}}</td>
-                        <td>{{producto.cantidad}}</td>
-                        <td>{{producto.stock}}</td>
-                        <td>{{producto.precio}}</td>
-                    </tr>
-                </ng-container>
-            </tbody>
-        </table>
+        <div class="cards-productos">
+            <ng-container *ngFor="let producto of productoList">
+                <div class="card-producto categoria-{{producto.categoria?.id}}">
+                    <img [src]="producto.urlImagen" alt="" class="imagen-productos">
+                    <div><span>ID:</span> {{producto.id}}</div>
+                    <div><span>Referencia:</span> {{producto.referencia}}</div>
+                    <div><span>Nombre:</span> {{producto.nombre}}</div>
+                    <div><span>Marca:</span> {{producto.marca}}</div>
+                    <div><span>Categoría:</span> {{producto.categoria?.nombre}}</div>
+                    <div><span>Subcategoría:</span> {{producto.subcategoria?.nombre}}</div>
+                    <div><span>Descripción:</span> {{producto.descripcion}}</div>
+                    <div><span>Ingredientes:</span> {{producto.ingredientes}}</div>
+                    <div><span>IVA:</span> {{producto.tipoIVA}}</div>
+                    <div><span>Cantidad:</span> {{producto.cantidad}}</div>
+                    <div><span>Stock:</span> {{producto.stock}}</div>
+                    <div><span>Precio:</span> {{producto.precio}}</div>
+                </div>
+            </ng-container>
+        </div>
     } @else {
         <p>NADA</p>
     }
-</div>
+  </div>

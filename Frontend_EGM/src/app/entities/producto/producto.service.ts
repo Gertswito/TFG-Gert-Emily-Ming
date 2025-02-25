@@ -13,4 +13,8 @@ export class ProductoService {
   getAllProductos(): Observable<IProducto[]> {
     return this.http.get<IProducto[]>(`${this.resourceUrl}/all`);
   }
+
+  getProductosConIdSubcategoria(id: number): Observable<IProducto[]> {
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/subcategoria/${id}`);
+  }
 }

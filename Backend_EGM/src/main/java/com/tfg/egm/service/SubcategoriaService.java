@@ -18,4 +18,8 @@ public class SubcategoriaService {
     public List<Subcategoria> obtenerSubcategorias() {
         return subcategoriaRepository.findAll();
     }
+
+    public List<Subcategoria> obtenerSubcategoriasConIdCategoria(int id) {
+        return subcategoriaRepository.findByCategoriaId(id);
+    }
 }

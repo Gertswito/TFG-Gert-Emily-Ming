@@ -7,6 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHome, faThList, faUser, faShoppingCart, faSignOut, faCog } from '@fortawesome/free-solid-svg-icons'; 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../auth/auth.service';
+import { ICategoria } from '../../entities/categoria/categoria.model';
+import { CategoriaService } from '../../entities/categoria/categoria.service';
 
 @Component({
   standalone: true,
@@ -23,9 +25,11 @@ export class NavBarComponent implements OnInit {
   faCog = faCog;
   faShoppingCart = faShoppingCart;
   isLoggedIn: boolean = false;
+  categorias: ICategoria[] = [];
   rol: string | null = '';
 
   protected authService = inject(AuthService);
+  protected categoriaService = inject(CategoriaService);
   protected router = inject(Router);
 
   ngOnInit(): void {
@@ -37,6 +41,10 @@ export class NavBarComponent implements OnInit {
       } else {
         this.rol = null;
       }
+    });
+
+    this.categoriaService.getAllCategorias().subscribe((res) => {
+      this.categorias = res || [];
     });
   }
 
