@@ -37,7 +37,7 @@
             </div>
         }
         <div>
-            <a href=""><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+            <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
         </div>
         <div>
             @if (!isLoggedIn) {

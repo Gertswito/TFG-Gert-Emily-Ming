@@ -15,6 +15,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { ErrorComponent } from './error/error.component';
 import { ClienteAjustesComponent } from './entities/cliente/cliente-ajustes/cliente-ajustes.component';
 import { ClienteCuentaComponent } from './entities/cliente/cliente-cuenta/cliente-cuenta.component';
+import { CarritoComponent } from './layouts/carrito/carrito.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'venta', component: VentaComponent},
     { path: 'login', component: LoginComponent },
     { path: 'registro', component: RegistroComponent },
+    { path: 'carrito', component: CarritoComponent },
     { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'error-sin-autorizacion', component: ErrorComponent },
 ];
