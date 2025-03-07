@@ -34,7 +34,7 @@ export class RegistroComponent implements OnInit {
       tipoDoc: new FormControl(null, [Validators.required]), 
       dni: new FormControl(null, [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
       fechaNac: new FormControl(null, [Validators.required]),
-      contrasenha: new FormControl(null, [Validators.required]),
+      contrasenha: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       repiteContrasenha: new FormControl(null, [Validators.required]),
     });
   }
