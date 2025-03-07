@@ -1,3 +1,320 @@
-<div class="body-entidades">
-    <h1 class="titulo">De momento lo dejamos vacío</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <div class="card shadow-sm border-0 mb-5">
+        <div class="card-header bg-gradient-primary text-dark py-3">
+          <h2 class="mb-0 fs-4">Ajustes de Cuenta</h2>
+        </div>
+        <div class="card-body p-4">
+          <!-- Spinner de carga -->
+          <div *ngIf="loading" class="text-center my-5 py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2 text-muted">Cargando tus datos...</p>
+          </div>
+          
+          <!-- Alerta de éxito -->
+          <div *ngIf="success" class="alert custom-alert-success alert-dismissible fade show bg-success-subtle text-success-emphasis" role="alert">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+              <span>Los datos se han actualizado correctamente.</span>
+            </div>
+            <button type="button" class="btn-close" (click)="success = false" aria-label="Cerrar"></button>
+          </div>
+          
+          <!-- Alerta de error -->
+          <div *ngIf="error" class="alert custom-alert-danger alert-dismissible fade show bg-danger-subtle text-danger-emphasis" role="alert">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+              <span>{{ errorMessage }}</span>
+            </div>
+            <button type="button" class="btn-close" (click)="error = false" aria-label="Cerrar"></button>
+          </div>
+          
+          <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+            <!-- Información Personal -->
+            <div class="card custom-card mb-4">
+              <div class="card-header d-flex align-items-center">
+                <i class="bi bi-person-fill me-2 text-primary"></i>
+                <h5 class="mb-0">Información Personal</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="usuario" class="form-label fw-medium">Usuario</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                      <input type="text" class="form-control bg-light" id="usuario" formControlName="usuario" readonly>
+                    </div>
+                    <small class="text-muted fst-italic">El nombre de usuario no se puede cambiar</small>
+                  </div>
+                </div>
+                
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <h6 class="text-primary fw-bold mb-2"><i class="bi bi-key me-2"></i>Cambiar Contraseña</h6>
+                    <small class="text-muted mb-3 d-block">Deja estos campos en blanco si no deseas cambiar tu contraseña</small>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3" formGroupName="passwordGroup">
+                    <label for="newPassword" class="form-label fw-medium">Nueva Contraseña</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                      <input type="password" class="form-control" id="newPassword" formControlName="newPassword">
+                    </div>
+                    <div *ngIf="clienteForm.get('passwordGroup.newPassword')?.invalid && clienteForm.get('passwordGroup.newPassword')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>La contraseña debe tener al menos 6 caracteres
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4 mb-3" formGroupName="passwordGroup">
+                    <label for="confirmPassword" class="form-label fw-medium">Confirmar Contraseña</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                      <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+                    </div>
+                    <div *ngIf="clienteForm.get('passwordGroup')?.errors?.['passwordMismatch'] && clienteForm.get('passwordGroup.confirmPassword')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>Las contraseñas no coinciden
+                    </div>
+                  </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label fw-medium">Nombre <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                      <input type="text" class="form-control" id="nombre" formControlName="nombre" required>
+                    </div>
+                    <div *ngIf="clienteForm.get('nombre')?.invalid && clienteForm.get('nombre')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>El nombre es obligatorio
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 mb-3">
+                    <label for="apellidos" class="form-label fw-medium">Apellidos <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                      <input type="text" class="form-control" id="apellidos" formControlName="apellidos" required>
+                    </div>
+                    <div *ngIf="clienteForm.get('apellidos')?.invalid && clienteForm.get('apellidos')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>Los apellidos son obligatorios
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="dni" class="form-label fw-medium">DNI/NIE <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                      <input type="text" class="form-control" id="dni" formControlName="dni" required>
+                    </div>
+                    <div *ngIf="clienteForm.get('dni')?.invalid && clienteForm.get('dni')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>Introduce un DNI válido (8 números y 1 letra) o NIE válido (X/Y/Z, 7 números y 1 letra)
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 mb-3">
+                    <label for="fechaNac" class="form-label fw-medium">Fecha de Nacimiento</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
+                      <input type="date" class="form-control" id="fechaNac" formControlName="fechaNac">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label fw-medium">Email <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                      <input type="email" class="form-control" id="email" formControlName="email" required>
+                    </div>
+                    <div *ngIf="clienteForm.get('email')?.invalid && clienteForm.get('email')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>Introduce un email válido
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label fw-medium">Teléfono</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                      <input type="tel" class="form-control" id="telefono" formControlName="telefono">
+                    </div>
+                    <div *ngIf="clienteForm.get('telefono')?.invalid && clienteForm.get('telefono')?.touched" class="invalid-feedback d-block">
+                      <i class="bi bi-exclamation-circle me-1"></i>Introduce un teléfono válido (9 dígitos)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-white d-flex justify-content-end gap-2 p-3 me-2">
+                <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+                  <i class="bi bi-x-circle me-1"></i> Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="clienteForm.invalid || loading">
+                  <i class="bi bi-save me-1"></i> Guardar Cambios
+                </button>
+              </div>
+            </div>
+            <!-- Direcciones -->
+            <div class="card custom-card mb-4">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
+                  <h5 class="mb-0">Direcciones</h5>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" (click)="addDireccion()">
+                  <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
+                </button>
+              </div>
+              <div class="card-body">
+                <div formArrayName="direcciones">
+                  <div *ngFor="let direccionForm of direccionesFormArray.controls; let i = index" class="address-card mb-3">
+                    <div [formGroupName]="i">
+                      <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                        <h6 class="fw-bold text-primary"><i class="bi bi-house me-2"></i>Dirección #{{ i + 1 }}</h6>
+                        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeDireccion(i)">
+                          <i class="bi bi-trash me-1"></i> Eliminar
+                        </button>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <label class="form-label fw-medium">Dirección <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-signpost"></i></span>
+                            <input type="text" class="form-control" formControlName="direccion" required>
+                          </div>
+                          <div *ngIf="direccionForm.get('direccion')?.invalid && direccionForm.get('direccion')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>La dirección es obligatoria
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-4 mb-3">
+                          <label class="form-label fw-medium">Código Postal <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                            <input type="text" class="form-control" formControlName="codigoPostal" required>
+                          </div>
+                          <div *ngIf="direccionForm.get('codigoPostal')?.invalid && direccionForm.get('codigoPostal')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>Introduce un código postal válido (5 dígitos)
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                          <label class="form-label fw-medium">Localidad <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                            <input type="text" class="form-control" formControlName="localidad" required>
+                          </div>
+                          <div *ngIf="direccionForm.get('localidad')?.invalid && direccionForm.get('localidad')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>La localidad es obligatoria
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                          <label class="form-label fw-medium">Comunidad Autónoma <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-map"></i></span>
+                            <input type="text" class="form-control" formControlName="comunidadAutonoma" required>
+                          </div>
+                          <div *ngIf="direccionForm.get('comunidadAutonoma')?.invalid && direccionForm.get('comunidadAutonoma')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>La comunidad autónoma es obligatoria
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="direccionesFormArray.length === 0" class="text-center py-4 empty-state">
+                    <i class="bi bi-geo-alt fs-1 text-muted mb-2"></i>
+                    <p class="text-muted">No hay direcciones añadidas</p>
+                    <button type="button" class="btn btn-outline-primary" (click)="addDireccion()">
+                      <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Métodos de Pago -->
+            <div class="card custom-card mb-4">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-credit-card-fill me-2 text-primary"></i>
+                  <h5 class="mb-0">Métodos de Pago</h5>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-primary" (click)="addPago()">
+                  <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
+                </button>
+              </div>
+              <div class="card-body">
+                <div formArrayName="pagos">
+                  <div *ngFor="let pagoForm of pagosFormArray.controls; let i = index" class="payment-card mb-3">
+                    <div [formGroupName]="i">
+                      <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                        <h6 class="fw-bold text-primary"><i class="bi bi-credit-card me-2"></i>Tarjeta #{{ i + 1 }}</h6>
+                        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePago(i)">
+                          <i class="bi bi-trash me-1"></i> Eliminar
+                        </button>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label fw-medium">Número de Tarjeta <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                            <input type="text" class="form-control" formControlName="numeroTarjeta" required>
+                          </div>
+                          <div *ngIf="pagoForm.get('numeroTarjeta')?.invalid && pagoForm.get('numeroTarjeta')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>Introduce un número de tarjeta válido (16 dígitos)
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-3">
+                          <label class="form-label fw-medium">Fecha de Caducidad <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            <input type="date" class="form-control" formControlName="fechaCaducidad" required>
+                          </div>
+                          <div *ngIf="pagoForm.get('fechaCaducidad')?.invalid && pagoForm.get('fechaCaducidad')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>La fecha de caducidad es obligatoria
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-3">
+                          <label class="form-label fw-medium">CVV <span class="text-danger">*</span></label>
+                          <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                            <input type="text" class="form-control" formControlName="cvv" required>
+                          </div>
+                          <div *ngIf="pagoForm.get('cvv')?.invalid && pagoForm.get('cvv')?.touched" class="invalid-feedback d-block">
+                            <i class="bi bi-exclamation-circle me-1"></i>Introduce un CVV válido (3 dígitos)
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="pagosFormArray.length === 0" class="text-center py-4 empty-state">
+                    <i class="bi bi-credit-card fs-1 text-muted mb-2"></i>
+                    <p class="text-muted">No hay métodos de pago añadidos</p>
+                    <button type="button" class="btn btn-outline-primary" (click)="addPago()">
+                      <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
