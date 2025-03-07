@@ -3,51 +3,56 @@
         <h1 class="container d-flex align-items-center justify-content-center">Crea una cuenta</h1>
         <form [formGroup]="registroFormulario" (ngSubmit)="comprobarRegistro()" class="d-flex flex-column form justify-content-center container">
             <div class="mb-2">
-                <label>Nombre de usuario*</label>
+                <label>Nombre de usuario<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="usuario" required>
                 <div *ngIf="registroFormulario.get('usuario')?.touched && registroFormulario.get('usuario')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['required']">El nombre de usuario es obligatorio.</span>
-                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['nombreUsuarioExiste']">Este nombre de usuario ya está en uso.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['required']">El nombre de usuario es obligatorio. </span>
+                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['nombreUsuarioExiste']">Este nombre de usuario ya está en uso. </span>
+                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['maxlength']">El nombre de usuario debe de tener menos de 50 caracteres. </span>
                 </div>
             </div>
             <div class="mb-2">
-                <label>Email*</label>
+                <label>Email<span class="text-danger">*</span></label>
                 <input type="email" class="form-control" formControlName="email" required>
                 <div *ngIf="registroFormulario.get('email')?.touched && registroFormulario.get('email')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('email')?.errors?.['required']">El email es obligatorio.</span>
-                    <span *ngIf="registroFormulario.get('email')?.errors?.['email']">Introduce un email válido.</span>
-                    <span *ngIf="registroFormulario.get('email')?.errors?.['maxlength']">Máximo 100 caracteres.</span>
-                    <span *ngIf="registroFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('email')?.errors?.['required']">El email es obligatorio. </span>
+                    <span *ngIf="registroFormulario.get('email')?.errors?.['email']">Introduce un email válido. </span>
+                    <span *ngIf="registroFormulario.get('email')?.errors?.['maxlength']">El email debe de tener un máximo de 100 caracteres. </span>
+                    <span *ngIf="registroFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado. </span>
                 </div>
             </div>
             <div class="mb-2">
                 <div class="d-flex flex-row nombre-apellidos-div">
                     <div class="me-3 w-100">
-                        <label>Nombre*</label>
+                        <label>Nombre<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" formControlName="nombre" required>
                     </div>
                     <div class="w-100">
-                        <label>Apellidos*</label>
+                        <label>Apellidos<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" formControlName="apellidos" required>
                     </div>
                 </div>
                 <div *ngIf="registroFormulario.get('nombre')?.touched && registroFormulario.get('nombre')?.invalid || registroFormulario.get('apellidos')?.touched && registroFormulario.get('apellidos')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('nombre')?.errors?.['required']">El nombre es obligatorio. </span>
-                    <span *ngIf="registroFormulario.get('nombre')?.errors?.['maxlength']">Máximo 50 caracteres. </span>
+                    <span *ngIf="registroFormulario.get('nombre')?.errors?.['maxlength']">El nombre debe tener como máximo 50 caracteres. </span>
                     <span *ngIf="registroFormulario.get('apellidos')?.errors?.['required']">Los apellidos son obligatorios. </span>
-                    <span *ngIf="registroFormulario.get('apellidos')?.errors?.['maxlength']">Máximo 50 caracteres. </span>
+                    <span *ngIf="registroFormulario.get('apellidos')?.errors?.['maxlength']">Los apellidos deben tener como máximo 50 caracteres. </span>
                 </div>
             </div>
             <div class="mb-2">
-                <label>Teléfono*</label>
+                <label>Teléfono<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="telefono" placeholder="Ej: 600111222" required pattern="\d{9}">
                 <div *ngIf="registroFormulario.get('telefono')?.touched && registroFormulario.get('telefono')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['required']">El teléfono es obligatorio.</span>
-                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['pattern']">Debe ser un número de 9 dígitos.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['required']">El teléfono es obligatorio. </span>
+                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['pattern']">El teléfono debe de ser de 9 dígitos. </span>
                 </div>
             </div>
             <div class="mb-2">
-                <label for="">Tipo de documento</label>
+                <label for="">Tipo de documento<span class="text-danger">*</span></label>
                 <div class="d-flex flex-row">
                     <select name="tipoDoc" class="form-control w-25 me-2" formControlName="tipoDoc" required>
                         <option value="dni">DNI</option>
@@ -56,40 +61,45 @@
                     <input type="text" class="form-control" formControlName="dni" required>
                 </div>
                 <div *ngIf="registroFormulario.get('dni')?.touched && registroFormulario.get('dni')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['required']">El documento de identidad es obligatorio.</span>
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado.</span>
-                    <span *ngIf="registroFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['required']">El documento de identidad es obligatorio. </span>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado. </span>
+                    <span *ngIf="registroFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto. </span>
                 </div>
                 <div *ngIf="registroFormulario.get('tipoDoc')?.touched && registroFormulario.get('tipoDoc')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('tipoDoc')?.errors?.['required']">Por favor seleccione un tipo de documentación.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('tipoDoc')?.errors?.['required']">Por favor seleccione un tipo de documentación. </span>
                 </div>
             </div>
             <div class="mb-2">
-                <label>Fecha de nacimiento *</label>
+                <label>Fecha de nacimiento<span class="text-danger">*</span></label>
                 <input type="date" class="form-control" formControlName="fechaNac" required>
                 <div *ngIf="registroFormulario.get('fechaNac')?.touched && registroFormulario.get('fechaNac')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['required']">La fecha de nacimiento es obligatoria.</span>
-                    <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['fechaInvalida']">La fecha no puede ser en el futuro.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['required']">La fecha de nacimiento es obligatoria. </span>
+                    <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['fechaInvalida']">La fecha no puede ser en el futuro. </span>
                 </div>
             </div>
             <div class="mb-2">
                 <div class="d-flex flex-row contrasenha-div">
                     <div class="me-3 w-100">
-                        <label>Contraseña*</label>
+                        <label>Contraseña<span class="text-danger">*</span></label>
                         <input type="password" class="form-control" formControlName="contrasenha" required>
                     </div>
                     <div class="w-100">
-                        <label>Repite la contraseña*</label>
+                        <label>Repite la contraseña<span class="text-danger">*</span></label>
                         <input type="password" class="form-control" formControlName="repiteContrasenha" required>
                     </div>
                 </div>
                 <div *ngIf="registroFormulario.get('contrasenha')?.touched && registroFormulario.get('contrasenha')?.invalid || registroFormulario.get('repiteContrasenha')?.touched && registroFormulario.get('repiteContrasenha')?.invalid" class="text-danger">
-                    <span *ngIf="registroFormulario.get('contrasenha')?.errors?.['required'] || registroFormulario.get('repiteContrasenha')?.errors?.['required']">La contraseña es obligatoria.</span>
-                    <span *ngIf="registroFormulario.get('repiteContrasenha')?.errors?.['noCoincide']">Las contraseñas no coinciden.</span>
+                    <i class="bi bi-exclamation-circle me-1"></i>    
+                    <span *ngIf="registroFormulario.get('contrasenha')?.errors?.['required'] || registroFormulario.get('repiteContrasenha')?.errors?.['required']">La contraseña es obligatoria. </span>
+                    <span *ngIf="registroFormulario.get('repiteContrasenha')?.errors?.['noCoincide']">Las contraseñas no coinciden. </span>
+                    <span *ngIf="registroFormulario.get('contrasenha')?.errors?.['minlength']">La contraseña debe de tener más de 6 caracteres. </span>
                 </div>
             </div>
             <div class="mt-4">
-                <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="registroFormulario.invalid">Crear cuenta</button>
                 <p class="mt-3">Al crear una cuenta declaro haber leído las bases, haber sido informado del tratamiento de mis datos 
                     personales según se describen en la Política de Privacidad de los Medios Digitales y acepto los términos 
                     y condiciones de uso de los Medios Digitales</p>
