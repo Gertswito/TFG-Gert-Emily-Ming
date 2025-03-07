@@ -71,4 +71,48 @@ public class ClienteService {
 
         return jwtTokenUtil.generateToken(usuario.getUsuario(), usuario.getRol());
     }
+
+    public Cliente actualizarCliente(Cliente cliente) {
+        if (cliente.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idRequerido");
+        }
+        
+        Cliente clienteExistente = clienteRepository.findByUsuario(cliente.getUsuario());
+    
+        // Validar que el email y DNI no estén en uso por otro cliente
+        if (!clienteExistente.getEmail().equals(cliente.getEmail()) &&
+            clienteRepository.existsByEmail(cliente.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "emailExiste");
+        }
+    
+        if (!clienteExistente.getDni().equals(cliente.getDni()) &&
+            clienteRepository.existsByDni(cliente.getDni())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "dniExiste");
+        }
+    
+        // Validar que la fecha de nacimiento no sea futura
+        LocalDate fechaHoy = LocalDate.now();
+        if (cliente.getFechaNac().isAfter(fechaHoy)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
+        }
+    
+        // Mantener el rol o asignarlo por defecto
+        if (cliente.getRol() == null) {
+            cliente.setRol(clienteExistente.getRol());
+        }
+    
+        // Mantener la contraseña encriptada si no fue cambiada
+        if (cliente.getContrasenha() != null && !cliente.getContrasenha().equals(clienteExistente.getContrasenha())) {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            cliente.setContrasenha(passwordEncoder.encode(cliente.getContrasenha()));
+        }else {
+            cliente.setContrasenha(clienteExistente.getContrasenha());
+        }
+    
+        // Mantener direcciones y pagos
+        cliente.setDirecciones(clienteExistente.getDirecciones());
+        cliente.setPagos(clienteExistente.getPagos());
+    
+        return clienteRepository.save(cliente);
+    }
 }
