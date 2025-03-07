@@ -3,7 +3,7 @@
         <h1 class="container d-flex align-items-center justify-content-center">Crea una cuenta</h1>
         <form [formGroup]="registroFormulario" (ngSubmit)="comprobarRegistro()" class="d-flex flex-column form justify-content-center container">
             <div class="mb-2">
-                <label>Nombre de usuario<span class="text-danger">*</span></label>
+                <label>Nombre de usuario<span class="text-danger"> *</span></label>
                 <input type="text" class="form-control" formControlName="usuario" required>
                 <div *ngIf="registroFormulario.get('usuario')?.touched && registroFormulario.get('usuario')?.invalid" class="text-danger">
                     <i class="bi bi-exclamation-circle me-1"></i>
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label>Email<span class="text-danger">*</span></label>
+                <label>Email<span class="text-danger"> *</span></label>
                 <input type="email" class="form-control" formControlName="email" required>
                 <div *ngIf="registroFormulario.get('email')?.touched && registroFormulario.get('email')?.invalid" class="text-danger">
                     <i class="bi bi-exclamation-circle me-1"></i>
@@ -26,11 +26,11 @@
             <div class="mb-2">
                 <div class="d-flex flex-row nombre-apellidos-div">
                     <div class="me-3 w-100">
-                        <label>Nombre<span class="text-danger">*</span></label>
+                        <label>Nombre<span class="text-danger"> *</span></label>
                         <input type="text" class="form-control" formControlName="nombre" required>
                     </div>
                     <div class="w-100">
-                        <label>Apellidos<span class="text-danger">*</span></label>
+                        <label>Apellidos<span class="text-danger"> *</span></label>
                         <input type="text" class="form-control" formControlName="apellidos" required>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label>Teléfono<span class="text-danger">*</span></label>
+                <label>Teléfono<span class="text-danger"> *</span></label>
                 <input type="text" class="form-control" formControlName="telefono" placeholder="Ej: 600111222" required pattern="\d{9}">
                 <div *ngIf="registroFormulario.get('telefono')?.touched && registroFormulario.get('telefono')?.invalid" class="text-danger">
                     <i class="bi bi-exclamation-circle me-1"></i>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label for="">Tipo de documento<span class="text-danger">*</span></label>
+                <label for="">Tipo de documento<span class="text-danger"> *</span></label>
                 <div class="d-flex flex-row">
                     <select name="tipoDoc" class="form-control w-25 me-2" formControlName="tipoDoc" required>
                         <option value="dni">DNI</option>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label>Fecha de nacimiento<span class="text-danger">*</span></label>
+                <label>Fecha de nacimiento<span class="text-danger"> *</span></label>
                 <input type="date" class="form-control" formControlName="fechaNac" required>
                 <div *ngIf="registroFormulario.get('fechaNac')?.touched && registroFormulario.get('fechaNac')?.invalid" class="text-danger">
                     <i class="bi bi-exclamation-circle me-1"></i>
@@ -83,11 +83,11 @@
             <div class="mb-2">
                 <div class="d-flex flex-row contrasenha-div">
                     <div class="me-3 w-100">
-                        <label>Contraseña<span class="text-danger">*</span></label>
+                        <label>Contraseña<span class="text-danger"> *</span></label>
                         <input type="password" class="form-control" formControlName="contrasenha" required>
                     </div>
                     <div class="w-100">
-                        <label>Repite la contraseña<span class="text-danger">*</span></label>
+                        <label>Repite la contraseña<span class="text-danger"> *</span></label>
                         <input type="password" class="form-control" formControlName="repiteContrasenha" required>
                     </div>
                 </div>
