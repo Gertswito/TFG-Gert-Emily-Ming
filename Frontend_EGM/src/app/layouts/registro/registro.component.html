@@ -6,17 +6,20 @@
                 <label>Nombre de usuario<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="usuario" required>
                 <div *ngIf="registroFormulario.get('usuario')?.touched && registroFormulario.get('usuario')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('usuario')?.errors?.['required']">El nombre de usuario es obligatorio. </span>
                     <span *ngIf="registroFormulario.get('usuario')?.errors?.['nombreUsuarioExiste']">Este nombre de usuario ya está en uso. </span>
+                    <span *ngIf="registroFormulario.get('usuario')?.errors?.['maxlength']">El nombre de usuario debe de tener menos de 50 caracteres. </span>
                 </div>
             </div>
             <div class="mb-2">
                 <label>Email<span class="text-danger">*</span></label>
                 <input type="email" class="form-control" formControlName="email" required>
                 <div *ngIf="registroFormulario.get('email')?.touched && registroFormulario.get('email')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('email')?.errors?.['required']">El email es obligatorio. </span>
                     <span *ngIf="registroFormulario.get('email')?.errors?.['email']">Introduce un email válido. </span>
-                    <span *ngIf="registroFormulario.get('email')?.errors?.['maxlength']">Máximo 100 caracteres. </span>
+                    <span *ngIf="registroFormulario.get('email')?.errors?.['maxlength']">El email debe de tener un máximo de 100 caracteres. </span>
                     <span *ngIf="registroFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado. </span>
                 </div>
             </div>
@@ -32,6 +35,7 @@
                     </div>
                 </div>
                 <div *ngIf="registroFormulario.get('nombre')?.touched && registroFormulario.get('nombre')?.invalid || registroFormulario.get('apellidos')?.touched && registroFormulario.get('apellidos')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('nombre')?.errors?.['required']">El nombre es obligatorio. </span>
                     <span *ngIf="registroFormulario.get('nombre')?.errors?.['maxlength']">El nombre debe tener como máximo 50 caracteres. </span>
                     <span *ngIf="registroFormulario.get('apellidos')?.errors?.['required']">Los apellidos son obligatorios. </span>
@@ -42,8 +46,9 @@
                 <label>Teléfono<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="telefono" placeholder="Ej: 600111222" required pattern="\d{9}">
                 <div *ngIf="registroFormulario.get('telefono')?.touched && registroFormulario.get('telefono')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('telefono')?.errors?.['required']">El teléfono es obligatorio. </span>
-                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['pattern']">Debe ser un número de 9 dígitos. </span>
+                    <span *ngIf="registroFormulario.get('telefono')?.errors?.['pattern']">El teléfono debe de ser de 9 dígitos. </span>
                 </div>
             </div>
             <div class="mb-2">
@@ -56,11 +61,13 @@
                     <input type="text" class="form-control" formControlName="dni" required>
                 </div>
                 <div *ngIf="registroFormulario.get('dni')?.touched && registroFormulario.get('dni')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('dni')?.errors?.['required']">El documento de identidad es obligatorio. </span>
                     <span *ngIf="registroFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado. </span>
                     <span *ngIf="registroFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto. </span>
                 </div>
                 <div *ngIf="registroFormulario.get('tipoDoc')?.touched && registroFormulario.get('tipoDoc')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('tipoDoc')?.errors?.['required']">Por favor seleccione un tipo de documentación. </span>
                 </div>
             </div>
@@ -68,6 +75,7 @@
                 <label>Fecha de nacimiento<span class="text-danger">*</span></label>
                 <input type="date" class="form-control" formControlName="fechaNac" required>
                 <div *ngIf="registroFormulario.get('fechaNac')?.touched && registroFormulario.get('fechaNac')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
                     <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['required']">La fecha de nacimiento es obligatoria. </span>
                     <span *ngIf="registroFormulario.get('fechaNac')?.errors?.['fechaInvalida']">La fecha no puede ser en el futuro. </span>
                 </div>
@@ -84,6 +92,7 @@
                     </div>
                 </div>
                 <div *ngIf="registroFormulario.get('contrasenha')?.touched && registroFormulario.get('contrasenha')?.invalid || registroFormulario.get('repiteContrasenha')?.touched && registroFormulario.get('repiteContrasenha')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>    
                     <span *ngIf="registroFormulario.get('contrasenha')?.errors?.['required'] || registroFormulario.get('repiteContrasenha')?.errors?.['required']">La contraseña es obligatoria. </span>
                     <span *ngIf="registroFormulario.get('repiteContrasenha')?.errors?.['noCoincide']">Las contraseñas no coinciden. </span>
                     <span *ngIf="registroFormulario.get('contrasenha')?.errors?.['minlength']">La contraseña debe de tener más de 6 caracteres. </span>
