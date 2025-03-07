@@ -58,4 +58,16 @@ public class ClienteController {
         response.put("token", token);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/clientes/update")
+    public ResponseEntity<Cliente> actualizarCliente(@RequestBody Cliente cliente) throws URISyntaxException {
+        try {
+            Cliente clienteActualizado = clienteService.actualizarCliente(cliente);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
