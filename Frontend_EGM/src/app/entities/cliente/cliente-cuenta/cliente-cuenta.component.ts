@@ -10,7 +10,7 @@ import { ClienteService } from '../cliente.service';
   selector: 'cliente',
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './cliente-cuenta.component.html',
-  styleUrls: ['../../entities.css'],
+  styleUrls: ['./cliente-cuenta.component.css'],
 })
 export class ClienteCuentaComponent implements OnInit {
   isLoggedIn: boolean = false;
