@@ -1,5 +1,5 @@
 <div class="body-entidades">
-    <h1 class="titulo">Subcategorías</h1>
+    <h1 class="titulo">{{nombreCategoria}}</h1>
 
     @if (subcategoriaList.length > 0) {
         <table class="table table-striped table-bordered">
@@ -16,11 +16,11 @@
                     <tr>
                         <td>{{subcategoria.id}}</td>
                         @if (subcategoria.imagenSubcategoria != null) {
-                            <td><img class="imagen-productos" [src]="subcategoria.imagenSubcategoria" alt=""></td>
+                            <td><img class="imagen-subcategoria" [src]="subcategoria.imagenSubcategoria" alt=""></td>
                         } @else {
                             <td>Sin imagen</td>
                         }
-                        <td>{{subcategoria.nombre}}</td>
+                        <td><a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre}">{{ subcategoria.nombre }}</a></td>
                         @if (subcategoria.categoria != null) {
                             <td>{{subcategoria.categoria.nombre}}</td>
                         } @else {

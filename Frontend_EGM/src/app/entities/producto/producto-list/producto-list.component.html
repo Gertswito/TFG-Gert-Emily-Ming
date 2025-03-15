@@ -1,0 +1,27 @@
+<div class="body-entidades">
+    <h1 class="titulo">{{nombreSubcategoria}}</h1>
+  
+    @if (productoList.length > 0) {
+        <div class="cards-productos">
+            <ng-container *ngFor="let producto of productoList">
+                <div class="card-producto categoria-{{producto.categoria?.id}}">
+                    <img [src]="producto.urlImagen" alt="" class="imagen-productos">
+                    <div><span>ID:</span> {{producto.id}}</div>
+                    <div><span>Referencia:</span> {{producto.referencia}}</div>
+                    <div><span>Nombre:</span> {{producto.nombre}}</div>
+                    <div><span>Marca:</span> {{producto.marca}}</div>
+                    <div><span>Categoría:</span> {{producto.categoria?.nombre}}</div>
+                    <div><span>Subcategoría:</span> {{producto.subcategoria?.nombre}}</div>
+                    <div><span>Descripción:</span> {{producto.descripcion}}</div>
+                    <div><span>Ingredientes:</span> {{producto.ingredientes}}</div>
+                    <div><span>IVA:</span> {{producto.tipoIVA}}</div>
+                    <div><span>Cantidad:</span> {{producto.cantidad}}</div>
+                    <div><span>Stock:</span> {{producto.stock}}</div>
+                    <div><span>Precio:</span> {{producto.precio}}</div>
+                </div>
+            </ng-container>
+        </div>
+    } @else {
+        <p>NADA</p>
+    }
+  </div>
