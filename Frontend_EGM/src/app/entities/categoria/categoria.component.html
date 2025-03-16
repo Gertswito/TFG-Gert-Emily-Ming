@@ -7,6 +7,7 @@
                 <tr class="table-primary">
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -14,6 +15,14 @@
                     <tr>
                         <td>{{categoria.id}}</td>
                         <td>{{categoria.nombre}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="editarCategoria(categoria)" title="Editar Categoría">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" (click)="eliminarCategoria(categoria)" title="Eliminar Categoría">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>
