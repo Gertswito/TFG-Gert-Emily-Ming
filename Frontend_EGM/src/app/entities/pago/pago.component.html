@@ -10,6 +10,7 @@
                     <th>Fecha de caducidad</th>
                     <th>CVV</th>
                     <th>Cliente</th>
+                    <th>Accion</th> <!-- Añadir columna para los botones -->
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,14 @@
                         <td>{{pago.fechaCaducidad}}</td>
                         <td>{{pago.cvv}}</td>
                         <td>{{pago.cliente?.usuario}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="editarPago(pago)" title="Editar Pago">
+                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                            </button>
+                            <button class="btn btn-danger" (click)="eliminarPago(pago)" title="Eliminar Pago">
+                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                            </button>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>

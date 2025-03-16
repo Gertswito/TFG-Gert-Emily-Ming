@@ -14,6 +14,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductoComponent implements OnInit {
   productoList: IProducto[] = [];
+  editarProducto(producto: any) {
+    // Lógica para editar el producto
+    console.log('Editar Producto:', producto);
+  }
+
+  eliminarProducto(producto: any) {
+    // Lógica para eliminar el producto
+    console.log('Eliminar Producto:', producto);
+  }
+
 
   private productoService = inject(ProductoService);
   private route = inject(ActivatedRoute);

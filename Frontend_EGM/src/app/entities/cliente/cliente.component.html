@@ -14,6 +14,7 @@
                     <th>Teléfono</th>
                     <th>Fecha de nacimiento</th>
                     <th>Rol</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,14 @@
                         <td>{{cliente.telefono}}</td>
                         <td>{{cliente.fechaNac | date: 'dd/MM/yyyy'}}</td>
                         <td>{{cliente.rol}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="editarCliente(cliente)" title="Editar Cliente">
+                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                            </button>
+                            <button class="btn btn-danger" (click)="eliminarCliente(cliente)" title="Eliminar Cliente">
+                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                            </button>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>

@@ -11,6 +11,7 @@
                     <th>Localidad</th>
                     <th>Comunidad autónoma</th>
                     <th>Cliente</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +23,15 @@
                         <td>{{direccion.localidad}}</td>
                         <td>{{direccion.comunidadAutonoma}}</td>
                         <td>{{direccion.cliente?.usuario}}</td>
+                        <td>
+                          <button class="btn btn-primary" (click)="editarDireccion(direccion)" title="Editar Dirección">
+                            <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                        </button>
+                        <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
+                            <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                        </button>
+                      </td>
+
                     </tr>
                 </ng-container>
             </tbody>

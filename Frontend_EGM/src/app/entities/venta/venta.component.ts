@@ -14,6 +14,21 @@ import { CommonModule } from '@angular/common';
 export class VentaComponent implements OnInit {
   ventaList: IVenta[] = [];
 
+  editarVenta(venta: any) {
+    // Lógica para editar la venta
+    console.log('Editar Venta:', venta);
+  }
+
+  eliminarVenta(venta: any) {
+    // Lógica para eliminar la venta
+    console.log('Eliminar Venta:', venta);
+  }
+
+  verLineasVenta(venta: any) {
+    // Lógica para ver las líneas de venta
+    console.log('Ver Líneas de Venta:', venta);
+  }
+
   private ventaService = inject(VentaService);
 
   ngOnInit(): void {

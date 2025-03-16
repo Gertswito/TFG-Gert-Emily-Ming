@@ -13,14 +13,14 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriaComponent implements OnInit {
   categoriaList: ICategoria[] = [];
-  editarCategoria(categoria: any) {
+  editarCategoria(Categoria: any) {
     // Lógica para editar la categoría
-    console.log('Editar categoría:', categoria);
+    console.log('Editar Categoría:', Categoria);
   }
 
-  eliminarCategoria(categoria: any) {
+  eliminarCategoria(Categoria: any) {
     // Lógica para eliminar la categoría
-    console.log('Eliminar categoría:', categoria);
+    console.log('Eliminar Categoría:', Categoria);
   }
 
   private categoriaService = inject(CategoriaService);

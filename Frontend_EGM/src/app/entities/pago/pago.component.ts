@@ -14,6 +14,16 @@ import { CommonModule } from '@angular/common';
 export class PagoComponent implements OnInit {
   pagoList: IPago[] = [];
 
+  editarPago(pago: any) {
+    // Lógica para editar el pago
+    console.log('Editar Pago:', pago);
+  }
+
+  eliminarPago(pago: any) {
+    // Lógica para eliminar el pago
+    console.log('Eliminar Pago:', pago);
+  }
+
   private pagoService = inject(PagoService);
 
   ngOnInit(): void {

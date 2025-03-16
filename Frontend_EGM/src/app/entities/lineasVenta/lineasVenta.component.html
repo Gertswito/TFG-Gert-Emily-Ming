@@ -11,6 +11,7 @@
                     <th>Cantidad pedida</th>
                     <th>Precio unitario</th>
                     <th>Precio total</th>
+                    <th>Accion</th> <!-- Añadir columna para los botones -->
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +23,14 @@
                         <td>{{lineaVenta.cantidadPedida}}</td>
                         <td>{{lineaVenta.precioUnitario}}</td>
                         <td>{{lineaVenta.precioTotal}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="editarLineaVenta(lineaVenta)" title="Editar Línea de Venta">
+                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                            </button>
+                            <button class="btn btn-danger" (click)="eliminarLineaVenta(lineaVenta)" title="Eliminar Línea de Venta">
+                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                            </button>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>
