@@ -24,14 +24,15 @@
                         <td>{{direccion.comunidadAutonoma}}</td>
                         <td>{{direccion.cliente?.usuario}}</td>
                         <td>
-                          <button class="btn btn-primary" (click)="editarDireccion(direccion)" title="Editar Dirección">
-                            <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                        </button>
-                        <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
-                            <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                        </button>
-                      </td>
-
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarDireccion(direccion)" title="Editar Dirección">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>

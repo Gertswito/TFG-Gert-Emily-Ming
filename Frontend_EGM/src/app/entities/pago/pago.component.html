@@ -22,12 +22,14 @@
                         <td>{{pago.cvv}}</td>
                         <td>{{pago.cliente?.usuario}}</td>
                         <td>
-                            <button class="btn btn-primary" (click)="editarPago(pago)" title="Editar Pago">
-                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                            </button>
-                            <button class="btn btn-danger" (click)="eliminarPago(pago)" title="Eliminar Pago">
-                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                            </button>
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarPago(pago)" title="Editar Pago">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarPago(pago)" title="Eliminar Pago">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>

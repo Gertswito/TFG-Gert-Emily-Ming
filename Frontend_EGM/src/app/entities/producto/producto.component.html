@@ -41,12 +41,14 @@
                         <td>{{producto.stock}}</td>
                         <td>{{producto.precio}}</td>
                         <td>
-                            <button class="btn btn-primary" (click)="editarProducto(producto)" title="Editar Producto">
-                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                            </button>
-                            <button class="btn btn-danger" (click)="eliminarProducto(producto)" title="Eliminar Producto">
-                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                            </button>
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarProducto(producto)" title="Editar Producto">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarProducto(producto)" title="Eliminar Producto">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>

@@ -30,12 +30,14 @@
                         <td>{{cliente.fechaNac | date: 'dd/MM/yyyy'}}</td>
                         <td>{{cliente.rol}}</td>
                         <td>
-                            <button class="btn btn-primary" (click)="editarCliente(cliente)" title="Editar Cliente">
-                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                            </button>
-                            <button class="btn btn-danger" (click)="eliminarCliente(cliente)" title="Eliminar Cliente">
-                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                            </button>
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarCliente(cliente)" title="Editar Cliente">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarCliente(cliente)" title="Eliminar Cliente">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>

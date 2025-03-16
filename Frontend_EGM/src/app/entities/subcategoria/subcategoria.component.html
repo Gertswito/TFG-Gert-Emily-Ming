@@ -28,12 +28,14 @@
                             <ng-template #sinCategoria>Sin categoría</ng-template>
                         </td>
                         <td>
-                            <button class="btn btn-primary" (click)="editarSubcategoria(subcategoria)" title="Editar Subcategoría">
-                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                            </button>
-                            <button class="btn btn-danger" (click)="eliminarSubcategoria(subcategoria)" title="Eliminar Subcategoría">
-                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                            </button>
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarSubcategoria(subcategoria)" title="Editar Subcategoría">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarSubcategoria(subcategoria)" title="Eliminar Subcategoría">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>

@@ -22,15 +22,17 @@
                         <td>{{venta.hora}}</td>
                         <td>{{venta.precioFinal}}</td>
                         <td>
-                            <button class="btn btn-primary" (click)="editarVenta(venta)" title="Editar Venta">
-                                <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                            </button>
-                            <button class="btn btn-danger" (click)="eliminarVenta(venta)" title="Eliminar Venta">
-                                <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                            </button>
-                            <button class="btn btn-primary" (click)="verLineasVenta(venta)" title="Ver Lineas de Venta">
-                                <i class="bi bi-eye"></i> <!-- Icono de ver -->
-                            </button>
+                            <div class="botones-accion">
+                                <button class="btn btn-success me-2" (click)="verLineasVenta(venta)" title="Ver Lineas de Venta">
+                                    <i class="bi bi-eye"></i> <!-- Icono de ver -->
+                                </button>
+                                <button class="btn btn-primary me-2" (click)="editarVenta(venta)" title="Editar Venta">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarVenta(venta)" title="Eliminar Venta">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </ng-container>
