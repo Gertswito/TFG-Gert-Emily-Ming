@@ -15,6 +15,16 @@ import { ActivatedRoute } from '@angular/router';
 export class SubcategoriaComponent implements OnInit {
   subcategoriaList: ISubcategoria[] = [];
 
+  editarSubcategoria(subcategoria: any) {
+    // Lógica para editar la subcategoría
+    console.log('Editar Subcategoría:', subcategoria);
+  }
+
+  eliminarSubcategoria(subcategoria: any) {
+    // Lógica para eliminar la subcategoría
+    console.log('Eliminar Subcategoría:', subcategoria);
+  }
+
   private subcategoriaService = inject(SubcategoriaService);
   private route = inject(ActivatedRoute);
 

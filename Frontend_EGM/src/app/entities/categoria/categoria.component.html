@@ -7,6 +7,7 @@
                 <tr class="table-primary">
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -14,6 +15,16 @@
                     <tr>
                         <td>{{categoria.id}}</td>
                         <td>{{categoria.nombre}}</td>
+                        <td>
+                            <div class="botones-accion">
+                                <button class="btn btn-primary me-2" (click)="editarCategoria(categoria)" title="Editar Categoría">
+                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                </button>
+                                <button class="btn btn-danger" (click)="eliminarCategoria(categoria)" title="Eliminar Categoría">
+                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>

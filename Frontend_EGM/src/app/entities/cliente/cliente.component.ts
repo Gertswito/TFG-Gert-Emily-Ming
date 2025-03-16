@@ -13,6 +13,13 @@ import { CommonModule } from '@angular/common';
 })
 export class ClienteComponent implements OnInit {
   clienteList: ICliente[] = [];
+  editarCliente(Cliente: any) {
+    console.log('Editar Cliente:', Cliente);
+  }
+
+  eliminarCliente(Cliente: any) {
+    console.log('Eliminar Cliente:', Cliente);
+  }
 
   private clienteService = inject(ClienteService);
 

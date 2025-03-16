@@ -13,6 +13,15 @@ import { CommonModule } from '@angular/common';
 })
 export class LineasVentaComponent implements OnInit {
   lineasVentaList: ILineasVenta[] = [];
+  editarLineaVenta(lineaVenta: any) {
+    // Lógica para editar la línea de venta
+    console.log('Editar Línea de Venta:', lineaVenta);
+  }
+
+  eliminarLineaVenta(lineaVenta: any) {
+    // Lógica para eliminar la línea de venta
+    console.log('Eliminar Línea de Venta:', lineaVenta);
+  }
 
   private lineasVentaService = inject(LineasVentaService);
 
