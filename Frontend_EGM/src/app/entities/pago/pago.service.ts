@@ -13,4 +13,20 @@ export class PagoService {
   getAllPagos(): Observable<IPago[]> {
     return this.http.get<IPago[]>(`${this.resourceUrl}/all`);
   }
+
+  getPagosByCliente(user: string): Observable<IPago[]> {
+    return this.http.get<IPago[]>(`${this.resourceUrl}/cliente/${user}`);
+  }
+
+  createPago(user: string, pago: IPago): Observable<IPago> {
+    return this.http.post<IPago>(`${this.resourceUrl}/new/${user}`, pago);
+  }
+
+  updatePago(id: number, pago: IPago): Observable<IPago> {
+    return this.http.put<IPago>(`${this.resourceUrl}/update/${id}`, pago);
+  }
+
+  deletePago(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
+  }
 }
