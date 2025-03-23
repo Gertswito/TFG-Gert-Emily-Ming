@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{pago.id}}</td>
                         <td>{{pago.numeroTarjeta}}</td>
-                        <td>{{pago.fechaCaducidad}}</td>
+                        <td>{{pago.fechaCaducidad | date:'MM/yyyy' }}</td>
                         <td>{{pago.cvv}}</td>
                         <td>{{pago.cliente?.usuario}}</td>
                         <td>

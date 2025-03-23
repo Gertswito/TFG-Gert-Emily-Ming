@@ -44,10 +44,6 @@ public class DireccionService {
     }
     
     public void deleteDireccion(Long id) {
-        direccionRepository.deleteById(id);
-    }
-    
-    public void deleteDireccion(Long id) {
         if (!direccionRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste");
         }

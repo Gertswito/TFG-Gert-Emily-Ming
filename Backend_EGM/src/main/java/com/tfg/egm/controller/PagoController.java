@@ -52,12 +52,6 @@ public class PagoController {
         pagoService.actualizarPago(id, pago);
         return ResponseEntity.ok(pago);
     }
-
-    @DeleteMapping("/pagos/delete/{id}")
-    public ResponseEntity<Void> eliminarPago(@PathVariable Long id) {
-        pagoService.deletePago(id);
-        return ResponseEntity.noContent().build(); 
-    }
     
     @DeleteMapping("/pagos/delete/{id}")
     public ResponseEntity<Void> deletePago(@PathVariable Long id) {

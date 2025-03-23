@@ -42,12 +42,8 @@ public class PagoService {
             return pagoRepository.save(pago);
         });
     }
-
-    public void deletePago(Long id) {
-        pagoRepository.deleteById(id);
-    }
     
-    public void deletePago2(Long id) {
+    public void deletePago(Long id) {
         if (!pagoRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "pagoNoExiste");
         }

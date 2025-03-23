@@ -55,12 +55,6 @@ public class DireccionController {
         return direccionActualizado.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    @DeleteMapping("/direcciones/delete/{id}")
-    public ResponseEntity<Void> eliminarDireccion(@PathVariable Long id) {
-        direccionService.deleteDireccion(id);
-        return ResponseEntity.noContent().build();
-    }
     
     @DeleteMapping("/direcciones/delete/{id}")
     public ResponseEntity<Void> deleteDireccion(@PathVariable Long id) {
