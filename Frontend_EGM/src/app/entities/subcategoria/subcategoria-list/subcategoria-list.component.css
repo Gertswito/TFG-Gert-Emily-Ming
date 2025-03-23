@@ -1,7 +1,7 @@
 hr {
     opacity: 1;
 }
-  
+
 .titulo {
     text-align: center;
     margin-bottom: 1rem;
@@ -9,7 +9,7 @@ hr {
     font-weight: bold;
     color: #333;
 }
-  
+
 .body-entidades {
     width: 100%;
     height: 100%;
@@ -24,13 +24,58 @@ hr {
     max-width: 10em;
     max-height: 10em;
 }
-  
+
 .imagen-subcategoria {
-    max-width: 10em;
-    max-height: 10em;
-    margin: 0 auto;
+    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+    height: 150px; /* Altura fija para uniformidad */
+    object-fit: contain; /* Ajusta la imagen para que mantenga sus proporciones */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
     display: block;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa; /* Fondo claro para imágenes más pequeñas */
+}
+
+.card {
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el contenido uniformemente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un diseño limpio */
+    padding: 1rem; /* Añade espacio interno para centrar mejor el contenido */
+    text-align: center; /* Centra todo el contenido de la tarjeta */
+}
+
+.card-body {
+    flex-grow: 1; /* Permite que el contenido del cuerpo crezca uniformemente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    text-align: center; /* Centra el texto dentro del cuerpo */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    max-height: 3rem; /* Limita la altura del texto */
+    overflow: hidden; /* Oculta el texto que exceda el límite */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
+}
+
+.card .botones-accion {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.card img {
+    align-self: center; /* Centra la imagen dentro de la tarjeta */
 }
