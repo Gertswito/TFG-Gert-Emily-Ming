@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IProducto } from './producto.model';
-import { ProductoService } from './producto.service';
+import { IProducto } from '../producto.model';
+import { ProductoService } from '../producto.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,21 +9,12 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   selector: 'producto',
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './producto.component.html',
-  styleUrls: ['../entities.css'],
+  templateUrl: './producto-list.component.html',
+  styleUrls: ['./producto-list.component.css'],
 })
-export class ProductoComponent implements OnInit {
+export class ProductoListComponent implements OnInit {
   productoList: IProducto[] = [];
-  editarProducto(producto: any) {
-    // Lógica para editar el producto
-    console.log('Editar Producto:', producto);
-  }
-
-  eliminarProducto(producto: any) {
-    // Lógica para eliminar el producto
-    console.log('Eliminar Producto:', producto);
-  }
-
+  nombreSubcategoria = '';
 
   private productoService = inject(ProductoService);
   private route = inject(ActivatedRoute);
@@ -34,8 +25,10 @@ export class ProductoComponent implements OnInit {
 
       if (id) {
         this.cargarProducttosConId(id);
+        this.nombreSubcategoria = params['nombre'];
       } else {
         this.cargarAllProductos();
+        this.nombreSubcategoria = 'Todos los productos';
       }
     });
   }
@@ -52,3 +45,4 @@ export class ProductoComponent implements OnInit {
     });
   }
 }
+

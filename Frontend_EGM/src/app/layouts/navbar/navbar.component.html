@@ -31,7 +31,7 @@
                 </a>
                 <div ngbDropdownMenu aria-labelledby="categorias">
                     <ng-container *ngFor="let categoria of categorias">
-                        <a ngbDropdownItem [routerLink]="'/subcategoria'" [queryParams]="{ id: categoria.id }">{{ categoria.nombre }}</a>
+                        <a ngbDropdownItem [routerLink]="'/subcategoria-list'" [queryParams]="{ id: categoria.id, nombre: categoria.nombre }">{{ categoria.nombre }}</a>
                     </ng-container>
                 </div>
             </div>

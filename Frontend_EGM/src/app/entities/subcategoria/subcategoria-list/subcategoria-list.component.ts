@@ -1,29 +1,21 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ISubcategoria } from './subcategoria.model';
-import { SubcategoriaService } from './subcategoria.service';
+import { ISubcategoria } from '../subcategoria.model';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { SubcategoriaService } from '../subcategoria.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'subcategoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  templateUrl: './subcategoria.component.html',
-  styleUrls: ['../entities.css'],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  templateUrl: './subcategoria-list.component.html',
+  styleUrls: ['./subcategoria-list.component.css'],
 })
-export class SubcategoriaComponent implements OnInit {
+export class SubcategoriaListComponent implements OnInit {
   subcategoriaList: ISubcategoria[] = [];
-
-  editarSubcategoria(subcategoria: any) {
-    // Lógica para editar la subcategoría
-    console.log('Editar Subcategoría:', subcategoria);
-  }
-
-  eliminarSubcategoria(subcategoria: any) {
-    // Lógica para eliminar la subcategoría
-    console.log('Eliminar Subcategoría:', subcategoria);
-  }
+  nombreCategoria = '';
 
   private subcategoriaService = inject(SubcategoriaService);
   private route = inject(ActivatedRoute);
@@ -34,8 +26,10 @@ export class SubcategoriaComponent implements OnInit {
 
       if (id) {
         this.cargarSubcategoriasConId(id);
+        this.nombreCategoria = params['nombre'];
       } else {
         this.cargarAllSubcategorias();
+        this.nombreCategoria = 'Todas las subcategorias';
       }
     });
   }

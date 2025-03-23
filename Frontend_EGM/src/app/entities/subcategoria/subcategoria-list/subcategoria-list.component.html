@@ -1,0 +1,28 @@
+<div class="body-entidades">
+    <h1 class="titulo">{{nombreCategoria}}</h1>
+
+    <div *ngIf="subcategoriaList.length > 0; else noSubcategorias">
+        <div class="row">
+            <ng-container *ngFor="let subcategoria of subcategoriaList">
+                <div class="col-md-4 mb-4">
+                    <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }">
+                        <div class="card">
+                            <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="Imagen de Subcategoría">
+                            <ng-template #sinImagen>
+                                <div class="card-img-top text-center py-5 bg-light">Sin imagen</div>
+                            </ng-template>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                        {{ subcategoria.nombre }}
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <ng-template #noSubcategorias>
+        <p>No hay subcategorías disponibles.</p>
+    </ng-template>
+</div>

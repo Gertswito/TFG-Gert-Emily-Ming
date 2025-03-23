@@ -13,6 +13,17 @@ import { CommonModule } from '@angular/common';
 })
 export class DireccionComponent implements OnInit {
   direccionList: IDireccion[] = [];
+  editarDireccion(direccion: any) {
+    // Lógica para editar la dirección
+    console.log('Editar dirección:', direccion);
+  }
+
+  eliminarDireccion(direccion: any) {
+    // Lógica para eliminar la dirección
+    console.log('Eliminar dirección:', direccion);
+  }
+
+
 
   private direccionService = inject(DireccionService);
 

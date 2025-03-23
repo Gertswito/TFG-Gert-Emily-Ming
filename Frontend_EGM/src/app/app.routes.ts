@@ -16,18 +16,22 @@ import { ErrorComponent } from './error/error.component';
 import { ClienteAjustesComponent } from './entities/cliente/cliente-ajustes/cliente-ajustes.component';
 import { ClienteCuentaComponent } from './entities/cliente/cliente-cuenta/cliente-cuenta.component';
 import { CarritoComponent } from './layouts/carrito/carrito.component';
+import { ProductoListComponent } from './entities/producto/producto-list/producto-list.component';
+import { SubcategoriaListComponent } from './entities/subcategoria/subcategoria-list/subcategoria-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'categoria', component: CategoriaComponent },
     { path: 'subcategoria', component: SubcategoriaComponent },
+    { path: 'subcategoria-list', component: SubcategoriaListComponent },
     { path: 'cliente', component: ClienteComponent },
     { path: 'cliente-ajustes', component: ClienteAjustesComponent },
     { path: 'cliente-cuenta', component: ClienteCuentaComponent },
     { path: 'direccion', component: DireccionComponent },
     { path: 'pago', component: PagoComponent },
     { path: 'producto', component: ProductoComponent },
+    { path: 'producto-list', component: ProductoListComponent },
     { path: 'lineasVenta', component: LineasVentaComponent },
     { path: 'venta', component: VentaComponent},
     { path: 'login', component: LoginComponent },
