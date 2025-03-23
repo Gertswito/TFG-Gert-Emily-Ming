@@ -31,11 +31,11 @@ public class DireccionService {
 
     public Optional<Direccion> actualizarDireccion(Long id, Direccion nuevaDireccion) {
         return direccionRepository.findById(id).map(direccion -> {
-            direccion.setDireccion(nuevaDireccion.getDireccion()); // Actualiza la dirección
-            direccion.setLocalidad(nuevaDireccion.getLocalidad()); // Actualiza la localidad
-            direccion.setCodigoPostal(nuevaDireccion.getCodigoPostal()); // Actualiza el código postal
-            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma()); // Actualiza la comunidad autónoma
-            return direccionRepository.save(direccion); // Guarda la dirección actualizada
+            direccion.setDireccion(nuevaDireccion.getDireccion()); 
+            direccion.setLocalidad(nuevaDireccion.getLocalidad()); 
+            direccion.setCodigoPostal(nuevaDireccion.getCodigoPostal()); 
+            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma()); 
+            return direccionRepository.save(direccion); 
         });
     }
     

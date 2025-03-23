@@ -32,10 +32,10 @@ public class PagoService {
     
     public Optional<Pago> actualizarPago(Long id, Pago nuevoPago) {
         return pagoRepository.findById(id).map(pago -> {
-            pago.setCvv(nuevoPago.getCvv()); // Actualiza el CVV
-            pago.setNumeroTarjeta(nuevoPago.getNumeroTarjeta()); // Actualiza el número de tarjeta
-            pago.setFechaCaducidad(nuevoPago.getFechaCaducidad()); // Actualiza la fecha de caducidad
-            return pagoRepository.save(pago); // Guarda el pago actualizado
+            pago.setCvv(nuevoPago.getCvv()); 
+            pago.setNumeroTarjeta(nuevoPago.getNumeroTarjeta());
+            pago.setFechaCaducidad(nuevoPago.getFechaCaducidad()); 
+            return pagoRepository.save(pago);
         });
     }
 

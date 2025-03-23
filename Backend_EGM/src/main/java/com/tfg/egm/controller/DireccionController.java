@@ -34,12 +34,12 @@ public class DireccionController {
     }
 
     @GetMapping("/direcciones/cliente/{user}")
-    public List<Direccion> obtenerDirecciones(@PathVariable String user) {
+    public List<Direccion> obtenerDireccionesPorCliente(@PathVariable String user) {
         return direccionService.obtenerDirecciones(clienteService.obtenerClientePorUsuario(user));
     }
 
     @PostMapping("/direcciones/new/{user}")
-    public ResponseEntity<Direccion> crearProducto(@PathVariable String user, @RequestBody Direccion direccion) {
+    public ResponseEntity<Direccion> crearDireccion(@PathVariable String user, @RequestBody Direccion direccion) {
         Cliente cliente = clienteService.obtenerClientePorUsuario(user);
         direccion.setCliente(cliente);
         Direccion nuevaDireccion = direccionService.save(direccion);
@@ -47,7 +47,7 @@ public class DireccionController {
     }
 
     @PutMapping("/direcciones/update/{id}")
-    public ResponseEntity<Direccion> actualizarProducto(@PathVariable Long id, @RequestBody Direccion direccion) {
+    public ResponseEntity<Direccion> actualizarDireccion(@PathVariable Long id, @RequestBody Direccion direccion) {
         Optional<Direccion> direccionActualizado = direccionService.actualizarDireccion(id, direccion);
         return direccionActualizado.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -56,6 +56,6 @@ public class DireccionController {
     @DeleteMapping("/direcciones/delete/{id}")
     public ResponseEntity<Void> eliminarDireccion(@PathVariable Long id) {
         direccionService.deleteDireccion(id);
-        return ResponseEntity.noContent().build(); // Devuelve un código 204 (sin contenido)
+        return ResponseEntity.noContent().build();
     }
 }

@@ -33,7 +33,7 @@ public class PagoController {
     }
 
     @GetMapping("/pagos/cliente/{user}")
-    public List<Pago> obtenerPagos(@PathVariable String user) {
+    public List<Pago> obtenerPagosPorCliente(@PathVariable String user) {
         return pagoService.obtenerPagos(clienteService.obtenerClientePorUsuario(user));
     }
 
@@ -54,6 +54,6 @@ public class PagoController {
     @DeleteMapping("/pagos/delete/{id}")
     public ResponseEntity<Void> eliminarPago(@PathVariable Long id) {
         pagoService.deletePago(id);
-        return ResponseEntity.noContent().build(); // Devuelve un código 204 (sin contenido)
+        return ResponseEntity.noContent().build(); 
     }
 }
