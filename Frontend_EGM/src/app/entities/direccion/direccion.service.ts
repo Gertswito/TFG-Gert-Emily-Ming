@@ -14,6 +14,22 @@ export class DireccionService {
     return this.http.get<IDireccion[]>(`${this.resourceUrl}/all`);
   }
 
+  getDireccionesPorCliente(user: string): Observable<IDireccion[]> {
+    return this.http.get<IDireccion[]>(`${this.resourceUrl}/cliente/${user}`);
+  }
+
+  createDireccion(user: string,direccion: IDireccion): Observable<IDireccion> {
+    return this.http.post<IDireccion>(`${this.resourceUrl}/new/${user}`, direccion);
+  }
+  
+  updateDireccion(id: number, direccion: IDireccion): Observable<IDireccion> {
+    return this.http.put<IDireccion>(`${this.resourceUrl}/update/${id}`, direccion);
+  }
+
+  deleteDireccion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
+  }
+
   deleteDireccion(id: number): Observable<any> {
     return this.http.delete<IDireccion>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

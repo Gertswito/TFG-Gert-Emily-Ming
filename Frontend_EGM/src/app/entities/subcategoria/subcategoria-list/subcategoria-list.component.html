@@ -1,36 +1,28 @@
 <div class="body-entidades">
     <h1 class="titulo">{{nombreCategoria}}</h1>
 
-    @if (subcategoriaList.length > 0) {
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>ID</th>
-                    <th>Imagen</th>
-                    <th>Subcategoría</th>
-                    <th>Categoría pertinente</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let subcategoria of subcategoriaList">
-                    <tr>
-                        <td>{{subcategoria.id}}</td>
-                        @if (subcategoria.imagenSubcategoria != null) {
-                            <td><img class="imagen-subcategoria" [src]="subcategoria.imagenSubcategoria" alt=""></td>
-                        } @else {
-                            <td>Sin imagen</td>
-                        }
-                        <td><a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre}">{{ subcategoria.nombre }}</a></td>
-                        @if (subcategoria.categoria != null) {
-                            <td>{{subcategoria.categoria.nombre}}</td>
-                        } @else {
-                            <td>Sin categoría</td>
-                        }
-                    </tr>
-                </ng-container>
-            </tbody>
-        </table>
-    } @else {
-        <p>NADA</p>
-    }
+    <div *ngIf="subcategoriaList.length > 0; else noSubcategorias">
+        <div class="row">
+            <ng-container *ngFor="let subcategoria of subcategoriaList">
+                <div class="col-md-4 mb-4">
+                    <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }">
+                        <div class="card">
+                            <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="Imagen de Subcategoría">
+                            <ng-template #sinImagen>
+                                <div class="card-img-top text-center py-5 bg-light">Sin imagen</div>
+                            </ng-template>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                        {{ subcategoria.nombre }}
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <ng-template #noSubcategorias>
+        <p>No hay subcategorías disponibles.</p>
+    </ng-template>
 </div>

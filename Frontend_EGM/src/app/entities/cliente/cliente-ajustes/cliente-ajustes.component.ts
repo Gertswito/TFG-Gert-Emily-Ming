@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ClienteService } from '../../cliente/cliente.service';
-import { AuthService } from '../../../auth/auth.service';
-import { ICliente } from '../../cliente/cliente.model';
-import { IDireccion } from '../../direccion/direccion.model';
-import { IPago } from '../../pago/pago.model';
+import { Component, OnInit } from "@angular/core";
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { ClienteService } from "../../cliente/cliente.service";
+import { AuthService } from "../../../auth/auth.service";
+import { ICliente } from "../../cliente/cliente.model";
+import { DireccionAjusteComponent } from "../../direccion/direccion-ajuste/direccion-ajuste.component";
+import { PagoAjusteComponent } from "../../pago/pago-ajuste/pago-ajuste.component";
 
 // Add the password validators function at the top of the file, before the @Component decorator
 function passwordMatchValidator(): ValidatorFn {
@@ -22,10 +22,10 @@ function passwordMatchValidator(): ValidatorFn {
 
 @Component({
   standalone: true,
-  selector: "app-cliente-ajustes", // Cambiado a app-cliente-ajustes para seguir convenciones
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  selector: "app-cliente-ajustes",
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, DireccionAjusteComponent, PagoAjusteComponent],
   templateUrl: "./cliente-ajustes.component.html",
-  styleUrls: ["./cliente-ajustes.component.css"] // Asegúrate de que este archivo existe
+  styleUrls: ["./cliente-ajustes.component.css"],
 })
 export class ClienteAjustesComponent implements OnInit {
   clienteForm: FormGroup
@@ -74,54 +74,7 @@ export class ClienteAjustesComponent implements OnInit {
         },
         { validators: passwordMatchValidator() },
       ),
-      direcciones: this.fb.array([]),
-      pagos: this.fb.array([]),
     })
-  }
-
-  get direccionesFormArray(): FormArray {
-    return this.clienteForm.get("direcciones") as FormArray
-  }
-
-  get pagosFormArray(): FormArray {
-    return this.clienteForm.get("pagos") as FormArray
-  }
-
-  createDireccionFormGroup(): FormGroup {
-    return this.fb.group({
-      id: [null],
-      direccion: [null, Validators.required],
-      codigoPostal: [null, [Validators.required, Validators.pattern("[0-9]{5}")]],
-      localidad: [null, Validators.required],
-      comunidadAutonoma: [null, Validators.required],
-      cliente: [null],
-    })
-  }
-
-  createPagoFormGroup(): FormGroup {
-    return this.fb.group({
-      id: [null],
-      numeroTarjeta: [null, [Validators.required, Validators.pattern("[0-9]{16}")]],
-      fechaCaducidad: [null, Validators.required],
-      cvv: [null, [Validators.required, Validators.pattern("[0-9]{3}")]],
-      cliente: [null],
-    })
-  }
-
-  addDireccion(): void {
-    this.direccionesFormArray.push(this.createDireccionFormGroup())
-  }
-
-  addPago(): void {
-    this.pagosFormArray.push(this.createPagoFormGroup())
-  }
-
-  removeDireccion(index: number): void {
-    this.direccionesFormArray.removeAt(index)
-  }
-
-  removePago(index: number): void {
-    this.pagosFormArray.removeAt(index)
   }
 
   loadClienteData(usuario: string): void {
@@ -161,73 +114,43 @@ export class ClienteAjustesComponent implements OnInit {
       telefono: cliente.telefono,
       fechaNac: cliente.fechaNac ? this.formatDate(cliente.fechaNac) : null,
     })
-
-    // Limpiar arrays de formularios existentes
-    while (this.direccionesFormArray.length) {
-      this.direccionesFormArray.removeAt(0)
-    }
-
-    while (this.pagosFormArray.length) {
-      this.pagosFormArray.removeAt(0)
-    }
-
-    // Añadir direcciones
-    if (cliente.direcciones && cliente.direcciones.length > 0) {
-      cliente.direcciones.forEach((direccion) => {
-        const direccionForm = this.createDireccionFormGroup()
-        direccionForm.patchValue(direccion)
-        this.direccionesFormArray.push(direccionForm)
-      })
-    }
-
-    // Añadir pagos
-    if (cliente.pagos && cliente.pagos.length > 0) {
-      cliente.pagos.forEach((pago) => {
-        const pagoForm = this.createPagoFormGroup()
-        pagoForm.patchValue({
-          ...pago,
-          fechaCaducidad: pago.fechaCaducidad ? this.formatDate(new Date(pago.fechaCaducidad)) : null,
-        })
-        this.pagosFormArray.push(pagoForm)
-      })
-    }
   }
 
   onSubmit(): void {
     if (this.clienteForm.invalid) {
-      this.markFormGroupTouched(this.clienteForm); // Marca los campos para mostrar errores
-      return;
+      this.markFormGroupTouched(this.clienteForm) // Marca los campos para mostrar errores
+      return
     }
-  
-    this.loading = true;
-    this.success = false;
-    this.error = false;
-  
-    const clienteData = this.prepareClienteData();
-  
+
+    this.loading = true
+    this.success = false
+    this.error = false
+
+    const clienteData = this.prepareClienteData()
+
     this.clienteService.updateCliente(clienteData).subscribe({
       next: (response) => {
-        this.loading = false;
-        this.success = true;
+        this.loading = false
+        this.success = true
         // Desplazar al inicio de la página para mostrar el mensaje de éxito
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.clienteForm.get("passwordGroup")?.reset(); // Limpiar los campos de contraseña después del cambio
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        this.clienteForm.get("passwordGroup")?.reset() // Limpiar los campos de contraseña después del cambio
       },
       error: (err) => {
-        this.loading = false;
-        this.error = true;
-        this.errorMessage = err.error?.message || "Error al actualizar los datos.";
+        this.loading = false
+        this.error = true
+        this.errorMessage = err.error?.message || "Error al actualizar los datos."
         // Desplazar al inicio de la página para mostrar el mensaje de error
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" })
       },
-    });
+    })
   }
-  
+
   prepareClienteData(): ICliente {
     if (!this.cliente) {
-      throw new Error("No hay datos del cliente cargados");
+      throw new Error("No hay datos del cliente cargados")
     }
-  
+
     // Crear un nuevo objeto manteniendo las claves de ICliente
     const clienteData: ICliente = {
       ...this.cliente, // Mantiene las claves originales
@@ -237,16 +160,14 @@ export class ClienteAjustesComponent implements OnInit {
       email: this.clienteForm.value.email,
       telefono: this.clienteForm.value.telefono,
       fechaNac: this.clienteForm.value.fechaNac,
-      direcciones: this.clienteForm.value.direcciones || [],
-      pagos: this.clienteForm.value.pagos || [],
-      contrasenha: this.clienteForm.value.passwordGroup?.newPassword 
-        ? this.clienteForm.value.passwordGroup.newPassword 
-        : this.cliente.contrasenha
-    };
-  
-    return clienteData;
+      contrasenha: this.clienteForm.value.passwordGroup?.newPassword
+        ? this.clienteForm.value.passwordGroup.newPassword
+        : this.cliente.contrasenha,
+    }
+
+    return clienteData
   }
-  
+
   // Método auxiliar para formatear fecha para mostrar
   formatDate(date: Date | null): string {
     if (!date) return ""
@@ -276,3 +197,4 @@ export class ClienteAjustesComponent implements OnInit {
     })
   }
 }
+

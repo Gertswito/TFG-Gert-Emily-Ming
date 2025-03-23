@@ -14,7 +14,23 @@ export class PagoService {
     return this.http.get<IPago[]>(`${this.resourceUrl}/all`);
   }
 
-  deletePago(id: number): Observable<any> {
+  getPagosByCliente(user: string): Observable<IPago[]> {
+    return this.http.get<IPago[]>(`${this.resourceUrl}/cliente/${user}`);
+  }
+
+  createPago(user: string, pago: IPago): Observable<IPago> {
+    return this.http.post<IPago>(`${this.resourceUrl}/new/${user}`, pago);
+  }
+
+  updatePago(id: number, pago: IPago): Observable<IPago> {
+    return this.http.put<IPago>(`${this.resourceUrl}/update/${id}`, pago);
+  }
+
+  deletePago(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
+  }
+
+  deletePago2(id: number): Observable<any> {
     return this.http.delete<IPago>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }
 }
