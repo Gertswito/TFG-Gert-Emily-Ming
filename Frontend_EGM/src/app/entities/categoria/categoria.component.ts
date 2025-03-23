@@ -3,6 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ICategoria } from './categoria.model';
 import { CategoriaService } from './categoria.service';
 import { CommonModule } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { filter, tap } from 'rxjs';
+import { CategoriaDeleteComponent } from './categoria-delete/categoria-delete.component';
 
 @Component({
   standalone: true,
@@ -13,21 +17,38 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriaComponent implements OnInit {
   categoriaList: ICategoria[] = [];
-  editarCategoria(Categoria: any) {
-    // Lógica para editar la categoría
-    console.log('Editar Categoría:', Categoria);
-  }
-
-  eliminarCategoria(Categoria: any) {
-    // Lógica para eliminar la categoría
-    console.log('Eliminar Categoría:', Categoria);
-  }
+  errorMessage = '';
 
   private categoriaService = inject(CategoriaService);
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
+    this.cargarCategorias();
+  }
+
+  cargarCategorias() {
     this.categoriaService.getAllCategorias().subscribe((res) => {
       this.categoriaList = res || [];
     });
+  }
+
+  editarCategoria(Categoria: any) {
+    console.log('Editar Categoría:', Categoria);
+  }
+
+  eliminarCategoria(categoria: ICategoria) {
+    const modalRef = this.modalService.open(CategoriaDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.categoria = categoria;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarCategorias()),
+      )
+      .subscribe();
   }
 }

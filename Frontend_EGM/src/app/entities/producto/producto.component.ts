@@ -4,6 +4,10 @@ import { IProducto } from './producto.model';
 import { ProductoService } from './producto.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { filter, tap } from 'rxjs';
+import { ProductoDeleteComponent } from './producto-delete/producto-delete.component';
 
 @Component({
   standalone: true,
@@ -14,41 +18,39 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductoComponent implements OnInit {
   productoList: IProducto[] = [];
-  editarProducto(producto: any) {
-    // Lógica para editar el producto
-    console.log('Editar Producto:', producto);
-  }
-
-  eliminarProducto(producto: any) {
-    // Lógica para eliminar el producto
-    console.log('Eliminar Producto:', producto);
-  }
-
+  errorMessage = '';
 
   private productoService = inject(ProductoService);
-  private route = inject(ActivatedRoute);
+  private modalService = inject(NgbModal);
+
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-
-      if (id) {
-        this.cargarProducttosConId(id);
-      } else {
-        this.cargarAllProductos();
-      }
-    });
+    this.cargarProductos();
   }
 
-  cargarProducttosConId(id: number) {
-    this.productoService.getProductosConIdSubcategoria(id).subscribe((res) => {
-      this.productoList = res || [];
-    });
-  }
-
-  cargarAllProductos() {
+  cargarProductos() {
     this.productoService.getAllProductos().subscribe((res) => {
       this.productoList = res || [];
     });
+  }
+
+  editarProducto(producto: any) {
+    console.log('Editar Producto:', producto);
+  }
+
+  eliminarProducto(producto: IProducto) {
+    const modalRef = this.modalService.open(ProductoDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.producto = producto;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarProductos()),
+      )
+      .subscribe();
   }
 }

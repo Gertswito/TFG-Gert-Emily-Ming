@@ -2,7 +2,11 @@ package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Producto;
 import com.tfg.egm.repository.ProductoRepository;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,5 +25,16 @@ public class ProductoService {
 
     public List<Producto> obtenerProductosConIdSubcategoria(int id) {
         return productoRepository.findBySubcategoriaId(id);
+    }
+    
+    public void deleteProducto(Long id) {
+        if (!productoRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste");
+        }
+        try {
+            productoRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "productoNoSePuedeEliminar", e);
+        }
     }
 }

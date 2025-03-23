@@ -2,7 +2,11 @@ package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.SubcategoriaRepository;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,5 +25,16 @@ public class SubcategoriaService {
 
     public List<Subcategoria> obtenerSubcategoriasConIdCategoria(int id) {
         return subcategoriaRepository.findByCategoriaId(id);
+    }
+
+    public void deleteSubcategoria(Long id) {
+        if (!subcategoriaRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste");
+        }
+                try {
+            subcategoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "subcategoriaNoSePuedeEliminar", e);
+        }
     }
 }

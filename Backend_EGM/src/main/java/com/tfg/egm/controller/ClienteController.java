@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -70,6 +71,16 @@ public class ClienteController {
             return ResponseEntity.ok(clienteActualizado);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/clientes/delete/{id}")
+    public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
+        try {
+            clienteService.deleteCliente(id);
+            return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }

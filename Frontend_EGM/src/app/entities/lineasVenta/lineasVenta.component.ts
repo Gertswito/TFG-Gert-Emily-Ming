@@ -3,6 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ILineasVenta } from './lineasVenta.model';
 import { LineasVentaService } from './lineasVenta.service';
 import { CommonModule } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, tap } from 'rxjs';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { LineasVentaDeleteComponent } from './lineasVenta-delete/lineasVenta-delete.component';
 
 @Component({
   standalone: true,
@@ -13,21 +17,38 @@ import { CommonModule } from '@angular/common';
 })
 export class LineasVentaComponent implements OnInit {
   lineasVentaList: ILineasVenta[] = [];
-  editarLineaVenta(lineaVenta: any) {
-    // Lógica para editar la línea de venta
-    console.log('Editar Línea de Venta:', lineaVenta);
-  }
-
-  eliminarLineaVenta(lineaVenta: any) {
-    // Lógica para eliminar la línea de venta
-    console.log('Eliminar Línea de Venta:', lineaVenta);
-  }
+  errorMessage = '';
 
   private lineasVentaService = inject(LineasVentaService);
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
+    this.cargarLineasVenta();
+  }
+
+  cargarLineasVenta() {
     this.lineasVentaService.getAllLineasVentas().subscribe((res) => {
       this.lineasVentaList = res || [];
     });
+  }
+
+  editarLineaVenta(lineaVenta: any) {
+    console.log('Editar Línea de Venta:', lineaVenta);
+  }
+
+  eliminarLineaVenta(lineaVenta: ILineasVenta) {
+    const modalRef = this.modalService.open(LineasVentaDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.lineaVenta = lineaVenta;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarLineasVenta()),
+      )
+      .subscribe();
   }
 }

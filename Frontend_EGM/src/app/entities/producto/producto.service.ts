@@ -17,4 +17,8 @@ export class ProductoService {
   getProductosConIdSubcategoria(id: number): Observable<IProducto[]> {
     return this.http.get<IProducto[]>(`${this.resourceUrl}/subcategoria/${id}`);
   }
+
+  deleteProducto(id: number): Observable<any> {
+    return this.http.delete<IProducto>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

@@ -31,4 +31,8 @@ export class ClienteService {
   updateCliente(cliente: ICliente): Observable<any> {
     return this.http.put<ICliente>(`${this.resourceUrl}/update`, cliente, { observe: 'response' });
   }
+
+  deleteCliente(id: number): Observable<any> {
+    return this.http.delete<ICliente>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

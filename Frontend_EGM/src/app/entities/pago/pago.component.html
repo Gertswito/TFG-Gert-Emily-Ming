@@ -1,6 +1,8 @@
 <div class="body-entidades">
     <h1 class="titulo">Pagos</h1>
-
+    @if (errorMessage != '') {
+        <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
     @if (pagoList.length > 0) {
         <table class="table table-striped table-bordered">
             <thead>
@@ -10,7 +12,7 @@
                     <th>Fecha de caducidad</th>
                     <th>CVV</th>
                     <th>Cliente</th>
-                    <th>Accion</th> <!-- Añadir columna para los botones -->
+                    <th>Accion</th> 
                 </tr>
             </thead>
             <tbody>
@@ -24,10 +26,10 @@
                         <td>
                             <div class="botones-accion">
                                 <button class="btn btn-primary me-2" (click)="editarPago(pago)" title="Editar Pago">
-                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
+                                    <i class="bi bi-pencil"></i> 
                                 </button>
                                 <button class="btn btn-danger" (click)="eliminarPago(pago)" title="Eliminar Pago">
-                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                    <i class="bi bi-trash"></i> 
                                 </button>
                             </div>
                         </td>

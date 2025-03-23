@@ -17,4 +17,8 @@ export class SubcategoriaService {
   getSubcategoriasConIdCategoria(id: number): Observable<ISubcategoria[]> {
     return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/categoria/${id}`);
   }
+
+  deleteSubcategoria(id: number): Observable<any> {
+    return this.http.delete<ISubcategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

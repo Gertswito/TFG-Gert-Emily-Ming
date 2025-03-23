@@ -13,4 +13,8 @@ export class PagoService {
   getAllPagos(): Observable<IPago[]> {
     return this.http.get<IPago[]>(`${this.resourceUrl}/all`);
   }
+
+  deletePago(id: number): Observable<any> {
+    return this.http.delete<IPago>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

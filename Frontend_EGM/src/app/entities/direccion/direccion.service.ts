@@ -13,4 +13,8 @@ export class DireccionService {
   getAllDirecciones(): Observable<IDireccion[]> {
     return this.http.get<IDireccion[]>(`${this.resourceUrl}/all`);
   }
+
+  deleteDireccion(id: number): Observable<any> {
+    return this.http.delete<IDireccion>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }
