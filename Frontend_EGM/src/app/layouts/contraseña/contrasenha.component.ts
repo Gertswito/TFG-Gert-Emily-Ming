@@ -6,11 +6,11 @@ import { CorreoService } from '../../services/correo.service';
 
 @Component({
   standalone: true,
-  selector: 'app-contraseña',
-  templateUrl: './contraseña.component.html',
+  selector: 'app-contrasenha',
+  templateUrl: './contrasenha.component.html',
   imports: [ReactiveFormsModule, CommonModule, RouterModule] // Incluye ReactiveFormsModule aquí
 })
-export class ContraseñaComponent implements OnInit {
+export class ContrasenhaComponent implements OnInit {
   recuperarFormulario: FormGroup;
 
   constructor(private fb: FormBuilder, private correoService: CorreoService) {
