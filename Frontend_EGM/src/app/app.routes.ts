@@ -18,6 +18,7 @@ import { ClienteCuentaComponent } from './entities/cliente/cliente-cuenta/client
 import { CarritoComponent } from './layouts/carrito/carrito.component';
 import { ProductoListComponent } from './entities/producto/producto-list/producto-list.component';
 import { SubcategoriaListComponent } from './entities/subcategoria/subcategoria-list/subcategoria-list.component';
+import { ContraseñaComponent } from './layouts/contraseña/contraseña.component'; // Import ContraseñaComponent
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,5 +39,6 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent },
     { path: 'carrito', component: CarritoComponent },
     { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
+    { path: 'recuperar-contrasenha', component: ContraseñaComponent }, // Ruta para recuperar contraseña
     { path: 'error-sin-autorizacion', component: ErrorComponent },
 ];

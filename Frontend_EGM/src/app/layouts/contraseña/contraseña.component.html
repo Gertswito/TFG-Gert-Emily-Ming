@@ -1,0 +1,24 @@
+<div class="bg-light p-4 rounded">
+    <h2 class="text-center mb-4">Recuperar Contraseña</h2>
+    <form [formGroup]="recuperarFormulario" (ngSubmit)="enviarCorreo()" class="needs-validation">
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input
+                type="email"
+                id="correo"
+                class="form-control"
+                formControlName="correo"
+                placeholder="Introduce tu correo electrónico"
+                required
+            />
+            <div *ngIf="recuperarFormulario.get('correo')?.touched && recuperarFormulario.get('correo')?.invalid" class="text-danger mt-1">
+                <span *ngIf="recuperarFormulario.get('correo')?.errors?.['required']">El correo electrónico es obligatorio.</span>
+                <span *ngIf="recuperarFormulario.get('correo')?.errors?.['email']">Introduce un correo válido.</span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="recuperarFormulario.invalid">Enviar</button>
+    </form>
+    <p class="mt-3 text-center">
+        <a [routerLink]="'/login'">Volver al inicio de sesión</a>
+    </p>
+</div>
