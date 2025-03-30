@@ -30,7 +30,7 @@ export class DireccionDeleteComponent {
       },
       error: (err) => {
         if (err.status === 409) {
-          this.errorSubject.next('No se puede eliminar la dirección "' + id + '" por culpa de otras dependencias.');
+          this.errorSubject.next('No se puede eliminar la dirección "' + id + '" por culpa de otras dependencias, asegúrese de que no haya ninguna venta asociada a esta dirección.');
         } else if (err.status === 404) {
           this.errorSubject.next('La dirección "' + id + '" no existe.');
         } else {

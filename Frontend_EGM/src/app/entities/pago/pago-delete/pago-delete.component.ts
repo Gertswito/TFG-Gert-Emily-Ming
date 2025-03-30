@@ -30,7 +30,7 @@ export class PagoDeleteComponent {
       },
       error: (err) => {
         if (err.status === 409) {
-          this.errorSubject.next('No se puede eliminar el pago "' + id + '" por culpa de otras dependencias.');
+          this.errorSubject.next('No se puede eliminar el pago "' + id + '" por culpa de otras dependencias, asegúrese de que no haya ninguna venta asociado a esta pago.');
         } else if (err.status === 404) {
           this.errorSubject.next('El pago "' + id + '" no existe.');
         } else {

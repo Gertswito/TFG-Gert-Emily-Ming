@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -29,6 +31,16 @@ public class Venta implements Serializable {
 
     @Column(name = "precio_final")
     private Float precioFinal;
+
+    @ManyToOne
+    @JoinColumn(name = "direccion_id")
+    @JsonIgnoreProperties(value = { "cliente" }, allowSetters = true)
+    private Direccion direccion;
+
+    @ManyToOne
+    @JoinColumn(name = "pago_id")
+    @JsonIgnoreProperties(value = { "cliente" }, allowSetters = true)
+    private Pago pago;
     
     public Integer getId() {
         return id;
@@ -68,5 +80,21 @@ public class Venta implements Serializable {
 
     public void setPrecioFinal(Float precioFinal) {
         this.precioFinal = precioFinal;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 }

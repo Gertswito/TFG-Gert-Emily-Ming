@@ -13,6 +13,8 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Precio final</th>
+                        <th>Dirección de envío</th>
+                        <th>Método de pago</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -24,6 +26,8 @@
                             <td>{{ venta.fecha }}</td>
                             <td>{{ venta.hora }}</td>
                             <td>{{ venta.precioFinal }}</td>
+                            <td>{{ venta.direccion?.direccion }} {{ venta.direccion?.localidad }}, {{ venta.direccion?.comunidadAutonoma }}</td>
+                            <td>{{ venta.pago?.numeroTarjeta }}</td>
                             <td>
                                 <div class="botones-accion">
                                     <button class="btn btn-success me-2" (click)="verLineasVenta(venta)" title="Ver Líneas de Venta">
