@@ -1,0 +1,41 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear subcategoría</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearSubcategoriaFormulario" (ngSubmit)="comprobarForm()">
+            <div class="mb-2">
+                <label>Nombre de subcategoría<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="nombre" required>
+                <div *ngIf="crearSubcategoriaFormulario.get('nombre')?.touched && crearSubcategoriaFormulario.get('nombre')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearSubcategoriaFormulario.get('nombre')?.errors?.['required']">El nombre es obligatorio. </span>
+                    <span *ngIf="crearSubcategoriaFormulario.get('nombre')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
+                    <span *ngIf="crearSubcategoriaFormulario.get('nombre')?.errors?.['nombreExiste']">Una subcategoría con este nombre ya está registrada. </span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Url de imagen de subcategoría</label>
+                <input type="text" class="form-control" formControlName="imagenSubcategoria">
+                <div *ngIf="crearSubcategoriaFormulario.get('imagenSubcategoria')?.value !== null && crearSubcategoriaFormulario.get('imagenSubcategoria')?.value !== ''" class="mt-2">
+                    <img [src]="crearSubcategoriaFormulario.get('imagenSubcategoria')?.value" alt="" class="imagen-productos">
+                </div>
+            </div>
+            <div class="mb-4">
+                <label>Categoría a la que pertence<span class="text-danger"> *</span></label>
+                <select class="form-control" name="categoria" formControlName="categoria">
+                    <option [ngValue]="null"></option>
+                    @for (categoria of categoriasCollection; track $index) {
+                      <option [ngValue]="categoria" [value]="categoria.id">{{ categoria.nombre }}</option>
+                    }
+                </select>
+                <div *ngIf="crearSubcategoriaFormulario.get('categoria')?.touched && crearSubcategoriaFormulario.get('categoria')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearSubcategoriaFormulario.get('categoria')?.errors?.['required']"> La categoría es obligatoria. </span>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearSubcategoriaFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

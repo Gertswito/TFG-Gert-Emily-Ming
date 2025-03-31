@@ -18,13 +18,17 @@ import { ClienteCuentaComponent } from './entities/cliente/cliente-cuenta/client
 import { CarritoComponent } from './layouts/carrito/carrito.component';
 import { ProductoListComponent } from './entities/producto/producto-list/producto-list.component';
 import { SubcategoriaListComponent } from './entities/subcategoria/subcategoria-list/subcategoria-list.component';
+import { CategoriaCreateComponent } from './entities/categoria/categoria-create/categoria-create.component';
+import { SubcategoriaCreateComponent } from './entities/subcategoria/subcategoria-create/subcategoria-create.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'categoria', component: CategoriaComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
+    { path: 'categoria-create', component: CategoriaCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'subcategoria', component: SubcategoriaComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'subcategoria-list', component: SubcategoriaListComponent },
+    { path: 'subcategoria-create', component: SubcategoriaCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'cliente', component: ClienteComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'cliente-ajustes', component: ClienteAjustesComponent },
     { path: 'cliente-cuenta', component: ClienteCuentaComponent },

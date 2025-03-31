@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { SubcategoriaDeleteComponent } from './subcategoria-delete/subcategoria-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class SubcategoriaComponent implements OnInit {
 
   private subcategoriaService = inject(SubcategoriaService);
   private modalService = inject(NgbModal);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarSubcategorias();
@@ -50,5 +52,9 @@ export class SubcategoriaComponent implements OnInit {
         tap(() => this.cargarSubcategorias()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/subcategoria-create']);
   }
 }

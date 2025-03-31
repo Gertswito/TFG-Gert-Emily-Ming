@@ -1,13 +1,17 @@
 hr {
     opacity: 1;
 }
-  
+
 .titulo {
     text-align: center;
     margin-bottom: 1rem;
     font-size: 2rem;
     font-weight: bold;
     color: #333;
+    background-color: #ededed;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
 }
   
 .body-entidades {
@@ -22,6 +26,7 @@ hr {
 .botones-accion {
     display: flex;
     flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .resto-imagenes {
@@ -99,4 +104,17 @@ hr {
 .tabla-body {
     overflow-y: auto;
     overflow-x: auto;
+}
+
+.accion {
+    width: 1em;
+    white-space: nowrap;
+}
+
+.new-btn {
+    width: 100%;
+}
+
+.create-form {
+    width: 80%;
 }

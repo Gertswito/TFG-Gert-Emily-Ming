@@ -1,5 +1,6 @@
 package com.tfg.egm.service;
 
+import com.tfg.egm.entity.Categoria;
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.SubcategoriaRepository;
 
@@ -36,5 +37,12 @@ public class SubcategoriaService {
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "subcategoriaNoSePuedeEliminar", e);
         }
+    }
+
+    public Subcategoria save(Subcategoria subcategoria) {
+        if (subcategoriaRepository.existsByNombre(subcategoria.getNombre())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
+        }
+        return subcategoriaRepository.save(subcategoria);
     }
 }

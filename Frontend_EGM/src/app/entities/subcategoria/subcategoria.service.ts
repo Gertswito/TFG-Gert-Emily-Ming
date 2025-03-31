@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ISubcategoria } from './subcategoria.model';
 
@@ -20,5 +20,9 @@ export class SubcategoriaService {
 
   deleteSubcategoria(id: number): Observable<any> {
     return this.http.delete<ISubcategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
+
+  crearSubcategoria(subcategoria: ISubcategoria): Observable<HttpResponse<ISubcategoria>> {
+    return this.http.post<ISubcategoria>(`${this.resourceUrl}/new`, subcategoria, { observe: 'response' });
   }
 }
