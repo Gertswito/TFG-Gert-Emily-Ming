@@ -1,42 +1,46 @@
 <div class="body-entidades">
     <h1 class="titulo">Líneas de venta</h1>
-
+    @if (errorMessage != '') {
+        <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
     @if (lineasVentaList.length > 0) {
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>ID</th>
-                    <th>ID venta</th>
-                    <th>Producto</th>
-                    <th>Cantidad pedida</th>
-                    <th>Precio unitario</th>
-                    <th>Precio total</th>
-                    <th>Accion</th> <!-- Añadir columna para los botones -->
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let lineaVenta of lineasVentaList">
-                    <tr>
-                        <td>{{lineaVenta.id}}</td>
-                        <td>{{lineaVenta.venta?.id}}</td>
-                        <td>{{lineaVenta.producto?.nombre}}</td>
-                        <td>{{lineaVenta.cantidadPedida}}</td>
-                        <td>{{lineaVenta.precioUnitario}}</td>
-                        <td>{{lineaVenta.precioTotal}}</td>
-                        <td>
-                            <div class="botones-accion">
-                                <button class="btn btn-primary me-2" (click)="editarLineaVenta(lineaVenta)" title="Editar Línea de Venta">
-                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                                </button>
-                                <button class="btn btn-danger" (click)="eliminarLineaVenta(lineaVenta)" title="Eliminar Línea de Venta">
-                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                                </button>
-                            </div>
-                        </td>
+        <div class="tabla-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>ID venta</th>
+                        <th>Producto</th>
+                        <th>Cantidad pedida</th>
+                        <th>Precio unitario</th>
+                        <th>Precio total</th>
+                        <th>Accion</th> 
                     </tr>
-                </ng-container>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let lineaVenta of lineasVentaList">
+                        <tr>
+                            <td>{{lineaVenta.id}}</td>
+                            <td>{{lineaVenta.venta?.id}}</td>
+                            <td>{{lineaVenta.producto?.nombre}}</td>
+                            <td>{{lineaVenta.cantidadPedida}}</td>
+                            <td>{{lineaVenta.precioUnitario}}</td>
+                            <td>{{lineaVenta.precioTotal}}</td>
+                            <td>
+                                <div class="botones-accion">
+                                    <button class="btn btn-primary me-2" (click)="editarLineaVenta(lineaVenta)" title="Editar Línea de Venta">
+                                        <i class="bi bi-pencil"></i> 
+                                    </button>
+                                    <button class="btn btn-danger" (click)="eliminarLineaVenta(lineaVenta)" title="Eliminar Línea de Venta">
+                                        <i class="bi bi-trash"></i> 
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
     } @else {
         <p>NADA</p>
     }

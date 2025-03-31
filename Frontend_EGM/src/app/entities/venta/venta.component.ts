@@ -3,6 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IVenta } from './venta.model';
 import { VentaService } from './venta.service';
 import { CommonModule } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, tap } from 'rxjs';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { VentaDeleteComponent } from './venta-delete/venta-delete.component';
 
 @Component({
   standalone: true,
@@ -13,27 +17,42 @@ import { CommonModule } from '@angular/common';
 })
 export class VentaComponent implements OnInit {
   ventaList: IVenta[] = [];
-
-  editarVenta(venta: any) {
-    // Lógica para editar la venta
-    console.log('Editar Venta:', venta);
-  }
-
-  eliminarVenta(venta: any) {
-    // Lógica para eliminar la venta
-    console.log('Eliminar Venta:', venta);
-  }
-
-  verLineasVenta(venta: any) {
-    // Lógica para ver las líneas de venta
-    console.log('Ver Líneas de Venta:', venta);
-  }
+  errorMessage = '';
 
   private ventaService = inject(VentaService);
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
+    this.cargarVentas();
+  }
+
+  cargarVentas() {
     this.ventaService.getAllVentas().subscribe((res) => {
       this.ventaList = res || [];
     });
+  }
+
+  editarVenta(venta: any) {
+    console.log('Editar Venta:', venta);
+  }
+
+  eliminarVenta(venta: IVenta) {
+    const modalRef = this.modalService.open(VentaDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.venta = venta;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarVentas()),
+      )
+      .subscribe();
+  }
+
+  verLineasVenta(venta: any) {
+    console.log('Ver Líneas de Venta:', venta);
   }
 }

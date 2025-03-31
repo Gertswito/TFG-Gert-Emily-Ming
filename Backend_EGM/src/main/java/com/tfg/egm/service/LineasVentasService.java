@@ -2,7 +2,11 @@ package com.tfg.egm.service;
 
 import com.tfg.egm.entity.LineasVentas;
 import com.tfg.egm.repository.LineasVentasRepository;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -17,5 +21,17 @@ public class LineasVentasService {
 
     public List<LineasVentas> obtenerLineasVentas() {
         return lineasVentasRepository.findAll();
+    }
+
+    
+    public void deleteLineasVentas(Long id) {
+        if (!lineasVentasRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "lineasVentaNoExiste");
+        }
+        try {
+            lineasVentasRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "lineasVentaNoSePuedeEliminar", e);
+        }
     }
 }

@@ -1,48 +1,51 @@
 <div class="body-entidades">
     <h1 class="titulo">Subcategorías</h1>
-
-    <div *ngIf="subcategoriaList.length > 0; else noSubcategorias">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>ID</th>
-                    <th>Imagen</th>
-                    <th>Subcategoría</th>
-                    <th>Categoría pertinente</th>
-                    <th>Accion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let subcategoria of subcategoriaList">
-                    <tr>
-                        <td>{{subcategoria.id}}</td>
-                        <td>
-                            <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" alt="" class="imagen-productos">
-                            <ng-template #sinImagen>Sin imagen</ng-template>
-                        </td>
-                        <td>{{subcategoria.nombre}}</td>
-                        <td>
-                            <ng-container *ngIf="subcategoria.categoria !== null; else sinCategoria">
-                                {{subcategoria.categoria.nombre}}
-                            </ng-container>
-                            <ng-template #sinCategoria>Sin categoría</ng-template>
-                        </td>
-                        <td>
-                            <div class="botones-accion">
-                                <button class="btn btn-primary me-2" (click)="editarSubcategoria(subcategoria)" title="Editar Subcategoría">
-                                    <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                                </button>
-                                <button class="btn btn-danger" (click)="eliminarSubcategoria(subcategoria)" title="Eliminar Subcategoría">
-                                    <i class="bi bi-trash"></i> <!-- Icono de papelera -->
-                                </button>
-                            </div>
-                        </td>
+    @if (errorMessage != '') {
+        <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+    @if (subcategoriaList.length > 0) {
+        <div class="tabla-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Subcategoría</th>
+                        <th>Categoría pertinente</th>
+                        <th>Accion</th>
                     </tr>
-                </ng-container>
-            </tbody>
-        </table>
-    </div>
-    <ng-template #noSubcategorias>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let subcategoria of subcategoriaList">
+                        <tr>
+                            <td>{{subcategoria.id}}</td>
+                            <td>
+                                <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" alt="" class="imagen-productos">
+                                <ng-template #sinImagen>Sin imagen</ng-template>
+                            </td>
+                            <td>{{subcategoria.nombre}}</td>
+                            <td>
+                                <ng-container *ngIf="subcategoria.categoria !== null; else sinCategoria">
+                                    {{subcategoria.categoria.nombre}}
+                                </ng-container>
+                                <ng-template #sinCategoria>Sin categoría</ng-template>
+                            </td>
+                            <td>
+                                <div class="botones-accion">
+                                    <button class="btn btn-primary me-2" (click)="editarSubcategoria(subcategoria)" title="Editar Subcategoría">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger" (click)="eliminarSubcategoria(subcategoria)" title="Eliminar Subcategoría">
+                                        <i class="bi bi-trash"></i> 
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    } @else {
         <p>NADA</p>
-    </ng-template>
+    }
 </div>

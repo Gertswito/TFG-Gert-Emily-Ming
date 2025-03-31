@@ -3,7 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ISubcategoria } from './subcategoria.model';
 import { SubcategoriaService } from './subcategoria.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, tap } from 'rxjs';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { SubcategoriaDeleteComponent } from './subcategoria-delete/subcategoria-delete.component';
 
 @Component({
   standalone: true,
@@ -14,41 +17,38 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SubcategoriaComponent implements OnInit {
   subcategoriaList: ISubcategoria[] = [];
-
-  editarSubcategoria(subcategoria: any) {
-    // Lógica para editar la subcategoría
-    console.log('Editar Subcategoría:', subcategoria);
-  }
-
-  eliminarSubcategoria(subcategoria: any) {
-    // Lógica para eliminar la subcategoría
-    console.log('Eliminar Subcategoría:', subcategoria);
-  }
+  errorMessage = '';
 
   private subcategoriaService = inject(SubcategoriaService);
-  private route = inject(ActivatedRoute);
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-
-      if (id) {
-        this.cargarSubcategoriasConId(id);
-      } else {
-        this.cargarAllSubcategorias();
-      }
-    });
+    this.cargarSubcategorias();
   }
 
-  cargarSubcategoriasConId(id: number) {
-    this.subcategoriaService.getSubcategoriasConIdCategoria(id).subscribe((res) => {
-      this.subcategoriaList = res || [];
-    });
-  }
-
-  cargarAllSubcategorias() {
+  cargarSubcategorias() {
     this.subcategoriaService.getAllSubcategorias().subscribe((res) => {
       this.subcategoriaList = res || [];
     });
+  }
+
+  editarSubcategoria(subcategoria: any) {
+    console.log('Editar Subcategoría:', subcategoria);
+  }
+
+  eliminarSubcategoria(subcategoria: ISubcategoria) {
+    const modalRef = this.modalService.open(SubcategoriaDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.subcategoria = subcategoria;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarSubcategorias()),
+      )
+      .subscribe();
   }
 }

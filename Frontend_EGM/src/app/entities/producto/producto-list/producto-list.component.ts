@@ -24,7 +24,7 @@ export class ProductoListComponent implements OnInit {
       const id = params['id'];
 
       if (id) {
-        this.cargarProducttosConId(id);
+        this.cargarProductosConId(id);
         this.nombreSubcategoria = params['nombre'];
       } else {
         this.cargarAllProductos();
@@ -33,7 +33,7 @@ export class ProductoListComponent implements OnInit {
     });
   }
 
-  cargarProducttosConId(id: number) {
+  cargarProductosConId(id: number) {
     this.productoService.getProductosConIdSubcategoria(id).subscribe((res) => {
       this.productoList = res || [];
     });

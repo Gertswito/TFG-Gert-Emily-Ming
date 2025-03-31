@@ -3,6 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IPago } from './pago.model';
 import { PagoService } from './pago.service';
 import { CommonModule } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, tap } from 'rxjs';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { PagoDeleteComponent } from './pago-delete/pago-delete.component';
 
 @Component({
   standalone: true,
@@ -13,22 +17,38 @@ import { CommonModule } from '@angular/common';
 })
 export class PagoComponent implements OnInit {
   pagoList: IPago[] = [];
+  errorMessage = '';
+
+  private pagoService = inject(PagoService);
+  private modalService = inject(NgbModal);
+
+  ngOnInit(): void {
+    this.cargarPagos();
+  }
+
+  cargarPagos() {
+    this.pagoService.getAllPagos().subscribe((res) => {
+      this.pagoList = res || [];
+    });
+  }
 
   editarPago(pago: any) {
-    // Lógica para editar el pago
     console.log('Editar Pago:', pago);
   }
 
   eliminarPago(pago: any) {
-    // Lógica para eliminar el pago
-    console.log('Eliminar Pago:', pago);
-  }
-
-  private pagoService = inject(PagoService);
-
-  ngOnInit(): void {
-    this.pagoService.getAllPagos().subscribe((res) => {
-      this.pagoList = res || [];
+    const modalRef = this.modalService.open(PagoDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.pago = pago;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
     });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarPagos()),
+      )
+      .subscribe();
   }
 }

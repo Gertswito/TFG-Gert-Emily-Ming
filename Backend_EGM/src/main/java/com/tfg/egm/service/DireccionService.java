@@ -3,7 +3,11 @@ package com.tfg.egm.service;
 import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.entity.Direccion;
 import com.tfg.egm.repository.DireccionRepository;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +44,13 @@ public class DireccionService {
     }
     
     public void deleteDireccion(Long id) {
-        direccionRepository.deleteById(id);
+        if (!direccionRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste");
+        }
+        try {
+            direccionRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "direccionNoSePuedeEliminar", e);
+        }
     }
 }

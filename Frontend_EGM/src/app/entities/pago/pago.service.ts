@@ -26,7 +26,7 @@ export class PagoService {
     return this.http.put<IPago>(`${this.resourceUrl}/update/${id}`, pago);
   }
 
-  deletePago(id: number): Observable<void> {
+  deletePago(id: number): Observable<any> {
     return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
   }
 }

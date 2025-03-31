@@ -13,4 +13,8 @@ export class LineasVentaService {
   getAllLineasVentas(): Observable<ILineasVenta[]> {
     return this.http.get<ILineasVenta[]>(`${this.resourceUrl}/all`);
   }
+
+  deleteLineasVenta(id: number): Observable<any> {
+    return this.http.delete<ILineasVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

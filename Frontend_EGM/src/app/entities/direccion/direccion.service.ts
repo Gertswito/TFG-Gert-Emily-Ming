@@ -26,7 +26,7 @@ export class DireccionService {
     return this.http.put<IDireccion>(`${this.resourceUrl}/update/${id}`, direccion);
   }
 
-  deleteDireccion(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
+  deleteDireccion(id: number): Observable<any> {
+    return this.http.delete<IDireccion>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }
 }

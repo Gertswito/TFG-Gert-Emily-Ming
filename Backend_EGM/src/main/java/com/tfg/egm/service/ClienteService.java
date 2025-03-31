@@ -3,6 +3,8 @@ package com.tfg.egm.service;
 import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.repository.ClienteRepository;
 import com.tfg.egm.security.JwtTokenUtil;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -79,7 +81,6 @@ public class ClienteService {
         
         Cliente clienteExistente = clienteRepository.findByUsuario(cliente.getUsuario());
     
-        // Validar que el email y DNI no estén en uso por otro cliente
         if (!clienteExistente.getEmail().equals(cliente.getEmail()) &&
             clienteRepository.existsByEmail(cliente.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "emailExiste");
@@ -90,18 +91,15 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "dniExiste");
         }
     
-        // Validar que la fecha de nacimiento no sea futura
         LocalDate fechaHoy = LocalDate.now();
         if (cliente.getFechaNac().isAfter(fechaHoy)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
         }
     
-        // Mantener el rol o asignarlo por defecto
         if (cliente.getRol() == null) {
             cliente.setRol(clienteExistente.getRol());
         }
     
-        // Mantener la contraseña encriptada si no fue cambiada
         if (cliente.getContrasenha() != null && !cliente.getContrasenha().equals(clienteExistente.getContrasenha())) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             cliente.setContrasenha(passwordEncoder.encode(cliente.getContrasenha()));
@@ -109,10 +107,20 @@ public class ClienteService {
             cliente.setContrasenha(clienteExistente.getContrasenha());
         }
     
-        // Mantener direcciones y pagos
         cliente.setDirecciones(clienteExistente.getDirecciones());
         cliente.setPagos(clienteExistente.getPagos());
     
         return clienteRepository.save(cliente);
+    }
+
+    public void deleteCliente(Long id) {
+        if (!clienteRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "clienteNoExiste");
+        }
+        try {
+            clienteRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "clienteNoSePuedeEliminar", e);
+        }
     }
 }

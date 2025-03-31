@@ -13,4 +13,8 @@ export class CategoriaService {
   getAllCategorias(): Observable<ICategoria[]> {
     return this.http.get<ICategoria[]>(`${this.resourceUrl}/all`);
   }
+
+  deleteCategoria(id: number): Observable<any> {
+    return this.http.delete<ICategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
 }

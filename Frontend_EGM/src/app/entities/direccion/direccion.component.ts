@@ -3,6 +3,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDireccion } from './direccion.model';
 import { DireccionService } from './direccion.service';
 import { CommonModule } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { filter, tap } from 'rxjs';
+import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { DireccionDeleteComponent } from './direccion-delete/direccion-delete.component';
 
 @Component({
   standalone: true,
@@ -13,23 +17,38 @@ import { CommonModule } from '@angular/common';
 })
 export class DireccionComponent implements OnInit {
   direccionList: IDireccion[] = [];
-  editarDireccion(direccion: any) {
-    // Lógica para editar la dirección
-    console.log('Editar dirección:', direccion);
-  }
-
-  eliminarDireccion(direccion: any) {
-    // Lógica para eliminar la dirección
-    console.log('Eliminar dirección:', direccion);
-  }
-
-
+  errorMessage = '';
 
   private direccionService = inject(DireccionService);
+  private modalService = inject(NgbModal);
 
   ngOnInit(): void {
+    this.cargarDirecciones();
+  }
+
+  cargarDirecciones() {
     this.direccionService.getAllDirecciones().subscribe((res) => {
       this.direccionList = res || [];
     });
+  }
+
+  editarDireccion(direccion: any) {
+    console.log('Editar dirección:', direccion);
+  }
+
+  eliminarDireccion(direccion: IDireccion) {
+    const modalRef = this.modalService.open(DireccionDeleteComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.direccion = direccion;
+    modalRef.componentInstance.errorSubject.subscribe({
+      next: (errorMessage: string) => {
+        this.errorMessage = errorMessage;  
+      }
+    });
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_DELETED_EVENT),
+        tap(() => this.cargarDirecciones()),
+      )
+      .subscribe();
   }
 }

@@ -91,3 +91,12 @@ hr {
 .card-producto.categoria-4 {
     border-left: 5px solid #d8ee30;  
 }
+
+::ng-deep .modal-content {
+    margin-top: 15em;
+}
+
+.tabla-body {
+    overflow-y: auto;
+    overflow-x: auto;
+}
