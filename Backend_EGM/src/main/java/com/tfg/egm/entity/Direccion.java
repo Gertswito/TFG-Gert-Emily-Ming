@@ -32,7 +32,7 @@ public class Direccion implements Serializable {
     @JsonIgnoreProperties(value = { "direcciones" }, allowSetters = true)
     private Cliente cliente;
 
-    @Column(name= "activo")
+    @Column(name= "activo", columnDefinition = "TINYINT(1)")
     private Boolean activo = true;
 
     public Integer getId() {

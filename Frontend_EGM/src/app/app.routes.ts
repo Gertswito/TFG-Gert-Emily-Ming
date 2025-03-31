@@ -20,6 +20,7 @@ import { ProductoListComponent } from './entities/producto/producto-list/product
 import { SubcategoriaListComponent } from './entities/subcategoria/subcategoria-list/subcategoria-list.component';
 import { CategoriaCreateComponent } from './entities/categoria/categoria-create/categoria-create.component';
 import { SubcategoriaCreateComponent } from './entities/subcategoria/subcategoria-create/subcategoria-create.component';
+import { ClienteCreateComponent } from './entities/cliente/cliente-create/cliente-create.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'cliente', component: ClienteComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'cliente-ajustes', component: ClienteAjustesComponent },
     { path: 'cliente-cuenta', component: ClienteCuentaComponent },
+    { path: 'cliente-create', component: ClienteCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'direccion', component: DireccionComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'pago', component: PagoComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' }  },
     { path: 'producto', component: ProductoComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' }  },

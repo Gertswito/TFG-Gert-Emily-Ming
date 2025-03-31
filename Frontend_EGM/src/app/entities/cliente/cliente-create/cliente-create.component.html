@@ -1,0 +1,96 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear cliente</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearClienteFormulario" (ngSubmit)="comprobarForm()">
+            <div class="mb-2">
+                <label>Nombre de usuario<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="usuario" required>
+                <div *ngIf="crearClienteFormulario.get('usuario')?.touched && crearClienteFormulario.get('usuario')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['required']">El nombre es obligatorio. </span>
+                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
+                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['usuarioExiste']">Un cliente con este nombre de usuario ya está registrada. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Contraseña<span class="text-danger"> *</span></label>
+                    <input type="password" class="form-control" formControlName="contrasenha" required>
+                    <div *ngIf="crearClienteFormulario.get('contrasenha')?.touched && crearClienteFormulario.get('contrasenha')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>    
+                        <span *ngIf="crearClienteFormulario.get('contrasenha')?.errors?.['required']">La contraseña es obligatoria. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-25">
+                    <label>Rol<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="rol" formControlName="rol">
+                        <option [ngValue]="null"></option>
+                        <option value="USER">Usuario</option>
+                        <option value="ADMIN">Administrador</option>
+                    </select>
+                    <div *ngIf="crearClienteFormulario.get('rol')?.touched && crearClienteFormulario.get('rol')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('rol')?.errors?.['required']"> El rol es obligatorio. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" formControlName="nombre">
+                    <div *ngIf="crearClienteFormulario.get('nombre')?.touched && crearClienteFormulario.get('nombre')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('nombre')?.errors?.['maxlength']">El nombre debe tener como máximo 50 caracteres. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Apellidos</label>
+                    <input type="text" class="form-control" formControlName="apellidos">
+                    <div *ngIf="crearClienteFormulario.get('apellidos')?.touched && crearClienteFormulario.get('apellidos')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('apellidos')?.errors?.['maxlength']">El apellido debe tener como máximo 50 caracteres. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Email</label>
+                <input type="email" class="form-control" formControlName="email">
+                <div *ngIf="crearClienteFormulario.get('email')?.touched && crearClienteFormulario.get('email')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['email']">Introduce un email válido. </span>
+                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['maxlength']">El email debe de tener un máximo de 100 caracteres. </span>
+                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-4 me-3 w-100">
+                    <label for="">Tipo de documento</label>
+                    <div class="d-flex flex-row">
+                        <select name="tipoDoc" class="form-control w-25 me-2" formControlName="tipoDoc">
+                            <option value="dni">DNI</option>
+                            <option value="nie">NIE</option>
+                        </select>
+                        <input type="text" class="form-control" formControlName="dni">
+                    </div>
+                    <div *ngIf="crearClienteFormulario.get('dni')?.touched && crearClienteFormulario.get('dni')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado. </span>
+                        <span *ngIf="crearClienteFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto. </span>
+                    </div>
+                </div>
+                <div class="mb-4 w-100">
+                    <label>Fecha de nacimiento</label>
+                    <input type="date" class="form-control" formControlName="fechaNac">
+                    <div *ngIf="crearClienteFormulario.get('fechaNac')?.touched && crearClienteFormulario.get('fechaNac')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('fechaNac')?.errors?.['fechaInvalida']">La fecha no puede ser en el futuro. </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearClienteFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

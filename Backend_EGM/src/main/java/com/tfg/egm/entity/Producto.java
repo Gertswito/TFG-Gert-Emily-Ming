@@ -17,7 +17,7 @@ public class Producto implements Serializable {
     @Column(name = "referencia")
     private String referencia;
 
-    @Column(name = "url_imagen")
+    @Column(name = "url_imagen", length = 3000)
     private String urlImagen;
 
     @Column(name = "nombre")

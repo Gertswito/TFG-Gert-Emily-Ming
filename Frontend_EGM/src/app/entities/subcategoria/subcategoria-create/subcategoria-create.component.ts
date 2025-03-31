@@ -37,13 +37,7 @@ export class SubcategoriaCreateComponent implements OnInit {
             this.crearSubcategoriaFormulario.markAllAsTouched();
             return;
         }  
-        const nuevaSubcategoria: ISubcategoria = {
-            id: null,
-            nombre: this.crearSubcategoriaFormulario.get('nombre')?.value,
-            categoria: this.crearSubcategoriaFormulario.get('categoria')?.value,
-            imagenSubcategoria: this.crearSubcategoriaFormulario.get('imagenSubcategoria')?.value
-        }
-        this.subcategoriaService.crearSubcategoria(nuevaSubcategoria).subscribe({
+        this.subcategoriaService.crearSubcategoria(this.crearSubcategoriaFormulario?.value).subscribe({
             next: (response) => {
               this.router.navigate(['/subcategoria'], { queryParams: { creado: 'true' } });
             },

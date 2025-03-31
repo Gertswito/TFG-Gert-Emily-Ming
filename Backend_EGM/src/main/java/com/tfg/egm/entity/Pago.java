@@ -30,7 +30,7 @@ public class Pago implements Serializable {
     @JsonIgnoreProperties(value = { "pagos" }, allowSetters = true)
     private Cliente cliente;
 
-    @Column(name = "activo")
+    @Column(name = "activo", columnDefinition = "TINYINT(1)")
     private Boolean activo = true;
 
     public Integer getId() {

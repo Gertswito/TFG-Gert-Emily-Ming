@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ClienteDeleteComponent } from './cliente-delete/cliente-delete.component';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ClienteComponent implements OnInit {
 
   private clienteService = inject(ClienteService);
   private modalService = inject(NgbModal);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -51,5 +53,9 @@ export class ClienteComponent implements OnInit {
         tap(() => this.cargarClientes()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/cliente-create']);
   }
 }

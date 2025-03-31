@@ -28,11 +28,7 @@ export class CategoriaCreateComponent implements OnInit {
             this.crearCategoriaFormulario.markAllAsTouched();
             return;
         }  
-        const nuevaCategoria: ICategoria = {
-            id: null,
-            nombre: this.crearCategoriaFormulario.get('nombre')?.value
-        }
-        this.categoriaService.crearCategoria(nuevaCategoria).subscribe({
+        this.categoriaService.crearCategoria(this.crearCategoriaFormulario.value).subscribe({
             next: (response) => {
               this.router.navigate(['/categoria'], { queryParams: { creado: 'true' } });
             },
