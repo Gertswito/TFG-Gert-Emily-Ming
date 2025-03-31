@@ -6,4 +6,5 @@ export interface IPago {
     fechaCaducidad: Date | null;
     cvv: string | null;
     cliente: ICliente | null;
+    activo: boolean | null;
 }

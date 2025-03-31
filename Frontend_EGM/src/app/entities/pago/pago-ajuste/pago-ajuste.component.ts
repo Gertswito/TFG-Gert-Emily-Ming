@@ -68,7 +68,7 @@ export class PagoAjusteComponent implements OnInit {
     if (pago.id) {
       // Si el pago ya existe en la base de datos, lo eliminamos
       this.loading = true
-      this.pagoService.deletePago(pago.id).subscribe({
+      this.pagoService.disablePago(pago.id).subscribe({
         next: () => {
           this.pagosFormArray.removeAt(index)
           this.loading = false
@@ -89,49 +89,49 @@ export class PagoAjusteComponent implements OnInit {
   }
 
   loadPagos(usuario: string): void {
-    this.loading = true
-
+    this.loading = true;
     this.pagoService.getPagosByCliente(usuario).subscribe({
       next: (pagos) => {
         // Guardar los pagos originales para comparar después
-        this.pagosOriginales = [...pagos]
-
+        this.pagosOriginales = [...pagos];
         // Limpiar arrays de formularios existentes
         while (this.pagosFormArray.length) {
-          this.pagosFormArray.removeAt(0)
+          this.pagosFormArray.removeAt(0);
         }
-
-        // Añadir pagos
-        if (pagos && pagos.length > 0) {
-          pagos.forEach((pago) => {
-            const pagoForm = this.createPagoFormGroup()
+  
+        // Filtrar pagos activos
+        const pagosActivos = pagos.filter((pago) => pago.activo);  // Filtra solo los pagos activos
+  
+        // Añadir pagos activos
+        if (pagosActivos && pagosActivos.length > 0) {
+          pagosActivos.forEach((pago) => {
+            const pagoForm = this.createPagoFormGroup();
             pagoForm.patchValue({
               ...pago,
               fechaCaducidad: pago.fechaCaducidad ? this.formatDateToMonthInput(pago.fechaCaducidad) : null,
-            })
-            this.pagosFormArray.push(pagoForm)
-
+            });
+            this.pagosFormArray.push(pagoForm);
             // Formatear el número de tarjeta para visualización
             if (pago.numeroTarjeta) {
               try {
-                const formattedCardNumber = this.formatCardNumberForDisplay(pago.numeroTarjeta)
-                pagoForm.get("numeroTarjeta")?.setValue(formattedCardNumber)
+                const formattedCardNumber = this.formatCardNumberForDisplay(pago.numeroTarjeta);
+                pagoForm.get("numeroTarjeta")?.setValue(formattedCardNumber);
               } catch (error) {
-                console.error("Error al formatear número de tarjeta:", error)
+                console.error("Error al formatear número de tarjeta:", error);
                 // Si hay error, dejamos el número como está
               }
             }
-          })
+          });
         }
-        this.loading = false
+        this.loading = false;
       },
       error: (error) => {
-        console.error("Error al cargar los métodos de pago", error)
-        this.loading = false
-        this.error = true
-        this.errorMessage = "Error al cargar los métodos de pago"
+        console.error("Error al cargar los métodos de pago", error);
+        this.loading = false;
+        this.error = true;
+        this.errorMessage = "Error al cargar los métodos de pago";
       },
-    })
+    });
   }
 
   onSubmit(): void {

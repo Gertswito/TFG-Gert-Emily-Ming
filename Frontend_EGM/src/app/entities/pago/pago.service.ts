@@ -29,4 +29,8 @@ export class PagoService {
   deletePago(id: number): Observable<any> {
     return this.http.delete<void>(`${this.resourceUrl}/delete/${id}`);
   }
+
+  disablePago(id: number): Observable<any> {
+    return this.http.delete<IPago>(`${this.resourceUrl}/disable/${id}`, { observe: 'response' });
+  }
 }

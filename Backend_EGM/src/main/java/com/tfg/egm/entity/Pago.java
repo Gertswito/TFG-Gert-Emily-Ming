@@ -30,6 +30,9 @@ public class Pago implements Serializable {
     @JsonIgnoreProperties(value = { "pagos" }, allowSetters = true)
     private Cliente cliente;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+
     public Integer getId() {
         return id;
     }
@@ -68,5 +71,13 @@ public class Pago implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

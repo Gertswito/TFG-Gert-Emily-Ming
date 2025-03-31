@@ -1,6 +1,7 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Cliente;
+import com.tfg.egm.entity.Direccion;
 import com.tfg.egm.entity.Pago;
 import com.tfg.egm.repository.PagoRepository;
 
@@ -49,6 +50,19 @@ public class PagoService {
         }
         try {
             pagoRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "pagoNoSePuedeEliminar", e);
+        }
+    }
+
+    public void disablePago(Long id) {
+        if (!pagoRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "pagoNoExiste");
+        }
+        try {
+            Pago pago = pagoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "pagoNoEncontrado"));
+            pago.setActivo(false);
+            pagoRepository.save(pago);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "pagoNoSePuedeEliminar", e);
         }

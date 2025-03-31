@@ -65,4 +65,14 @@ public class DireccionController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/direcciones/disable/{id}")
+    public ResponseEntity<Void> disableDireccion(@PathVariable Long id) {
+        try {
+            direccionService.disableDireccion(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

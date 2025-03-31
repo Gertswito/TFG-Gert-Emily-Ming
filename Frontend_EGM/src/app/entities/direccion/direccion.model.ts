@@ -7,4 +7,5 @@ export interface IDireccion {
     localidad: string | null;
     comunidadAutonoma: string | null;
     cliente: ICliente | null;
+    activo: boolean | null;
 }

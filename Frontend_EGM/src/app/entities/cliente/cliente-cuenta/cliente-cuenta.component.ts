@@ -36,6 +36,12 @@ export class ClienteCuentaComponent implements OnInit {
             next: (res) => {
               this.cliente = res;
               this.usuarioEncontrado = true;
+              if (this.cliente?.direcciones) {
+                this.cliente.direcciones = this.cliente.direcciones.filter(d => d.activo);
+              }
+              if (this.cliente?.pagos) {
+                this.cliente.pagos = this.cliente.pagos.filter(pago => pago.activo);
+              }
             },
             error: () => {
               this.usuarioEncontrado = false;

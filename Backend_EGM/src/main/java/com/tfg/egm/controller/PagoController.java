@@ -62,4 +62,14 @@ public class PagoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/pagos/disable/{id}")
+    public ResponseEntity<Void> disablePago(@PathVariable Long id) {
+        try {
+            pagoService.disablePago(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

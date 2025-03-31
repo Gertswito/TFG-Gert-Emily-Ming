@@ -32,6 +32,9 @@ public class Direccion implements Serializable {
     @JsonIgnoreProperties(value = { "direcciones" }, allowSetters = true)
     private Cliente cliente;
 
+    @Column(name= "activo")
+    private Boolean activo = true;
+
     public Integer getId() {
         return id;
     }
@@ -78,5 +81,13 @@ public class Direccion implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

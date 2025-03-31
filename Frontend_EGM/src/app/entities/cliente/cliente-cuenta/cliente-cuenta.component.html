@@ -28,10 +28,12 @@
                               </thead>
                               <tbody>
                                   <ng-container *ngFor="let direccion of cliente.direcciones; let i = index">
-                                      <tr>
-                                          <td>{{ i + 1 }}</td>
-                                          <td>{{ direccion.direccion }}, {{ direccion.localidad }}, {{ direccion.comunidadAutonoma }} | {{ direccion.codigoPostal }}</td>
-                                      </tr>
+                                      @if (direccion.activo) {
+                                        <tr>
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ direccion.direccion }}, {{ direccion.localidad }}, {{ direccion.comunidadAutonoma }} | {{ direccion.codigoPostal }}</td>
+                                        </tr>
+                                      }
                                   </ng-container>
                               </tbody>
                           </table>
@@ -50,10 +52,12 @@
                               </thead>
                               <tbody>
                                   <ng-container *ngFor="let pago of cliente.pagos; let i = index">
+                                    @if (pago.activo) {
                                       <tr>
                                           <td>{{ i + 1 }}</td>
                                           <td>{{ pago.numeroTarjeta }}</td>
                                       </tr>
+                                    }
                                   </ng-container>
                               </tbody>
                           </table>

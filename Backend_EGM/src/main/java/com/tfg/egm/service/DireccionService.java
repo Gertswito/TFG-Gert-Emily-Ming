@@ -3,7 +3,7 @@ package com.tfg.egm.service;
 import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.entity.Direccion;
 import com.tfg.egm.repository.DireccionRepository;
-
+import com.tfg.egm.repository.VentaRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,13 @@ import java.util.Optional;
 @Service
 public class DireccionService {
 
+    private final VentaRepository ventaRepository;
+
     private final DireccionRepository direccionRepository;
 
-    public DireccionService(DireccionRepository direccionRepository) {
+    public DireccionService(DireccionRepository direccionRepository, VentaRepository ventaRepository) {
         this.direccionRepository = direccionRepository;
+        this.ventaRepository = ventaRepository;
     }
 
     public List<Direccion> obtenerDirecciones() {
@@ -49,6 +52,19 @@ public class DireccionService {
         }
         try {
             direccionRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "direccionNoSePuedeEliminar", e);
+        }
+    }
+
+    public void disableDireccion(Long id) {
+        if (!direccionRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste");
+        }
+        try {
+            Direccion direccion = direccionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoEncontrada"));
+            direccion.setActivo(false);
+            direccionRepository.save(direccion);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "direccionNoSePuedeEliminar", e);
         }

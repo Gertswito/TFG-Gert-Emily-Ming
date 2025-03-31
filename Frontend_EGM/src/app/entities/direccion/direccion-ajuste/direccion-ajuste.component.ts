@@ -76,7 +76,7 @@ export class DireccionAjusteComponent implements OnInit {
     if (direccion.id) {
       // Si la dirección ya existe en la base de datos, la eliminamos
       this.loading = true
-      this.direccionService.deleteDireccion(direccion.id).subscribe({
+      this.direccionService.disableDireccion(direccion.id).subscribe({
         next: () => {
           this.direccionesFormArray.removeAt(index)
           this.loading = false
@@ -97,35 +97,36 @@ export class DireccionAjusteComponent implements OnInit {
   }
 
   loadDirecciones(usuario: string): void {
-    this.loading = true
-
+    this.loading = true;
     this.direccionService.getDireccionesPorCliente(usuario).subscribe({
       next: (direcciones) => {
         // Guardar las direcciones originales para comparar después
-        this.direccionesOriginales = [...direcciones]
-
+        this.direccionesOriginales = [...direcciones];
         // Limpiar arrays de formularios existentes
         while (this.direccionesFormArray.length) {
-          this.direccionesFormArray.removeAt(0)
+          this.direccionesFormArray.removeAt(0);
         }
-
-        // Añadir direcciones
-        if (direcciones && direcciones.length > 0) {
-          direcciones.forEach((direccion) => {
-            const direccionForm = this.createDireccionFormGroup()
-            direccionForm.patchValue(direccion)
-            this.direccionesFormArray.push(direccionForm)
-          })
+  
+        // Filtrar direcciones activas
+        const direccionesActivas = direcciones.filter((direccion) => direccion.activo);
+  
+        // Añadir direcciones activas
+        if (direccionesActivas && direccionesActivas.length > 0) {
+          direccionesActivas.forEach((direccion) => {
+            const direccionForm = this.createDireccionFormGroup();
+            direccionForm.patchValue(direccion);
+            this.direccionesFormArray.push(direccionForm);
+          });
         }
-        this.loading = false
+        this.loading = false;
       },
       error: (error) => {
-        console.error("Error al cargar las direcciones", error)
-        this.loading = false
-        this.error = true
-        this.errorMessage = "Error al cargar las direcciones"
+        console.error("Error al cargar las direcciones", error);
+        this.loading = false;
+        this.error = true;
+        this.errorMessage = "Error al cargar las direcciones";
       },
-    })
+    });
   }
 
   onSubmit(): void {
