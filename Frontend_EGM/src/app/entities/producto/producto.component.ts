@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IProducto } from './producto.model';
 import { ProductoService } from './producto.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { filter, tap } from 'rxjs';
@@ -22,7 +22,7 @@ export class ProductoComponent implements OnInit {
 
   private productoService = inject(ProductoService);
   private modalService = inject(NgbModal);
-
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarProductos();
@@ -52,5 +52,9 @@ export class ProductoComponent implements OnInit {
         tap(() => this.cargarProductos()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/producto-create']);
   }
 }

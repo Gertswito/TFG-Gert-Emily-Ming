@@ -37,4 +37,11 @@ public class ProductoService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "productoNoSePuedeEliminar", e);
         }
     }
+
+    public Producto save(Producto producto) {
+        if (productoRepository.existsByReferencia(producto.getReferencia())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "referenciaExiste");
+        }
+        return productoRepository.save(producto);
+    }
 }

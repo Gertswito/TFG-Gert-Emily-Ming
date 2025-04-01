@@ -1,0 +1,158 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear producto</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearProductoFormulario" (ngSubmit)="comprobarForm()">
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Nombre de producto<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="nombre" required>
+                    <div *ngIf="crearProductoFormulario.get('nombre')?.touched && crearProductoFormulario.get('nombre')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('nombre')?.errors?.['required']">El nombre es obligatorio. </span>
+                        <span *ngIf="crearProductoFormulario.get('nombre')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
+                    </div>
+                </div>
+                <div class="mb-2 me-3 w-100">
+                    <label>Referencia<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="referencia" required>
+                    <div *ngIf="crearProductoFormulario.get('referencia')?.touched && crearProductoFormulario.get('referencia')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('referencia')?.errors?.['required']">La referencia es obligatoria. </span>
+                        <span *ngIf="crearProductoFormulario.get('referencia')?.errors?.['referenciaExiste']">Un producto con esta referencia ya está registrado. </span>
+                        <span *ngIf="crearProductoFormulario.get('referencia')?.errors?.['maxlength']">La referencia tiene como máximo 255 caracteres. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Marca<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="marca" required>
+                    <div *ngIf="crearProductoFormulario.get('marca')?.touched && crearProductoFormulario.get('marca')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('marca')?.errors?.['required']">La referencia es obligatoria. </span>
+                        <span *ngIf="crearProductoFormulario.get('marca')?.errors?.['maxlength']">La marca tiene como máximo 255 caracteres. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Categoría a la que pertence<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="categoria" formControlName="categoria">
+                        @for (categoria of categoriasCollection; track $index) {
+                          <option [ngValue]="categoria">{{ categoria.nombre }}</option>
+                        }
+                    </select>
+                    <div *ngIf="crearProductoFormulario.get('categoria')?.touched && crearProductoFormulario.get('categoria')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('categoria')?.errors?.['required']"> La categoría es obligatoria. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Subcategoría a la que pertence<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="subcategoria" formControlName="subcategoria">
+                        @for (subcategoria of subcategoriasCollection; track $index) {
+                          <option [ngValue]="subcategoria">{{ subcategoria.nombre }}</option>
+                        }
+                    </select>
+                    <div *ngIf="crearProductoFormulario.get('subcategoria')?.touched && crearProductoFormulario.get('subcategoria')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('subcategoria')?.errors?.['required']"> La subcategoría es obligatoria. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Url de imagen de producto</label>
+                <input type="text" class="form-control" formControlName="imagenProducto">
+                <div *ngIf="crearProductoFormulario.get('imagenProducto')?.value !== null && crearProductoFormulario.get('imagenProducto')?.value !== ''" class="mt-2">
+                    <img [src]="crearProductoFormulario.get('imagenProducto')?.value" alt="" class="imagen-productos">
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Descripción</label>
+                <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+                <div *ngIf="crearProductoFormulario.get('descripcion')?.touched && crearProductoFormulario.get('descripcion')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearProductoFormulario.get('descripcion')?.errors?.['maxlength']">La descripción tiene como máximo 3000 caracteres. </span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Ingredientes</label>
+                <textarea class="form-control" formControlName="ingredientes" rows="3"></textarea>
+                <div *ngIf="crearProductoFormulario.get('ingredientes')?.touched && crearProductoFormulario.get('ingredientes')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearProductoFormulario.get('ingredientes')?.errors?.['maxlength']">Los ingredientes tienen como máximo 3000 caracteres. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Cantidad del producto</label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="1" class="form-control text-end" formControlName="cantidad">
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;uds
+                        </div>
+                    </div>
+                    <div *ngIf="crearProductoFormulario.get('cantidad')?.touched && crearProductoFormulario.get('cantidad')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('cantidad')?.errors?.['min']">La cantidad tiene que ser mayor a 0. </span>
+                        <span *ngIf="crearProductoFormulario.get('cantidad')?.errors?.['pattern']">La cantidad no puede tener decimales. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Stock en almacén</label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="1" class="form-control text-end" formControlName="stock">
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;uds
+                        </div>
+                    </div>
+                    <div *ngIf="crearProductoFormulario.get('stock')?.touched && crearProductoFormulario.get('stock')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('stock')?.errors?.['min']">El stock tiene que ser mayor a 0. </span>
+                        <span *ngIf="crearProductoFormulario.get('stock')?.errors?.['pattern']">El stock no puede tener decimales. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-4 me-3 w-100">
+                    <label>Tipo de IVA en %</label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="0.1" class="form-control text-end" formControlName="tipoIVA">
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;%
+                        </div>
+                    </div>
+                    <div *ngIf="crearProductoFormulario.get('tipoIVA')?.touched && crearProductoFormulario.get('tipoIVA')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('tipoIVA')?.errors?.['min']">El IVA tiene que ser mayor a 0%. </span>
+                        <span *ngIf="crearProductoFormulario.get('tipoIVA')?.errors?.['max']">El IVA tiene que ser menor a 100%. </span>
+                    </div>
+                </div>
+                <div class="mb-4 w-100">
+                    <label>Precio<span class="text-danger"> *</span></label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="0.01" class="form-control text-end" formControlName="precio">
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;€
+                        </div>
+                    </div>
+                    <div *ngIf="crearProductoFormulario.get('precio')?.touched && crearProductoFormulario.get('precio')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearProductoFormulario.get('precio')?.errors?.['required']">El precio es obligatorio. </span>
+                        <span *ngIf="crearProductoFormulario.get('precio')?.errors?.['min']">El precio tiene que ser mayor a 0. </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearProductoFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -14,7 +14,7 @@
                         <th>Cantidad pedida</th>
                         <th>Precio unitario</th>
                         <th>Precio total</th>
-                        <th class="accion"><button type="button" class="btn btn-primary new-btn">Crear nuevo</button></th>
+                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,10 +22,10 @@
                         <tr>
                             <td>{{lineaVenta.id}}</td>
                             <td>{{lineaVenta.venta?.id}}</td>
-                            <td>{{lineaVenta.producto?.nombre}}</td>
-                            <td>{{lineaVenta.cantidadPedida}}</td>
-                            <td>{{lineaVenta.precioUnitario}}</td>
-                            <td>{{lineaVenta.precioTotal}}</td>
+                            <td>{{ lineaVenta.producto?.referencia }} | {{ lineaVenta.producto?.marca }} {{lineaVenta.producto?.nombre}}</td>
+                            <td>{{lineaVenta.cantidadPedida || 0}} uds</td>
+                            <td>{{lineaVenta.precioUnitario || 0}} €</td>
+                            <td>{{lineaVenta.precioTotal || 0}} €</td>
                             <td>
                                 <div class="botones-accion">
                                     <button class="btn btn-primary me-2" (click)="editarLineaVenta(lineaVenta)" title="Editar Línea de Venta">
@@ -42,6 +42,7 @@
             </table>
         </div>
     } @else {
-        <p>NADA</p>
+        <p>No se ha encontrado nada</p>
+        <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

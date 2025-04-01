@@ -11,11 +11,10 @@
                         <th>ID</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
-                        <th>Hora</th>
                         <th>Precio final</th>
                         <th>Dirección de envío</th>
                         <th>Método de pago</th>
-                        <th class="accion"><button type="button" class="btn btn-primary new-btn">Crear nuevo</button></th>
+                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,8 +22,7 @@
                         <tr>
                             <td>{{ venta.id }}</td>
                             <td>{{ venta.cliente?.nombre }}</td>
-                            <td>{{ venta.fecha }}</td>
-                            <td>{{ venta.hora }}</td>
+                            <td>{{ venta.fechaHora | date:'dd/MM/yyyy HH:mm' }}</td>
                             <td>{{ venta.precioFinal }}</td>
                             <td>{{ venta.direccion?.direccion }} {{ venta.direccion?.localidad }}, {{ venta.direccion?.comunidadAutonoma }}</td>
                             <td>{{ venta.pago?.numeroTarjeta }}</td>
@@ -47,6 +45,7 @@
             </table>
         </div>
     } @else {
-        <p>NADA</p>
+        <p>No se ha encontrado nada</p>
+        <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

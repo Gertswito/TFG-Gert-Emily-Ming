@@ -34,4 +34,8 @@ public class LineasVentasService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "lineasVentaNoSePuedeEliminar", e);
         }
     }
+
+    public LineasVentas save(LineasVentas lineasVentas) {
+        return lineasVentasRepository.save(lineasVentas);
+    }
 }

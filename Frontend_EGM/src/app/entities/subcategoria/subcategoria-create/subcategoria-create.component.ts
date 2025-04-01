@@ -22,13 +22,17 @@ export class SubcategoriaCreateComponent implements OnInit {
     protected categoriaService = inject(CategoriaService);
 
     ngOnInit(): void {
-        this.categoriaService.getAllCategorias().subscribe((res) => {
-            this.categoriasCollection = res || [];
-        });
+        this.loadCategorias();
         this.crearSubcategoriaFormulario = new FormGroup({
           nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
           categoria: new FormControl(null, [Validators.required]),
           imagenSubcategoria: new FormControl(null)
+        });
+    }
+
+    loadCategorias() {
+        this.categoriaService.getAllCategorias().subscribe((res) => {
+            this.categoriasCollection = res || [];
         });
     }
 

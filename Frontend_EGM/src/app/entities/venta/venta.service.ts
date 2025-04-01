@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { IVenta } from './venta.model';
 
 @Injectable({
@@ -11,10 +11,18 @@ export class VentaService {
   protected http = inject(HttpClient);
 
   getAllVentas(): Observable<IVenta[]> {
-    return this.http.get<IVenta[]>(`${this.resourceUrl}/all`);
+    return this.http.get<IVenta[]>(`${this.resourceUrl}/all`).pipe(
+      map((res: any[]) => res.map(venta => ({
+        ...venta,
+      fechaHora: new Date(venta.fechaHora)})))
+    );
   }
 
   deleteVenta(id: number): Observable<any> {
     return this.http.delete<IVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
+
+  crearVenta(venta: IVenta): Observable<HttpResponse<IVenta>> {
+    return this.http.post<IVenta>(`${this.resourceUrl}/new`, venta, { observe: 'response' });
   }
 }

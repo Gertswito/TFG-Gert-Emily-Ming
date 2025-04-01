@@ -1,7 +1,6 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Categoria;
-import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.service.CategoriaService;
 
 import jakarta.persistence.EntityNotFoundException;

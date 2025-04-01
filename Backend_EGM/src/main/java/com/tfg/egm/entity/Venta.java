@@ -2,8 +2,10 @@ package com.tfg.egm.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -23,11 +25,9 @@ public class Venta implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @Column(name = "fecha")
-    private LocalDate fecha;
-
-    @Column(name = "hora")
-    private LocalTime hora;
+    @Column(name = "fecha_hora")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss") // Formato ISO
+    private LocalDateTime fechaHora;
 
     @Column(name = "precio_final")
     private Float precioFinal;
@@ -58,20 +58,12 @@ public class Venta implements Serializable {
         this.cliente = cliente;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-    
-    public LocalTime getHora() {
-        return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
     }
 
     public Float getPrecioFinal() {

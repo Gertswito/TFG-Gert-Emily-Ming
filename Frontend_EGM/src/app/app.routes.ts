@@ -21,6 +21,9 @@ import { SubcategoriaListComponent } from './entities/subcategoria/subcategoria-
 import { CategoriaCreateComponent } from './entities/categoria/categoria-create/categoria-create.component';
 import { SubcategoriaCreateComponent } from './entities/subcategoria/subcategoria-create/subcategoria-create.component';
 import { ClienteCreateComponent } from './entities/cliente/cliente-create/cliente-create.component';
+import { ProductoCreateComponent } from './entities/producto/producto-create/producto-create.component';
+import { LineasVentaCreateComponent } from './entities/lineasVenta/lineasVenta-create/lineasVenta-create.component';
+import { VentaCreateComponent } from './entities/venta/venta-create/venta-create.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,8 +41,11 @@ export const routes: Routes = [
     { path: 'pago', component: PagoComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' }  },
     { path: 'producto', component: ProductoComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' }  },
     { path: 'producto-list', component: ProductoListComponent },
+    { path: 'producto-create', component: ProductoCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'lineasVenta', component: LineasVentaComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
+    { path: 'lineasVenta-create', component: LineasVentaCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'venta', component: VentaComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
+    { path: 'venta-create', component: VentaCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'login', component: LoginComponent },
     { path: 'registro', component: RegistroComponent },
     { path: 'carrito', component: CarritoComponent },

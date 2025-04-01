@@ -22,9 +22,8 @@
             <div class="mb-4">
                 <label>Categoría a la que pertence<span class="text-danger"> *</span></label>
                 <select class="form-control" name="categoria" formControlName="categoria">
-                    <option [ngValue]="null"></option>
                     @for (categoria of categoriasCollection; track $index) {
-                      <option [ngValue]="categoria" [value]="categoria.id">{{ categoria.nombre }}</option>
+                      <option [ngValue]="categoria">{{ categoria.nombre }}</option>
                     }
                 </select>
                 <div *ngIf="crearSubcategoriaFormulario.get('categoria')?.touched && crearSubcategoriaFormulario.get('categoria')?.invalid" class="text-danger">

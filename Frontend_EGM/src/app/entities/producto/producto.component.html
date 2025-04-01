@@ -21,7 +21,7 @@
                         <th>Cantidad</th>
                         <th>Stock</th>
                         <th>Precio</th>
-                        <th class="accion"><button type="button" class="btn btn-primary new-btn">Crear nuevo</button></th>
+                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,10 +39,10 @@
                             <td>{{producto.subcategoria?.nombre}}</td>
                             <td>{{producto.descripcion}}</td>
                             <td>{{producto.ingredientes}}</td>
-                            <td>{{producto.tipoIVA}}</td>
-                            <td>{{producto.cantidad}}</td>
-                            <td>{{producto.stock}}</td>
-                            <td>{{producto.precio}}</td>
+                            <td>{{producto.tipoIVA || 0}}%</td>
+                            <td>{{producto.cantidad || 0}} uds</td>
+                            <td>{{producto.stock || 0}} uds</td>
+                            <td>{{producto.precio || 0}} €</td>
                             <td>
                                 <div class="botones-accion">
                                     <button class="btn btn-primary me-2" (click)="editarProducto(producto)" title="Editar Producto">
@@ -59,6 +59,7 @@
             </table>
         </div>
     } @else {
-        <p>NADA</p>
+        <p>No se ha encontrado nada</p>
+        <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

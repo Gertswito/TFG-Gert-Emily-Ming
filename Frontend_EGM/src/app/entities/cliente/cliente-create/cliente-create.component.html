@@ -52,18 +52,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-2">
-                <label>Email</label>
-                <input type="email" class="form-control" formControlName="email">
-                <div *ngIf="crearClienteFormulario.get('email')?.touched && crearClienteFormulario.get('email')?.invalid" class="text-danger">
-                    <i class="bi bi-exclamation-circle me-1"></i>
-                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['email']">Introduce un email válido. </span>
-                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['maxlength']">El email debe de tener un máximo de 100 caracteres. </span>
-                    <span *ngIf="crearClienteFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado. </span>
-                </div>
-            </div>
             <div class="d-flex flex-row">
-                <div class="mb-4 me-3 w-100">
+                <div class="mb-2 w-100 me-3">
                     <label for="">Tipo de documento</label>
                     <div class="d-flex flex-row">
                         <select name="tipoDoc" class="form-control w-25 me-2" formControlName="tipoDoc">
@@ -76,6 +66,26 @@
                         <i class="bi bi-exclamation-circle me-1"></i>
                         <span *ngIf="crearClienteFormulario.get('dni')?.errors?.['dniExiste']">Este documento de identidad ya está registrado. </span>
                         <span *ngIf="crearClienteFormulario.get('dni')?.errors?.['pattern']">El formato del documento de identidad es incorrecto. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Email</label>
+                    <input type="email" class="form-control" formControlName="email">
+                    <div *ngIf="crearClienteFormulario.get('email')?.touched && crearClienteFormulario.get('email')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('email')?.errors?.['email']">Introduce un email válido. </span>
+                        <span *ngIf="crearClienteFormulario.get('email')?.errors?.['maxlength']">El email debe de tener un máximo de 100 caracteres. </span>
+                        <span *ngIf="crearClienteFormulario.get('email')?.errors?.['emailExiste']">Este email ya está registrado. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-4 me-3 w-100">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" formControlName="telefono" placeholder="Ej: 600111222" pattern="\d{9}">
+                    <div *ngIf="crearClienteFormulario.get('telefono')?.touched && crearClienteFormulario.get('telefono')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('telefono')?.errors?.['pattern']">El teléfono debe de ser de 9 dígitos. </span>
                     </div>
                 </div>
                 <div class="mb-4 w-100">

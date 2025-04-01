@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { LineasVentaDeleteComponent } from './lineasVenta-delete/lineasVenta-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class LineasVentaComponent implements OnInit {
 
   private lineasVentaService = inject(LineasVentaService);
   private modalService = inject(NgbModal);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarLineasVenta();
@@ -50,5 +52,9 @@ export class LineasVentaComponent implements OnInit {
         tap(() => this.cargarLineasVenta()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/lineasVenta-create']);
   }
 }

@@ -34,10 +34,10 @@ public class Producto implements Serializable {
     @JoinColumn(name = "subcategoria_id")
     private Subcategoria subcategoria;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 3000)
     private String descripcion;
 
-    @Column(name = "ingredientes")
+    @Column(name = "ingredientes", length = 3000)
     private String ingredientes;
 
     @Column(name = "tipo_IVA")

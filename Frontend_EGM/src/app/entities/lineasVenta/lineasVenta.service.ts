@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ILineasVenta } from './lineasVenta.model';
 
@@ -16,5 +16,9 @@ export class LineasVentaService {
 
   deleteLineasVenta(id: number): Observable<any> {
     return this.http.delete<ILineasVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
+
+  crearLineaVenta(lineaVenta: ILineasVenta): Observable<HttpResponse<ILineasVenta>> {
+    return this.http.post<ILineasVenta>(`${this.resourceUrl}/new`, lineaVenta, { observe: 'response' });
   }
 }
