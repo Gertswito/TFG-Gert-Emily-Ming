@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { VentaDeleteComponent } from './venta-delete/venta-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -20,14 +21,15 @@ export class VentaComponent implements OnInit {
   errorMessage = '';
 
   private ventaService = inject(VentaService);
-  private modalService = inject(NgbModal);
+  private modalService = inject(NgbModal);  
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarVentas();
   }
 
   cargarVentas() {
-    this.ventaService.getAllVentas().subscribe((res) => {
+    this.ventaService.getAllVentasFormateadas().subscribe((res) => {
       this.ventaList = res || [];
     });
   }
@@ -54,5 +56,9 @@ export class VentaComponent implements OnInit {
 
   verLineasVenta(venta: any) {
     console.log('Ver Líneas de Venta:', venta);
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/venta-create']);
   }
 }

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IProducto } from './producto.model';
 
@@ -20,5 +20,9 @@ export class ProductoService {
 
   deleteProducto(id: number): Observable<any> {
     return this.http.delete<IProducto>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
+
+  crearProducto(producto: IProducto): Observable<HttpResponse<IProducto>> {
+    return this.http.post<IProducto>(`${this.resourceUrl}/new`, producto, { observe: 'response' });
   }
 }

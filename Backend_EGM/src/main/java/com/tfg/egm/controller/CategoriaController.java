@@ -5,13 +5,22 @@ import com.tfg.egm.service.CategoriaService;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 public class CategoriaController {
@@ -34,6 +43,17 @@ public class CategoriaController {
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/categorias/new")
+    public ResponseEntity<Object> createCategoria(@RequestBody Categoria categoria) throws URISyntaxException {
+        try {
+            Categoria nuevaCategoria = categoriaService.save(categoria);
+            URI location = new URI("/categorias/new/" + nuevaCategoria.getId());
+            return ResponseEntity.created(location).body(nuevaCategoria);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
         }
     }
 }

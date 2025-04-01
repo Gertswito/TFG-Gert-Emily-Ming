@@ -1,0 +1,88 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear línea de venta</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearLineaVentaFormulario" (ngSubmit)="comprobarForm()">
+            <div class="mb-2">
+                <label>Venta a la que pertenece<span class="text-danger"> *</span></label>
+                <select class="form-control" name="venta" formControlName="venta">
+                    @for (venta of ventasCollection; track $index) {
+                      <option [ngValue]="venta">Venta {{ venta.id }} realizada por {{ venta.cliente?.usuario }}</option>
+                    }
+                </select>
+                <div *ngIf="crearLineaVentaFormulario.get('venta')?.touched && crearLineaVentaFormulario.get('venta')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearLineaVentaFormulario.get('venta')?.errors?.['required']"> La venta es obligatoria. </span>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Producto<span class="text-danger"> *</span></label>
+                <select class="form-control" name="producto" formControlName="producto">
+                    @for (producto of productosCollection; track $index) {
+                      <option [ngValue]="producto">{{ producto.referencia }} | {{ producto.marca }} {{producto.nombre}}</option>
+                    }
+                </select>
+                <div *ngIf="crearLineaVentaFormulario.get('producto')?.touched && crearLineaVentaFormulario.get('producto')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearLineaVentaFormulario.get('producto')?.errors?.['required']"> El producto es obligatorio. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-4 w-100 me-3">
+                    <div class="mb-2 me-3 w-100">
+                        <label>Cantidad pedida<span class="text-danger"> *</span></label>
+                        <div class="d-flex flex-row">
+                            <div class="w-100">
+                                <input type="number" step="1" class="form-control text-end" formControlName="cantidadPedida">
+                            </div>
+                            <div class="pt-2 unidades">
+                                &nbsp;&nbsp;uds
+                            </div>
+                        </div>
+                        <div *ngIf="crearLineaVentaFormulario.get('cantidadPedida')?.touched && crearLineaVentaFormulario.get('cantidadPedida')?.invalid" class="text-danger">
+                            <i class="bi bi-exclamation-circle me-1"></i>
+                            <span *ngIf="crearLineaVentaFormulario.get('cantidadPedida')?.errors?.['required']">La cantidad tiene que ser mayor a 0. </span>
+                            <span *ngIf="crearLineaVentaFormulario.get('cantidadPedida')?.errors?.['min']">La cantidad es obligatoria. </span>
+                            <span *ngIf="crearLineaVentaFormulario.get('cantidadPedida')?.errors?.['pattern']">La cantidad no puede tener decimales. </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 w-100 me-3">
+                    <label>Precio unitario<span class="text-danger"> *</span></label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="0.01" class="form-control text-end" formControlName="precioUnitario" readonly>
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;€
+                        </div>
+                    </div>
+                    <div *ngIf="crearLineaVentaFormulario.get('precioUnitario')?.touched && crearLineaVentaFormulario.get('precioUnitario')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearLineaVentaFormulario.get('precioUnitario')?.errors?.['required']">El precio es obligatorio. </span>
+                        <span *ngIf="crearLineaVentaFormulario.get('precioUnitario')?.errors?.['min']">El precio tiene que ser mayor a 0. </span>
+                    </div>
+                </div>
+                <div class="mb-4 w-100">
+                    <label>Precio total<span class="text-danger"> *</span></label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="number" step="0.01" class="form-control text-end" formControlName="precioTotal" readonly>
+                        </div>
+                        <div class="pt-2 unidades">
+                            &nbsp;&nbsp;€
+                        </div>
+                    </div>
+                    <div *ngIf="crearLineaVentaFormulario.get('precioTotal')?.touched && crearLineaVentaFormulario.get('precioTotal')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearLineaVentaFormulario.get('precioTotal')?.errors?.['required']">El precio es obligatorio. </span>
+                        <span *ngIf="crearLineaVentaFormulario.get('precioTotal')?.errors?.['min']">El precio tiene que ser mayor a 0. </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearLineaVentaFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

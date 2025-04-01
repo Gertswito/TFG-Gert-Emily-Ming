@@ -46,7 +46,6 @@ public class ClienteController {
         if (cliente.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "clienteExiste");
         }
-    
         try {
             Cliente nuevoCliente = clienteService.save(cliente);
             URI location = new URI("/clientes/new/" + nuevoCliente.getId());

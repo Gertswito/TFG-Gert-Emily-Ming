@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> findBySubcategoriaId(int id);
+    boolean existsByReferencia(String referencia);
 }

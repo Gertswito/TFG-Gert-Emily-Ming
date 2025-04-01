@@ -48,7 +48,6 @@
                         <fa-icon [icon]="faUser"></fa-icon>
                     </a>
                     <div ngbDropdownMenu aria-labelledby="usuarioMenu">
-                        <a ngbDropdownItem [routerLink]="'/cliente-cuenta'"><fa-icon [icon]="faUser"></fa-icon>&nbsp;&nbsp;Cuenta</a>
                         <a ngbDropdownItem [routerLink]="'/cliente-ajustes'"><fa-icon [icon]="faCog"></fa-icon>&nbsp;&nbsp;Ajustes</a>
                         <a ngbDropdownItem (click)="logout()"><fa-icon [icon]="faSignOut"></fa-icon>&nbsp;&nbsp;Cerrar sesión</a>
                     </div>

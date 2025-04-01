@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../entities/cliente/cliente.service';
+import { debounceTime } from 'rxjs';
 
 
 @Component({
@@ -37,17 +38,11 @@ export class RegistroComponent implements OnInit {
       contrasenha: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       repiteContrasenha: new FormControl(null, [Validators.required]),
     });
+    this.registroFormulario.get('tipoDoc')?.valueChanges.pipe(debounceTime(300)).subscribe(() => this.actualizarValidacionDNI());
+    this.registroFormulario.get('dni')?.valueChanges.pipe(debounceTime(300)).subscribe(() => this.actualizarValidacionDNI());
   }
 
-  comprobarRegistro(): void {
-    this.registroFormulario.get('dni')?.clearValidators();
-    if (this.registroFormulario.get('tipoDoc')?.value === 'dni') {
-      this.registroFormulario.get('dni')?.setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern(/^\d{8}[A-Z]$/)]);
-    } else if (this.registroFormulario.get('tipoDoc')?.value === 'nie') {
-      this.registroFormulario.get('dni')?.setValidators([Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern(/^[XYZ]\d{7}[A-Z]$/)]);
-    } 
-    this.registroFormulario.get('dni')?.updateValueAndValidity();
-    
+  comprobarRegistro(): void {  
     if (this.registroFormulario.invalid) {
       this.registroFormulario.markAllAsTouched();
       return;
@@ -86,4 +81,31 @@ export class RegistroComponent implements OnInit {
   irHaciaAtras(): void {
     window.history.back();
   }
+
+  private actualizarValidacionDNI(): void {
+    const dniControl = this.registroFormulario.get('dni');
+    if (!dniControl) return;
+  
+    const tipoDoc = this.registroFormulario.get('tipoDoc')?.value;
+  
+    if (tipoDoc === 'dni') {
+      dniControl.setValidators([
+        Validators.required,
+        Validators.minLength(9),
+        Validators.maxLength(9),
+        Validators.pattern(/^\d{8}[A-Z]$/)
+      ]);
+    } else if (tipoDoc === 'nie') {
+      dniControl.setValidators([
+        Validators.required,
+        Validators.minLength(9),
+        Validators.maxLength(9),
+        Validators.pattern(/^[XYZ]\d{7}[A-Z]$/)
+      ]);
+    } else {
+      dniControl.clearValidators(); 
+    }
+  
+    dniControl.updateValueAndValidity({ emitEvent: false }); 
+}
 }

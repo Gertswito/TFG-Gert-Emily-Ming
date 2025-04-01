@@ -1,0 +1,76 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear venta</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearVentaFormulario" (ngSubmit)="comprobarForm()">
+            <div class="mb-2">
+                <label>Cliente<span class="text-danger"> *</span></label>
+                <select class="form-control" name="cliente" formControlName="cliente">
+                    @for (cliente of clientesCollection; track $index) {
+                      <option [ngValue]="cliente">{{ cliente.usuario }}</option>
+                    }
+                </select>
+                <div *ngIf="crearVentaFormulario.get('cliente')?.touched && crearVentaFormulario.get('cliente')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearVentaFormulario.get('cliente')?.errors?.['required']"> El cliente es obligatorio. </span>
+                    <span *ngIf="crearVentaFormulario.get('cliente')?.errors?.['clienteSinCosas']"> El cliente no tiene direcciones y/o pagos registrados. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 w-100 me-3">
+                    <label>Dirección<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="direccion" formControlName="direccion">
+                        @for (direccion of direccionesCollection; track $index) {
+                          <option [ngValue]="direccion">{{ direccion.direccion }}</option>
+                        }
+                    </select>
+                    <div *ngIf="crearVentaFormulario.get('direccion')?.touched && crearVentaFormulario.get('direccion')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearVentaFormulario.get('direccion')?.errors?.['required']"> La dirección es obligatoria. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-100">
+                    <label>Pago<span class="text-danger"> *</span></label>
+                    <select class="form-control" name="pago" formControlName="pago">
+                        @for (pago of pagosCollection; track $index) {
+                          <option [ngValue]="pago">{{ pago.numeroTarjeta }}</option>
+                        }
+                    </select>
+                    <div *ngIf="crearVentaFormulario.get('pago')?.touched && crearVentaFormulario.get('pago')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearVentaFormulario.get('pago')?.errors?.['required']"> El pago es obligatorio. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-4 me-3 w-100">
+                    <label>Fecha de compra<span class="text-danger"> *</span></label>
+                    <input type="datetime-local" class="form-control" formControlName="fechaHora" required>
+                    <div *ngIf="crearVentaFormulario.get('fechaHora')?.touched && crearVentaFormulario.get('fechaHora')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearVentaFormulario.get('fechaHora')?.errors?.['required']"> La fecha es obligatoria. </span>
+                        <span *ngIf="crearVentaFormulario.get('fechaHora')?.errors?.['fechaInvalida']"> La fecha no puede ser futura. </span>
+                    </div>
+                </div>
+                <div class="mb-4 w-100">
+                    <label>Precio final<span class="text-danger"> *</span></label>
+                    <div class="d-flex flex-row">
+                        <div class="w-100">
+                            <input type="numer" step="0.01" class="form-control" formControlName="precioFinal" required>
+                        </div>
+                        <div class="pt-2 unidades text-end">
+                            &nbsp;&nbsp;€
+                        </div>
+                    </div>
+                    <div *ngIf="crearVentaFormulario.get('precioFinal')?.touched && crearVentaFormulario.get('precioFinal')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearVentaFormulario.get('precioFinal')?.errors?.['required']"> El precio final es obligatoria. </span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearVentaFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

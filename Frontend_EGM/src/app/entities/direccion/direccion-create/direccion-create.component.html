@@ -1,0 +1,68 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear dirección</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearDireccionFormulario" (ngSubmit)="comprobarForm()">
+            <div class="mb-2">
+                <label>Dirección<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="direccion" required>
+                <div *ngIf="crearDireccionFormulario.get('direccion')?.touched && crearDireccionFormulario.get('direccion')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearDireccionFormulario.get('direccion')?.errors?.['required']">La dirección es obligatoria. </span>
+                    <span *ngIf="crearDireccionFormulario.get('direccion')?.errors?.['maxlength']">La dirección tiene como máximo 255 caracteres. </span>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Código postal<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="codigoPostal" required>
+                    <div *ngIf="crearDireccionFormulario.get('codigoPostal')?.touched && crearDireccionFormulario.get('codigoPostal')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearDireccionFormulario.get('codigoPostal')?.errors?.['required']">La dirección es obligatoria. </span>
+                        <span *ngIf="crearDireccionFormulario.get('codigoPostal')?.errors?.['pattern']">Introduce un código postal válido (5 dígitos). </span>
+                    </div>
+                </div>
+                <div class="mb-2 me-3 w-100">
+                    <label>Localidad<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="localidad" required>
+                    <div *ngIf="crearDireccionFormulario.get('localidad')?.touched && crearDireccionFormulario.get('localidad')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearDireccionFormulario.get('localidad')?.errors?.['required']">La localidad es obligatoria. </span>
+                        <span *ngIf="crearDireccionFormulario.get('localidad')?.errors?.['maxlength']">La localidad tiene como máximo 255 caracteres. </span>
+                    </div>
+                </div>
+                <div class="mb-2 me-3 w-100">
+                    <label>Comunidad Autónoma<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="comunidadAutonoma" required>
+                    <div *ngIf="crearDireccionFormulario.get('comunidadAutonoma')?.touched && crearDireccionFormulario.get('comunidadAutonoma')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearDireccionFormulario.get('comunidadAutonoma')?.errors?.['required']">La Comunidad Autónoma es obligatoria. </span>
+                        <span *ngIf="crearDireccionFormulario.get('comunidadAutonoma')?.errors?.['maxlength']">La Comunidad Autónoma tiene como máximo 255 caracteres. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Cliente al que pertence</label>
+                <select class="form-control" name="cliente" formControlName="cliente">
+                    @for (cliente of clientesCollection; track $index) {
+                      <option [ngValue]="cliente">{{ cliente.usuario }}</option>
+                    }
+                </select>
+                <div *ngIf="crearDireccionFormulario.get('cliente')?.touched && crearDireccionFormulario.get('cliente')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearDireccionFormulario.get('cliente')?.errors?.['required']"> El cliente es obligatoria. </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="activo">¿Desea dejar activada o desactivada esta dirección?</label><br>
+                <input type="checkbox" id="activo" formControlName="activo" class="ms-2">
+                <span class="ms-2">
+                    {{ crearDireccionFormulario.get('activo')?.value ? 'Activado' : 'Desactivado' }}
+                </span>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearDireccionFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -40,17 +40,19 @@ public class ClienteService {
         if (clienteRepository.existsByUsuario(cliente.getUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreUsuarioExiste");
         }
-        if (clienteRepository.existsByEmail(cliente.getEmail())) {
+        if (cliente.getEmail() != null && clienteRepository.existsByEmail(cliente.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "emailExiste");
         }
-        if (clienteRepository.existsByDni(cliente.getDni())) {
+        if (cliente.getDni() != null && clienteRepository.existsByDni(cliente.getDni())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "dniExiste");
         }
-        LocalDate fechaHoy = LocalDate.now();
-        if (cliente.getFechaNac().isAfter(fechaHoy)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
+        if(cliente.getFechaNac() != null) {
+            LocalDate fechaHoy = LocalDate.now();
+            if (cliente.getFechaNac().isAfter(fechaHoy)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
+            }
         }
-    
+
         if (cliente.getRol() == null) {
             cliente.setRol("USER");
         }

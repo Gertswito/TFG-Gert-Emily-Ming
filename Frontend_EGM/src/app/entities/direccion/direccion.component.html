@@ -12,8 +12,9 @@
                     <th>Calle</th>
                     <th>Localidad</th>
                     <th>Comunidad autónoma</th>
+                    <th>Estado</th>
                     <th>Cliente</th>
-                    <th>Accion</th>
+                    <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,13 @@
                         <td>{{direccion.direccion}}</td>
                         <td>{{direccion.localidad}}</td>
                         <td>{{direccion.comunidadAutonoma}}</td>
+                        <td>
+                            @if (direccion.activo) {
+                                <button type="button" class="btn btn-success btn-small">Activado</button>
+                            } @else {
+                                <button type="button" class="btn btn-danger btn-small">Desactivado</button>
+                            }
+                        </td>
                         <td>{{direccion.cliente?.usuario}}</td>
                         <td>
                             <div class="botones-accion">
@@ -40,6 +48,7 @@
             </tbody>
         </table>
     } @else {
-        <p>NADA</p>
+        <p>No se ha encontrado nada</p>
+        <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

@@ -10,23 +10,25 @@
 
         <div class="cards-categorias">
             <ng-container *ngFor="let categoria of categoriaList">
-                <div class="card-categoria">
-                    <h2>{{categoria.nombre}}</h2>
-                    <div class="subcategorias-container">
-                        <div class="subcategorias">
-                            <ng-container *ngFor="let subcategoria of categoria.subcategorias">
-                                <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }" class="card-subcategoria-link">
-                                    <div class="card-subcategoria">
-                                        @if (subcategoria.imagenSubcategoria !== null){
-                                            <img [src]="subcategoria.imagenSubcategoria" class="subcategoria-imagen" alt="">
-                                        }
-                                        <span class="texto">{{subcategoria.nombre}}</span>
-                                    </div>
-                                </a>
-                            </ng-container>
+                @if (categoria.subcategorias && categoria.subcategorias.length > 0) {
+                    <div class="card-categoria">
+                        <h2>{{categoria.nombre}}</h2>
+                        <div class="subcategorias-container">
+                            <div class="subcategorias">
+                                <ng-container *ngFor="let subcategoria of categoria.subcategorias">
+                                    <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }" class="card-subcategoria-link">
+                                        <div class="card-subcategoria">
+                                            @if (subcategoria.imagenSubcategoria !== null){
+                                                <img [src]="subcategoria.imagenSubcategoria" class="subcategoria-imagen" alt="">
+                                            }
+                                            <span class="texto">{{subcategoria.nombre}}</span>
+                                        </div>
+                                    </a>
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </ng-container>
         </div>
     } @else {

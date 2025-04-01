@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ICategoria } from './categoria.model';
 
@@ -16,5 +16,9 @@ export class CategoriaService {
 
   deleteCategoria(id: number): Observable<any> {
     return this.http.delete<ICategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
+  }
+
+  crearCategoria(categoria: ICategoria): Observable<HttpResponse<ICategoria>> {
+    return this.http.post<ICategoria>(`${this.resourceUrl}/new`, categoria, { observe: 'response' });
   }
 }

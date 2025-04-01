@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { PagoDeleteComponent } from './pago-delete/pago-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class PagoComponent implements OnInit {
 
   private pagoService = inject(PagoService);
   private modalService = inject(NgbModal);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarPagos();
@@ -50,5 +52,9 @@ export class PagoComponent implements OnInit {
         tap(() => this.cargarPagos()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/pago-create']);
   }
 }

@@ -18,7 +18,7 @@ public class Subcategoria implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "imagen_subcategoria")
+    @Column(name = "imagen_subcategoria", length = 3000)
     private String imagenSubcategoria;
 
     @ManyToOne
