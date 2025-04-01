@@ -15,8 +15,6 @@
                         <th>Marca</th>
                         <th>Categoría</th>
                         <th>Subcategoría</th>
-                        <th>Descripción</th>
-                        <th>Ingredientes</th>
                         <th>IVA</th>
                         <th>Cantidad</th>
                         <th>Stock</th>
@@ -37,8 +35,6 @@
                             <td>{{producto.marca}}</td>
                             <td>{{producto.categoria?.nombre}}</td>
                             <td>{{producto.subcategoria?.nombre}}</td>
-                            <td>{{producto.descripcion}}</td>
-                            <td>{{producto.ingredientes}}</td>
                             <td>{{producto.tipoIVA || 0}}%</td>
                             <td>{{producto.cantidad || 0}} uds</td>
                             <td>{{producto.stock || 0}} uds</td>

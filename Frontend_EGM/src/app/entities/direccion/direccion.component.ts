@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { DireccionDeleteComponent } from './direccion-delete/direccion-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class DireccionComponent implements OnInit {
 
   private direccionService = inject(DireccionService);
   private modalService = inject(NgbModal);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     this.cargarDirecciones();
@@ -50,5 +52,9 @@ export class DireccionComponent implements OnInit {
         tap(() => this.cargarDirecciones()),
       )
       .subscribe();
+  }
+
+  crearNuevo(): void {
+    this.router.navigate(['/direccion-create']);
   }
 }

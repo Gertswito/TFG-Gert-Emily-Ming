@@ -29,7 +29,7 @@ export class VentaComponent implements OnInit {
   }
 
   cargarVentas() {
-    this.ventaService.getAllVentas().subscribe((res) => {
+    this.ventaService.getAllVentasFormateadas().subscribe((res) => {
       this.ventaList = res || [];
     });
   }

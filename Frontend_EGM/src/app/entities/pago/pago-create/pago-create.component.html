@@ -1,0 +1,57 @@
+<div class="body-entidades">
+    <h1 class="titulo">Crear dirección</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form class="form create-form" [formGroup]="crearPagoFormulario" (ngSubmit)="comprobarForm()">
+            <div class="d-flex flex-row">
+                <div class="mb-2 me-3 w-100">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" class="form-control" formControlName="numeroTarjeta" (input)="formatCardNumber($event)" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                    <div *ngIf="crearPagoFormulario.get('numeroTarjeta')?.invalid && crearPagoFormulario.get('numeroTarjeta')?.touched"  class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span>Introduce un número de tarjeta válido (16 dígitos)</span>
+                    </div>
+                </div>
+                <div class="mb-2 me-3 w-75">
+                    <label>Fecha</label>
+                    <input type="month" class="form-control" formControlName="fechaCaducidad" required>
+                    <div *ngIf="crearPagoFormulario.get('fechaCaducidad')?.invalid && crearPagoFormulario.get('fechaCaducidad')?.touched" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearPagoFormulario.get('fechaCaducidad')?.errors?.['required']"> La fecha de caducidad es obligatoria. </span>
+                    </div>
+                </div>
+                <div class="mb-2 w-50">
+                    <label>CVV</label>
+                    <input type="number" class="form-control" formControlName="cvv" required>
+                    <div *ngIf="crearPagoFormulario.get('cvv')?.invalid && crearPagoFormulario.get('cvv')?.touched" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearPagoFormulario.get('cvv')?.errors?.['required']"> El CVV es obligatorio. </span>
+                        <span *ngIf="crearPagoFormulario.get('cvv')?.errors?.['pattern']"> El CVV debe de tener solo 3 dígitos. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label>Cliente al que pertence</label>
+                <select class="form-control" name="cliente" formControlName="cliente">
+                    @for (cliente of clientesCollection; track $index) {
+                      <option [ngValue]="cliente">{{ cliente.usuario }}</option>
+                    }
+                </select>
+                <div *ngIf="crearPagoFormulario.get('cliente')?.touched && crearPagoFormulario.get('cliente')?.invalid" class="text-danger">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    <span *ngIf="crearPagoFormulario.get('cliente')?.errors?.['required']"> El cliente es obligatoria. </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="activo">¿Desea dejar activada o desactivada esta dirección?</label><br>
+                <input type="checkbox" id="activo" formControlName="activo" class="ms-2">
+                <span class="ms-2">
+                    {{ crearPagoFormulario.get('activo')?.value ? 'Activado' : 'Desactivado' }}
+                </span>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success me-2" [disabled]="crearPagoFormulario.invalid">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="volver()">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>

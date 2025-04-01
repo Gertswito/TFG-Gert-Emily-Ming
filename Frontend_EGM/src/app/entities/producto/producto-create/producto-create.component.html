@@ -60,9 +60,9 @@
             </div>
             <div class="mb-2">
                 <label>Url de imagen de producto</label>
-                <input type="text" class="form-control" formControlName="imagenProducto">
-                <div *ngIf="crearProductoFormulario.get('imagenProducto')?.value !== null && crearProductoFormulario.get('imagenProducto')?.value !== ''" class="mt-2">
-                    <img [src]="crearProductoFormulario.get('imagenProducto')?.value" alt="" class="imagen-productos">
+                <input type="text" class="form-control" formControlName="urlImagen">
+                <div *ngIf="crearProductoFormulario.get('urlImagen')?.value !== null && crearProductoFormulario.get('urlImagen')?.value !== ''" class="mt-2">
+                    <img [src]="crearProductoFormulario.get('urlImagen')?.value" alt="" class="imagen-productos">
                 </div>
             </div>
             <div class="mb-2">

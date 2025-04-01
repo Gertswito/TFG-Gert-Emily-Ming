@@ -10,12 +10,16 @@ export class VentaService {
   private resourceUrl = 'http://localhost:8080/ventas';
   protected http = inject(HttpClient);
 
-  getAllVentas(): Observable<IVenta[]> {
+  getAllVentasFormateadas(): Observable<IVenta[]> {
     return this.http.get<IVenta[]>(`${this.resourceUrl}/all`).pipe(
       map((res: any[]) => res.map(venta => ({
         ...venta,
       fechaHora: new Date(venta.fechaHora)})))
     );
+  }
+
+  getAllVentas(): Observable<IVenta[]> {
+    return this.http.get<IVenta[]>(`${this.resourceUrl}/all`);
   }
 
   deleteVenta(id: number): Observable<any> {

@@ -34,7 +34,7 @@ export class ProductoCreateComponent implements OnInit {
             referencia: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
             categoria: new FormControl(null, [Validators.required]),
             subcategoria: new FormControl({ value: null, disabled: true }, [Validators.required]),
-            imagenProducto: new FormControl(null),
+            urlImagen: new FormControl(null),
             descripcion: new FormControl(null, [Validators.maxLength(3000)]),
             ingredientes: new FormControl(null, [Validators.maxLength(3000)]),
             tipoIVA: new FormControl(null, [Validators.min(0), Validators.max(100)]),
