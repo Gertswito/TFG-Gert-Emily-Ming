@@ -1,0 +1,43 @@
+@if (errorCargado) {
+    <div class="alert alert-danger" role="alert">
+        <strong>Error al cargar el producto, vuelva a intentarlo más tarde</strong>
+    </div>
+} @else if (productoSeleccionado) {
+    <div class="d-flex flex-row align-items-center justify-content-center contenedor-producto">
+        <div class="div-imagen-producto w-50">
+            @if (productoSeleccionado.urlImagen) {
+                <img [src]="productoSeleccionado.urlImagen" alt="" class="imagen-producto">
+            }
+        </div>
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h1 class="mb-0">{{productoSeleccionado.marca}} - {{productoSeleccionado.nombre}}</h1>
+                <button type="button" class="btn btn-secondary" (click)="atras()">Volver</button>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    {{productoSeleccionado.categoria?.nombre}} / {{productoSeleccionado.subcategoria?.nombre}}
+                </div>
+                <div>
+                    {{productoSeleccionado.referencia}}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{productoSeleccionado.descripcion}}
+            </div>
+            <div class="d-flex flex-row justify-content-between">
+                <div class="d-flex flex-column align-items-center">
+                    <h5>Ingredientes:</h5>
+                    {{productoSeleccionado.ingredientes}}
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-between">
+                    <div class="d-flex justify-content-end w-100 mb-2">
+                        <span class="text-end">Precio: {{productoSeleccionado.precio}}€</span>
+                    </div>
+                    <button type="button" class="btn btn-primary">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

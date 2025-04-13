@@ -3,12 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IProducto } from '../producto.model';
 import { ProductoService } from '../producto.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'producto',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './producto-list.component.html',
   styleUrls: ['./producto-list.component.css'],
 })

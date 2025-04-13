@@ -1,0 +1,8 @@
+.contenedor-producto {
+    margin: 1em;
+}
+
+.imagen-producto {
+    width: 100%;
+    max-width: 20em;   
+}

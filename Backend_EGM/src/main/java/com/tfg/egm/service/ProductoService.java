@@ -26,6 +26,10 @@ public class ProductoService {
     public List<Producto> obtenerProductosConIdSubcategoria(int id) {
         return productoRepository.findBySubcategoriaId(id);
     }
+
+    public Producto obtenerProductoPorId(Long id) {
+        return productoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste"));
+    }
     
     public void deleteProducto(Long id) {
         if (!productoRepository.existsById(id)) {

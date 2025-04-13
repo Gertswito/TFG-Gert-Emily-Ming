@@ -38,6 +38,17 @@ public class ProductoController {
         return productoService.obtenerProductosConIdSubcategoria(id);
     }
 
+
+    @GetMapping("/productos/find/{id}")
+    public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
+        try {
+            Producto producto = productoService.obtenerProductoPorId(id);
+            return ResponseEntity.ok(producto);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/productos/delete/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
         try {
