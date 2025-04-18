@@ -1,3 +1,33 @@
-<div class="ms-5">
-    <h1>NADA, DE MOMENTO NO HAY NADA</h1>
+<div class="ms-5 body-carrito">
+    <div class="d-flex flex-column align-items-center justify-content-center contenedor-producto">
+        <h1 class="mb-0">Carrito de compras</h1>
+        <hr>
+        @if (venta && venta.precioFinal !== null && venta.precioFinal > 0) {
+            <div class="d-flex flex-column w-100 me-5">
+                <div class="d-flex flex-row justify-content-between mb-3">
+                    <div><h4>Producto</h4></div>
+                </div>
+                <ng-container *ngFor="let linea of lineasVenta">
+                    <div class="d-flex flex-row justify-content-between mb-2 w-100">
+                        <div class="d-flex flex-row justify-content-between align-items-center w-100 me-2">
+                            <div>{{linea.producto?.marca}} - {{linea.producto?.nombre}} <span class="color-gris">|</span> x{{linea.cantidadPedida}}</div>
+                            <div>{{linea.precioTotal | number:'1.2-2'}}€</div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center align-items-center borde-izquierda">
+                            <button type="button" class="btn btn-primary btn-sm me-1" (click)="addUno(linea)" style="width: 2em;"><b>+</b></button>
+                            <button type="button" class="btn btn-secondary btn-sm me-1" (click)="deleteUno(linea)" style="width: 2em;"><b>-</b></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteLinea(linea)"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                </ng-container>
+                <hr>
+                <div class="d-flex flex-row justify-content-between mb-3">
+                    <h5>Total:</h5>
+                    <h5>{{venta.precioFinal | number:'1.2-2'}}€</h5>
+                </div>
+            </div>
+        } @else {
+            <h2 class="mb-0">No hay productos en el carrito</h2>
+        }
+    </div>
 </div>

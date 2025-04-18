@@ -1,0 +1,13 @@
+hr {
+    opacity: 1;
+    color: #b4b4b4;
+}
+
+.borde-izquierda {
+    border-left: 2px solid #b4b4b4;
+    padding-left: 0.5em;
+}
+
+.color-gris {
+    color: #b4b4b4;
+}

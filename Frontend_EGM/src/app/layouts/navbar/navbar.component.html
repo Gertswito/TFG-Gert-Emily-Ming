@@ -37,7 +37,11 @@
             </div>
         }
         <div>
-            <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+            @if (rol) {
+                <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+            } @else {
+                <a [routerLink]="'/login'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+            }
         </div>
         <div>
             @if (!isLoggedIn) {
