@@ -4,7 +4,7 @@
         <hr>
         @if (venta && venta.precioFinal !== null && venta.precioFinal > 0) {
             <div class="d-flex flex-column w-100 me-5">
-                <div class="d-flex flex-row justify-content-between mb-3">
+                <div class="d-flex flex-row justify-content-between mb-1">
                     <div><h4>Producto</h4></div>
                 </div>
                 <ng-container *ngFor="let linea of lineasVenta">
