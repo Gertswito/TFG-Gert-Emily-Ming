@@ -52,7 +52,7 @@ export const routes: Routes = [
     { path: 'venta-create', component: VentaCreateComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'login', component: LoginComponent },
     { path: 'registro', component: RegistroComponent },
-    { path: 'carrito', component: CarritoComponent },
+    { path: 'carrito', component: CarritoComponent, canActivate: [AuthGuard] },
     { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'error-sin-autorizacion', component: ErrorComponent },
 ];

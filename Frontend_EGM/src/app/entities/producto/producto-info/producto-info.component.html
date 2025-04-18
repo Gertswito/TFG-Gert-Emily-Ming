@@ -33,9 +33,9 @@
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-between">
                     <div class="d-flex justify-content-end w-100 mb-2">
-                        <span class="text-end">Precio: {{productoSeleccionado.precio}}€</span>
+                        <span class="text-end">Precio: {{productoSeleccionado.precio | number:'1.2-2'}}€</span>
                     </div>
-                    <button type="button" class="btn btn-primary">Añadir al carrito</button>
+                    <button type="button" class="btn btn-primary" (click)="addCarrito(productoSeleccionado)" [disabled]="usuario == null || usuario == undefined">Añadir al carrito</button>
                 </div>
             </div>
         </div>

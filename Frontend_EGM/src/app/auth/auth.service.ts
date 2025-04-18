@@ -11,7 +11,7 @@ export class AuthService {
   constructor() {}
 
   private isTokenValid(): boolean {
-    const token = sessionStorage.getItem('jwtToken');
+    const token = localStorage.getItem('jwtToken');
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1])); 
       const now = Math.floor(new Date().getTime() / 1000);
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   getUsuario(): string | null {
-    const token = sessionStorage.getItem('jwtToken');
+    const token = localStorage.getItem('jwtToken');
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.sub || null; 
@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   getRol(): string | null {
-    const token = sessionStorage.getItem('jwtToken');
+    const token = localStorage.getItem('jwtToken');
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.rol || null;  
@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   logout(): void {
-    sessionStorage.removeItem('jwtToken');
+    localStorage.removeItem('jwtToken');
     this.setLoggedIn(false);
   }
 }

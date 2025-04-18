@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.clienteService.login(this.loginFormulario.value).subscribe({
       next: (response) => {
         if (response.body && response.body.token) {
-          sessionStorage.setItem('jwtToken', response.body.token);  
+          localStorage.setItem('jwtToken', response.body.token);  
           this.router.navigate(['/']);  
         }
       },
