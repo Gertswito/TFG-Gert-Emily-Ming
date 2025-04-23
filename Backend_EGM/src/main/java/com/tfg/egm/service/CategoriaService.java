@@ -26,6 +26,10 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
+    public Categoria obtenerCategoriaPorId(Long id) {
+        return categoriaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste"));
+    }
+
     public void deleteCategoria(Long id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste");

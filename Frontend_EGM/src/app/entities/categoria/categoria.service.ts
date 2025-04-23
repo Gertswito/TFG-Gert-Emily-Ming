@@ -14,11 +14,19 @@ export class CategoriaService {
     return this.http.get<ICategoria[]>(`${this.resourceUrl}/all`);
   }
 
+  getCategoria(id: number): Observable<ICategoria> {
+    return this.http.get<ICategoria>(`${this.resourceUrl}/find/${id}`);
+  }
+
   deleteCategoria(id: number): Observable<any> {
     return this.http.delete<ICategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }
 
   crearCategoria(categoria: ICategoria): Observable<HttpResponse<ICategoria>> {
     return this.http.post<ICategoria>(`${this.resourceUrl}/new`, categoria, { observe: 'response' });
+  }
+
+  editarCategoria(categoria: ICategoria): Observable<HttpResponse<ICategoria>> {
+    return this.http.put<ICategoria>(`${this.resourceUrl}/update/${categoria.id}`, categoria, { observe: 'response' });
   }
 }

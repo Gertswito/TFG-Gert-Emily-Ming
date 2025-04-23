@@ -24,6 +24,10 @@ public class SubcategoriaService {
         return subcategoriaRepository.findAll();
     }
 
+    public Subcategoria obtenerSubcategoriaPorId(Long id) {
+        return subcategoriaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste"));
+    }
+
     public List<Subcategoria> obtenerSubcategoriasConIdCategoria(int id) {
         return subcategoriaRepository.findByCategoriaId(id);
     }

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../categoria.service';
 import { ICategoria } from '../categoria.model';
 
@@ -13,14 +13,29 @@ import { ICategoria } from '../categoria.model';
 })
 export class CategoriaCreateComponent implements OnInit {
     crearCategoriaFormulario!: FormGroup;
+    booleanEditarExistente = false;
 
     protected router = inject(Router);
     protected categoriaService = inject(CategoriaService);
+    private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
-        this.crearCategoriaFormulario = new FormGroup({
-          nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)])
-        });
+      this.crearCategoriaFormulario = new FormGroup({
+        nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)])
+      });
+    
+      this.route.queryParams.subscribe(params => {
+        const id = params['id'];
+        if (id) {
+          this.booleanEditarExistente = true;
+          this.categoriaService.getCategoria(id).subscribe((res) => {
+            this.crearCategoriaFormulario = new FormGroup({
+              id: new FormControl(res.id),
+              nombre: new FormControl(res.nombre, [Validators.required, Validators.maxLength(255)])
+            });
+          });
+        }
+      });
     }
 
     comprobarForm(): void {
@@ -28,7 +43,14 @@ export class CategoriaCreateComponent implements OnInit {
             this.crearCategoriaFormulario.markAllAsTouched();
             return;
         }  
-        this.categoriaService.crearCategoria(this.crearCategoriaFormulario.value).subscribe({
+        if (this.booleanEditarExistente) {
+          this.categoriaService.editarCategoria(this.crearCategoriaFormulario.value).subscribe({
+            next: (response) => {
+              this.router.navigate(['/categoria'], { queryParams: { editado: 'true' } });
+            }
+          });
+        } else {
+          this.categoriaService.crearCategoria(this.crearCategoriaFormulario.value).subscribe({
             next: (response) => {
               this.router.navigate(['/categoria'], { queryParams: { creado: 'true' } });
             },
@@ -39,7 +61,8 @@ export class CategoriaCreateComponent implements OnInit {
                 }
               }
             }
-        });
+          });
+        }
     }
 
     volver(): void{

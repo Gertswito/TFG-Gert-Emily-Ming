@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,6 +33,16 @@ public class SubcategoriaController {
     @GetMapping("/subcategorias/all")
     public List<Subcategoria> obtenerSubcategorias() {
         return subcategoriaService.obtenerSubcategorias();
+    }
+
+    @GetMapping("/subcategorias/find/{id}")
+    public ResponseEntity<Subcategoria> obtenerSubcategoriaPorId(@PathVariable Long id) {
+        try {
+            Subcategoria subcategoria = subcategoriaService.obtenerSubcategoriaPorId(id);
+            return ResponseEntity.ok(subcategoria);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/subcategorias/categoria/{id}")
@@ -57,6 +68,18 @@ public class SubcategoriaController {
             return ResponseEntity.created(location).body(nuevaSubcategoria);
         } catch (ResponseStatusException ex) {
             return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+        }
+    }
+
+    @PutMapping("/subcategorias/update/{id}")
+    public ResponseEntity<Subcategoria> updateSubcategoria(@PathVariable Long id, @RequestBody Subcategoria subcategoria) {
+        try {
+            Subcategoria subcategoriaExistente = subcategoriaService.obtenerSubcategoriaPorId(id);
+            subcategoria.setId(subcategoriaExistente.getId());
+            Subcategoria subcategoriaActualizada = subcategoriaService.save(subcategoria);
+            return ResponseEntity.ok(subcategoriaActualizada);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -34,6 +35,16 @@ public class CategoriaController {
     @GetMapping("/categorias/all")
     public List<Categoria> obtenerCategorias() {
         return categoriaService.obtenerCategorias();
+    }
+
+    @GetMapping("/categorias/find/{id}")
+    public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable Long id) {
+        try {
+            Categoria categoria = categoriaService.obtenerCategoriaPorId(id);
+            return ResponseEntity.ok(categoria);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/categorias/delete/{id}")
@@ -54,6 +65,19 @@ public class CategoriaController {
             return ResponseEntity.created(location).body(nuevaCategoria);
         } catch (ResponseStatusException ex) {
             return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+        }
+    }
+
+    @PutMapping("/categorias/update/{id}")
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
+        try {
+            Categoria categoriaExistente = categoriaService.obtenerCategoriaPorId(id);
+            categoria.setId(categoriaExistente.getId());
+            categoria.setSubcategorias(categoriaExistente.getSubcategorias());
+            Categoria categoriaActualizada = categoriaService.save(categoria);
+            return ResponseEntity.ok(categoriaActualizada);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
