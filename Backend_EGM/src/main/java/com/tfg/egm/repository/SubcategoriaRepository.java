@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SubcategoriaRepository extends JpaRepository<Subcategoria, Long> {
     List<Subcategoria> findByCategoriaId(int id);
     boolean existsByNombre(String nombre);
+    Subcategoria findByNombre(String nombre);
 }

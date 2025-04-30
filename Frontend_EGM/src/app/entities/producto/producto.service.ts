@@ -29,4 +29,8 @@ export class ProductoService {
   crearProducto(producto: IProducto): Observable<HttpResponse<IProducto>> {
     return this.http.post<IProducto>(`${this.resourceUrl}/new`, producto, { observe: 'response' });
   }
+
+  editarProducto(producto: IProducto): Observable<HttpResponse<IProducto>> {
+    return this.http.put<IProducto>(`${this.resourceUrl}/update/${producto.id}`, producto, { observe: 'response' });
+  }
 }

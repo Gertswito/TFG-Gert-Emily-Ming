@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../categoria.service';
 import { ICategoria } from '../categoria.model';
+import { identity } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class CategoriaCreateComponent implements OnInit {
 
     ngOnInit(): void {
       this.crearCategoriaFormulario = new FormGroup({
+        id: new FormControl(null),
         nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)])
       });
     
@@ -29,9 +31,9 @@ export class CategoriaCreateComponent implements OnInit {
         if (id) {
           this.booleanEditarExistente = true;
           this.categoriaService.getCategoria(id).subscribe((res) => {
-            this.crearCategoriaFormulario = new FormGroup({
-              id: new FormControl(res.id),
-              nombre: new FormControl(res.nombre, [Validators.required, Validators.maxLength(255)])
+            this.crearCategoriaFormulario.patchValue({
+              id: res.id,
+              nombre: res.nombre
             });
           });
         }

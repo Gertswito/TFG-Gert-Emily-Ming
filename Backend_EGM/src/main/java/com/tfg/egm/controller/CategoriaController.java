@@ -71,11 +71,12 @@ public class CategoriaController {
     @PutMapping("/categorias/update/{id}")
     public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
         try {
-            Categoria categoriaExistente = categoriaService.obtenerCategoriaPorId(id);
-            categoria.setId(categoriaExistente.getId());
-            categoria.setSubcategorias(categoriaExistente.getSubcategorias());
-            Categoria categoriaActualizada = categoriaService.save(categoria);
-            return ResponseEntity.ok(categoriaActualizada);
+            if (categoriaService.obtenerCategoriaPorId(id) != null) {
+                categoriaService.update(categoria);
+                return ResponseEntity.ok(categoria);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }

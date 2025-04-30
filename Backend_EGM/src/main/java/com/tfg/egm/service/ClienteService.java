@@ -1,6 +1,7 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Cliente;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.ClienteRepository;
 import com.tfg.egm.security.JwtTokenUtil;
 
@@ -34,6 +35,10 @@ public class ClienteService {
 
     public Cliente obtenerClientePorUsuario(String usuario) {
         return clienteRepository.findByUsuario(usuario);
+    }
+
+    public Cliente obtenerClientePorId(Long id) {
+        return clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "clienteNoExiste"));
     }
 
     public Cliente save(Cliente cliente) {
@@ -81,7 +86,7 @@ public class ClienteService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idRequerido");
         }
         
-        Cliente clienteExistente = clienteRepository.findByUsuario(cliente.getUsuario());
+        Cliente clienteExistente = clienteRepository.findById(cliente.getId());
     
         if (!clienteExistente.getEmail().equals(cliente.getEmail()) &&
             clienteRepository.existsByEmail(cliente.getEmail())) {

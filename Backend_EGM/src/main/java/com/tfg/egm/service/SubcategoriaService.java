@@ -49,4 +49,12 @@ public class SubcategoriaService {
         }
         return subcategoriaRepository.save(subcategoria);
     }
+
+    public Subcategoria update(Subcategoria subcategoria) {
+        Subcategoria existente = subcategoriaRepository.findByNombre(subcategoria.getNombre());
+        if (existente != null && !existente.getId().equals(subcategoria.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
+        }
+        return subcategoriaRepository.save(subcategoria);
+    }
 }

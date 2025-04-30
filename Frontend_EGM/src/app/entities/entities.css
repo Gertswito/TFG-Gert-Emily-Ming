@@ -122,3 +122,7 @@ hr {
 .unidades {
     width: 2em;
 }
+
+.full-width {
+    width: 100% !important;
+}

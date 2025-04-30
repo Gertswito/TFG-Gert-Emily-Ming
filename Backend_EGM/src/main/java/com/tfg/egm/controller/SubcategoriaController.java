@@ -74,10 +74,12 @@ public class SubcategoriaController {
     @PutMapping("/subcategorias/update/{id}")
     public ResponseEntity<Subcategoria> updateSubcategoria(@PathVariable Long id, @RequestBody Subcategoria subcategoria) {
         try {
-            Subcategoria subcategoriaExistente = subcategoriaService.obtenerSubcategoriaPorId(id);
-            subcategoria.setId(subcategoriaExistente.getId());
-            Subcategoria subcategoriaActualizada = subcategoriaService.save(subcategoria);
-            return ResponseEntity.ok(subcategoriaActualizada);
+            if (subcategoriaService.obtenerSubcategoriaPorId(id) != null) {
+                subcategoriaService.update(subcategoria);
+                return ResponseEntity.ok(subcategoria);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (ResponseStatusException ex) {
             return ResponseEntity.notFound().build();
         }

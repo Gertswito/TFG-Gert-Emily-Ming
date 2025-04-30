@@ -1,6 +1,7 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Producto;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.ProductoRepository;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -46,6 +47,10 @@ public class ProductoService {
         if (productoRepository.existsByReferencia(producto.getReferencia())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "referenciaExiste");
         }
+        return productoRepository.save(producto);
+    }
+
+    public Producto update(Producto producto) {
         return productoRepository.save(producto);
     }
 }

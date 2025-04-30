@@ -2,23 +2,15 @@
     <h1 class="titulo">Crear cliente</h1>
     <div class="d-flex align-items-center justify-content-center">
         <form class="form create-form" [formGroup]="crearClienteFormulario" (ngSubmit)="comprobarForm()">
-            <div class="mb-2">
-                <label>Nombre de usuario<span class="text-danger"> *</span></label>
-                <input type="text" class="form-control" formControlName="usuario" required>
-                <div *ngIf="crearClienteFormulario.get('usuario')?.touched && crearClienteFormulario.get('usuario')?.invalid" class="text-danger">
-                    <i class="bi bi-exclamation-circle me-1"></i>
-                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['required']">El nombre es obligatorio. </span>
-                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
-                    <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['usuarioExiste']">Un cliente con este nombre de usuario ya está registrada. </span>
-                </div>
-            </div>
             <div class="d-flex flex-row">
                 <div class="mb-2 me-3 w-100">
-                    <label>Contraseña<span class="text-danger"> *</span></label>
-                    <input type="password" class="form-control" formControlName="contrasenha" required>
-                    <div *ngIf="crearClienteFormulario.get('contrasenha')?.touched && crearClienteFormulario.get('contrasenha')?.invalid" class="text-danger">
-                        <i class="bi bi-exclamation-circle me-1"></i>    
-                        <span *ngIf="crearClienteFormulario.get('contrasenha')?.errors?.['required']">La contraseña es obligatoria. </span>
+                    <label>Nombre de usuario<span class="text-danger"> *</span></label>
+                    <input type="text" class="form-control" formControlName="usuario" required>
+                    <div *ngIf="crearClienteFormulario.get('usuario')?.touched && crearClienteFormulario.get('usuario')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>
+                        <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['required']">El nombre es obligatorio. </span>
+                        <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
+                        <span *ngIf="crearClienteFormulario.get('usuario')?.errors?.['usuarioExiste']">Un cliente con este nombre de usuario ya está registrada. </span>
                     </div>
                 </div>
                 <div class="mb-2 w-25">
@@ -34,6 +26,16 @@
                     </div>
                 </div>
             </div>
+            @if (!booleanEditarExistente) {
+                <div class="mb-2">
+                    <label>Contraseña<span class="text-danger"> *</span></label>
+                    <input type="password" class="form-control" formControlName="contrasenha" required>
+                    <div *ngIf="crearClienteFormulario.get('contrasenha')?.touched && crearClienteFormulario.get('contrasenha')?.invalid" class="text-danger">
+                        <i class="bi bi-exclamation-circle me-1"></i>    
+                        <span *ngIf="crearClienteFormulario.get('contrasenha')?.errors?.['required']">La contraseña es obligatoria. </span>
+                    </div>
+                </div>
+            }
             <div class="d-flex flex-row">
                 <div class="mb-2 me-3 w-100">
                     <label>Nombre</label>

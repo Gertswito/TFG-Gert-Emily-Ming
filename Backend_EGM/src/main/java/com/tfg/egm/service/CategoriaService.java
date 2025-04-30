@@ -47,4 +47,12 @@ public class CategoriaService {
         }
         return categoriaRepository.save(categoria);
     }
+
+    public Categoria update(Categoria categoria) {
+        Categoria existente = categoriaRepository.findByNombre(categoria.getNombre());
+        if (existente != null && !existente.getId().equals(categoria.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
+        }
+        return categoriaRepository.save(categoria);
+    }
 }

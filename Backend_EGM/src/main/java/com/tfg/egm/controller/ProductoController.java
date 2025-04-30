@@ -1,6 +1,7 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Producto;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.ProductoService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -67,6 +69,20 @@ public class ProductoController {
             return ResponseEntity.created(location).body(nuevaProducto);
         } catch (ResponseStatusException ex) {
             return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+        }
+    }
+
+    @PutMapping("/productos/update/{id}")
+    public ResponseEntity<Producto> updateProducto(@PathVariable Long id, @RequestBody Producto producto) {
+        try {
+            if (productoService.obtenerProductoPorId(id) != null) {
+                productoService.update(producto);
+                return ResponseEntity.ok(producto);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

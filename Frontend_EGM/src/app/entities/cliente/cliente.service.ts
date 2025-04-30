@@ -20,6 +20,10 @@ export class ClienteService {
     return this.http.get<ICliente>(`${this.resourceUrl}/usuario/${usuario}`);
   }
 
+  getClienteById(id: number): Observable<ICliente> {
+    return this.http.get<ICliente>(`${this.resourceUrl}/find/${id}`);
+  }
+
   crearUsuario(cliente: ICliente): Observable<any> { 
     return this.http.post<any>(`${this.resourceUrl}/new`, cliente, { observe: 'response' });
   }

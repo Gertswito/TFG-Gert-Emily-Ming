@@ -41,11 +41,13 @@
                             <td>{{producto.precio || 0}} €</td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-primary me-2" (click)="editarProducto(producto)" title="Editar Producto">
-                                        <i class="bi bi-pencil"></i> <!-- Icono de editar -->
-                                    </button>
+                                    <a [routerLink]="'/producto-create'" [queryParams]="{ id: producto.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Producto">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarProducto(producto)" title="Eliminar Producto">
-                                        <i class="bi bi-trash"></i> <!-- Icono de papelera -->
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
                             </td>

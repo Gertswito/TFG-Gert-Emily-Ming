@@ -25,6 +25,7 @@ export class SubcategoriaCreateComponent implements OnInit {
     ngOnInit(): void {
         this.loadCategorias();
         this.crearSubcategoriaFormulario = new FormGroup({
+          id: new FormControl(null),
           nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
           categoria: new FormControl(null, [Validators.required]),
           imagenSubcategoria: new FormControl(null)
@@ -35,12 +36,16 @@ export class SubcategoriaCreateComponent implements OnInit {
           if (id) {
             this.booleanEditarExistente = true;
             this.subcategoriaService.getSubcategoria(id).subscribe((res) => {
-              this.crearSubcategoriaFormulario = new FormGroup({
-                id: new FormControl(res.id),
-                nombre: new FormControl(res.nombre, [Validators.required, Validators.maxLength(255)]),
-                categoria: new FormControl(res.categoria, [Validators.required]),
-                imagenSubcategoria: new FormControl(res.imagenSubcategoria)
-              });
+              setTimeout(() => {
+                const categoriaCorrespondiente = this.categoriasCollection.find(c => c.id === res.categoria?.id);
+                
+                this.crearSubcategoriaFormulario.patchValue({
+                  id: res.id,
+                  nombre: res.nombre,
+                  categoria: categoriaCorrespondiente,
+                  imagenSubcategoria: res.imagenSubcategoria
+                });
+              }, 25);
             });
           }
         });
@@ -64,7 +69,6 @@ export class SubcategoriaCreateComponent implements OnInit {
           }
         });
       } else {
-        this.crearSubcategoriaFormulario.get('imagenSubcategoria')?.setValue(this.crearSubcategoriaFormulario.get('imagenSubcategoria')?.value?.name);  
         this.subcategoriaService.crearSubcategoria(this.crearSubcategoriaFormulario?.value).subscribe({
             next: (response) => {
               this.router.navigate(['/subcategoria'], { queryParams: { creado: 'true' } });
