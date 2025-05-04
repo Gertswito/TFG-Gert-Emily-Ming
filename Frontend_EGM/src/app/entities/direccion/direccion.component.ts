@@ -57,4 +57,19 @@ export class DireccionComponent implements OnInit {
   crearNuevo(): void {
     this.router.navigate(['/direccion-create']);
   }
+
+  cambiarEstado(direccion: IDireccion): void {
+    if (direccion.id) {
+      if (direccion.activo) {
+        this.direccionService.disableDireccion(direccion.id).subscribe(() => {
+          this.cargarDirecciones();
+        });
+      } else if (!direccion.activo) {
+        this.direccionService.enableDireccion(direccion.id).subscribe(() => {
+          this.cargarDirecciones();
+        });
+      }
+      this.cargarDirecciones();
+    }
+  }
 }

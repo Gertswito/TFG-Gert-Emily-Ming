@@ -27,9 +27,9 @@
                         <td>{{direccion.comunidadAutonoma}}</td>
                         <td>
                             @if (direccion.activo) {
-                                <button type="button" class="btn btn-success btn-small">Activado</button>
+                                <button type="button" class="btn btn-success btn-small w-100" (click)="cambiarEstado(direccion)">Activado</button>
                             } @else {
-                                <button type="button" class="btn btn-danger btn-small">Desactivado</button>
+                                <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(direccion)">Desactivado</button>
                             }
                         </td>
                         <td>{{direccion.cliente?.usuario}}</td>

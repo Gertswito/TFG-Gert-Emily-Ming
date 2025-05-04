@@ -66,7 +66,20 @@ public class DireccionService {
             direccion.setActivo(false);
             direccionRepository.save(direccion);
         } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "direccionNoSePuedeEliminar", e);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "errorInesperadoSetFalse", e);
+        }
+    }
+
+    public void enableDireccion(Long id) {
+        if (!direccionRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste");
+        }
+        try {
+            Direccion direccion = direccionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoEncontrada"));
+            direccion.setActivo(true);
+            direccionRepository.save(direccion);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "errorInesperadoSetTrue", e);
         }
     }
 }

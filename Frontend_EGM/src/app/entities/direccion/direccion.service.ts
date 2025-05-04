@@ -33,4 +33,8 @@ export class DireccionService {
   disableDireccion(id: number): Observable<any> {
     return this.http.delete<IDireccion>(`${this.resourceUrl}/disable/${id}`, { observe: 'response' });
   }
+
+  enableDireccion(id: number): Observable<any> {
+    return this.http.delete<IDireccion>(`${this.resourceUrl}/enable/${id}`, { observe: 'response' });
+  }
 }

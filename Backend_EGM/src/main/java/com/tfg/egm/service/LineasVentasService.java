@@ -1,6 +1,7 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.LineasVentas;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.LineasVentasRepository;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,7 +24,10 @@ public class LineasVentasService {
         return lineasVentasRepository.findAll();
     }
 
-    
+    public LineasVentas obtenerLineaVentaPorId(Long id) {
+        return lineasVentasRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste"));
+    }
+
     public void deleteLineasVentas(Long id) {
         if (!lineasVentasRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "lineasVentaNoExiste");
@@ -36,6 +40,10 @@ public class LineasVentasService {
     }
 
     public LineasVentas save(LineasVentas lineasVentas) {
+        return lineasVentasRepository.save(lineasVentas);
+    }
+
+    public LineasVentas update(LineasVentas lineasVentas) {
         return lineasVentasRepository.save(lineasVentas);
     }
 }
