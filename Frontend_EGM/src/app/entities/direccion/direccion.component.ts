@@ -7,12 +7,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { DireccionDeleteComponent } from './direccion-delete/direccion-delete.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'direccion',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './direccion.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -69,7 +69,6 @@ export class DireccionComponent implements OnInit {
           this.cargarDirecciones();
         });
       }
-      this.cargarDirecciones();
     }
   }
 }

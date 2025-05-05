@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { PagoService } from '../pago.service';
 import { ClienteService } from '../../cliente/cliente.service';
 import { ICliente } from '../../cliente/cliente.model';
@@ -16,19 +16,43 @@ import { IPago } from '../pago.model';
 export class PagoCreateComponent implements OnInit {
     crearPagoFormulario!: FormGroup;
     clientesCollection: ICliente[] = [];
+    booleanEditarExistente = false;
 
     protected router = inject(Router);
     protected pagoService = inject(PagoService);
     protected clienteService = inject(ClienteService);
+    private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
         this.loadClientes();
         this.crearPagoFormulario = new FormGroup({
+            id: new FormControl(null),
             numeroTarjeta: new FormControl(null, [Validators.required]),
             fechaCaducidad: new FormControl(null, [Validators.required]),
             cvv: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{3}")]),
             activo: new FormControl(true, [Validators.required]),
             cliente: new FormControl(null, [Validators.required]),
+        });
+
+        this.route.queryParams.subscribe(params => {
+            const id = params['id'];
+            if (id) {
+                this.booleanEditarExistente = true;
+                this.pagoService.getPago(id).subscribe((res) => {
+                    setTimeout(() => {
+                        const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
+
+                        this.crearPagoFormulario.patchValue({
+                            id: res.id,
+                            numeroTarjeta: this.formatCardNumberForDisplay(res.numeroTarjeta),
+                            fechaCaducidad: this.formatearFechaParaInput(res.fechaCaducidad),
+                            cvv: res.cvv,
+                            activo: res.activo,
+                            cliente: clienteCorrespondiente
+                        });
+                    }, 25);
+                });
+            }
         });
     }
 
@@ -103,15 +127,49 @@ export class PagoCreateComponent implements OnInit {
             pago.numeroTarjeta = pago.numeroTarjeta.replace(/\s/g, "");
         }
         if (clienteSeleccionado.usuario) {
-            this.pagoService.createPago(clienteSeleccionado.usuario, pago).subscribe({
-                next: (response) => {
-                  this.router.navigate(['/pago'], { queryParams: { creado: 'true' } });
+            if (this.booleanEditarExistente) {
+                if (pago.id) {
+                    this.pagoService.updatePago(pago.id, pago).subscribe({
+                        next: (response) => {
+                            this.router.navigate(['/pago'], { queryParams: { editado: 'true' } });
+                        }
+                    });
                 }
-            });
+            } else {
+                this.pagoService.createPago(clienteSeleccionado.usuario, pago).subscribe({
+                    next: (response) => {
+                      this.router.navigate(['/pago'], { queryParams: { creado: 'true' } });
+                    }
+                });
+            }
         }
     }
 
     volver(): void{
         window.history.back();
+    }
+
+    private formatearFechaParaInput(fecha: Date | string | Array<number> | { year: number; month: number; day: number } | null): string | null {
+        if (!fecha) return null;
+      
+        let year: number;
+        let month: number;
+      
+        if (Array.isArray(fecha) && fecha.length >= 2) {
+          [year, month] = fecha;
+        } else if (
+          typeof fecha === 'object' &&
+          'year' in fecha &&
+          'month' in fecha
+        ) {
+          ({ year, month } = fecha as { year: number; month: number });
+        } else {
+          const d: Date = typeof fecha === 'string' ? new Date(fecha) : fecha as Date;
+          year = d.getFullYear();
+          month = d.getMonth() + 1;
+        }
+      
+        const mm = String(month).padStart(2, '0');
+        return `${year}-${mm}`;
     }
 }

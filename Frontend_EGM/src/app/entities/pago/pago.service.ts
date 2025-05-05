@@ -14,6 +14,10 @@ export class PagoService {
     return this.http.get<IPago[]>(`${this.resourceUrl}/all`);
   }
 
+  getPago(id: number): Observable<IPago> {
+    return this.http.get<IPago>(`${this.resourceUrl}/find/${id}`);
+  }
+
   getPagosByCliente(user: string): Observable<IPago[]> {
     return this.http.get<IPago[]>(`${this.resourceUrl}/cliente/${user}`);
   }
@@ -32,5 +36,9 @@ export class PagoService {
 
   disablePago(id: number): Observable<any> {
     return this.http.delete<IPago>(`${this.resourceUrl}/disable/${id}`, { observe: 'response' });
+  }
+
+  enablePago(id: number): Observable<any> {
+    return this.http.delete<IPago>(`${this.resourceUrl}/enable/${id}`, { observe: 'response' });
   }
 }

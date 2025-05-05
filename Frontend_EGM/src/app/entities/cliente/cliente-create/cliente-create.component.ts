@@ -143,9 +143,7 @@ export class ClienteCreateComponent implements OnInit {
     }
   }
 
-  private formatearFechaParaInput(
-    fecha: Date | string | Array<number> | { year: number; month: number; day: number } | null
-  ): string | null {
+  private formatearFechaParaInput(fecha: Date | string | Array<number> | { year: number; month: number; day: number } | null): string | null {
     if (!fecha) {
       return null;
     }

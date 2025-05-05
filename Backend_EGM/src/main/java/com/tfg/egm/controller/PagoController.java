@@ -34,6 +34,16 @@ public class PagoController {
         return pagoService.obtenerPagos();
     }
 
+    @GetMapping("/pagos/find/{id}")
+    public ResponseEntity<Pago> obtenerPagoPorId(@PathVariable Long id) {
+        try {
+            Pago pago = pagoService.obtenerPagoPorId(id);
+            return ResponseEntity.ok(pago);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/pagos/cliente/{user}")
     public List<Pago> obtenerPagosPorCliente(@PathVariable String user) {
         return pagoService.obtenerPagos(clienteService.obtenerClientePorUsuario(user));
@@ -67,6 +77,16 @@ public class PagoController {
     public ResponseEntity<Void> disablePago(@PathVariable Long id) {
         try {
             pagoService.disablePago(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/pagos/enable/{id}")
+    public ResponseEntity<Void> enablePago(@PathVariable Long id) {
+        try {
+            pagoService.enablePago(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

@@ -28,6 +28,10 @@ public class DireccionService {
         return direccionRepository.findAll();
     }
 
+    public Direccion obtenerDireccionPorId(Long id) {
+        return direccionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste"));
+    }
+
     public List<Direccion> obtenerDirecciones(Cliente cliente) {
         return direccionRepository.findByCliente(cliente);
     }
@@ -41,7 +45,13 @@ public class DireccionService {
             direccion.setDireccion(nuevaDireccion.getDireccion()); 
             direccion.setLocalidad(nuevaDireccion.getLocalidad()); 
             direccion.setCodigoPostal(nuevaDireccion.getCodigoPostal()); 
-            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma()); 
+            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma());
+            if(nuevaDireccion.getActivo() != null) {
+                direccion.setActivo(nuevaDireccion.getActivo()); 
+            }
+            if (nuevaDireccion.getCliente() != direccion.getCliente()) {
+                direccion.setCliente(nuevaDireccion.getCliente()); 
+            }
             return direccionRepository.save(direccion); 
         });
     }

@@ -35,9 +35,11 @@
                         <td>{{direccion.cliente?.usuario}}</td>
                         <td>
                             <div class="botones-accion">
-                                <button class="btn btn-primary me-2" (click)="editarDireccion(direccion)" title="Editar Dirección">
-                                    <i class="bi bi-pencil"></i> 
-                                </button>
+                                <a [routerLink]="'/direccion-create'" [queryParams]="{ id: direccion.id }">
+                                    <button class="btn btn-primary me-2" title="Editar Dirección">
+                                        <i class="bi bi-pencil"></i> 
+                                    </button>
+                                </a>
                                 <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
                                     <i class="bi bi-trash"></i> 
                                 </button>
