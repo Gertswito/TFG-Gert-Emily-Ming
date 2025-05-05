@@ -38,6 +38,21 @@ a {
 a:hover {
     color: #1a4f9f;
 }
+.carrito-count {
+    color: white;
+    background-color: #dc3545;
+    border-radius: 50%;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 1px;
+    padding-right: 1px;
+
+    padding-bottom: 1px;
+    width: 1.65em;
+}
 
 @media screen and (max-width: 850px) {
     #nav_bar {

@@ -38,7 +38,10 @@
         }
         <div>
             @if (rol) {
-                <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+                <div class="d-flex flex-row">
+                    <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+                    <div class="d-flex justify-content-center align-items-center ps-1"><div *ngIf="carritoCount > 0" class="carrito-count">{{ carritoCount }}</div></div>
+                </div>
             } @else {
                 <a [routerLink]="'/login'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
             }

@@ -6,6 +6,7 @@ import { ClienteService } from '../../entities/cliente/cliente.service';
 import { ICliente } from '../../entities/cliente/cliente.model';
 import { IVenta } from '../../entities/venta/venta.model';
 import { ILineasVenta } from '../../entities/lineasVenta/lineasVenta.model';
+import { CarritoService } from './carrito.service';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ export class CarritoComponent implements OnInit {
 
   private authService = inject(AuthService);
   private clienteService = inject(ClienteService);
+  private carritoService = inject(CarritoService);
 
   ngOnInit(): void {
     const usuarioNombre = this.authService.getUsuario();
@@ -41,6 +43,7 @@ export class CarritoComponent implements OnInit {
   }
 
   addUno(linea: ILineasVenta): void {
+    if (!this.usuario) return;
     const carritoKey = `carrito_${this.usuario?.id}`;
     if (!carritoKey) return;
     if (linea.cantidadPedida == null || linea.precioUnitario == null) return; 
@@ -50,9 +53,11 @@ export class CarritoComponent implements OnInit {
 
     localStorage.setItem(`${carritoKey}_lineas`, JSON.stringify(this.lineasVenta)); 
     this.calcularPrecioFinal();
+    this.carritoService.actualizarCarritoCount(this.usuario.id!);
   }
 
   deleteUno(linea: ILineasVenta): void {
+    if (!this.usuario) return;
     const carritoKey = `carrito_${this.usuario?.id}`;
     if (!carritoKey) return;
     if (linea.cantidadPedida == null || linea.precioUnitario == null) return; 
@@ -66,15 +71,18 @@ export class CarritoComponent implements OnInit {
 
     localStorage.setItem(`${carritoKey}_lineas`, JSON.stringify(this.lineasVenta)); 
     this.calcularPrecioFinal();
+    this.carritoService.actualizarCarritoCount(this.usuario.id!);
   }
 
   deleteLinea(linea: ILineasVenta): void {
+    if (!this.usuario) return;
     const carritoKey = `carrito_${this.usuario?.id}`;
     if (!carritoKey) return;
 
     this.lineasVenta = this.lineasVenta.filter(l => l !== linea);
     localStorage.setItem(`${carritoKey}_lineas`, JSON.stringify(this.lineasVenta));
     this.calcularPrecioFinal();
+    this.carritoService.actualizarCarritoCount(this.usuario.id!);
   }
 
   calcularPrecioFinal(): void {

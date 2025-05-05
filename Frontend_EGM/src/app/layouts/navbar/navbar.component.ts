@@ -9,6 +9,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../auth/auth.service';
 import { ICategoria } from '../../entities/categoria/categoria.model';
 import { CategoriaService } from '../../entities/categoria/categoria.service';
+import { ClienteService } from '../../entities/cliente/cliente.service';
+import { ICliente } from '../../entities/cliente/cliente.model';
+import { CarritoService } from '../carrito/carrito.service';
 
 @Component({
   standalone: true,
@@ -27,9 +30,13 @@ export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
   categorias: ICategoria[] = [];
   rol: string | null = '';
+  usuario: ICliente | null = null;
+  carritoCount = 0;
 
   protected authService = inject(AuthService);
   protected categoriaService = inject(CategoriaService);
+  protected clienteService = inject(ClienteService);
+  private carritoService = inject(CarritoService);
   protected router = inject(Router);
 
   ngOnInit(): void {
@@ -38,8 +45,21 @@ export class NavBarComponent implements OnInit {
 
       if (status) {
         this.rol = this.authService.getRol();
+        const nombreUsuario = this.authService.getUsuario();
+        if (nombreUsuario != null) {
+          this.clienteService.getCliente(nombreUsuario).subscribe((res) => {
+            this.usuario = res || null;
+            if (this.usuario) {
+              this.carritoService.actualizarCarritoCount(this.usuario.id!);
+              this.suscribirseAlCarrito();
+            }
+          });
+        }
       } else {
         this.rol = null;
+        this.usuario = null;
+        this.carritoCount = 0;
+        this.carritoService.actualizarCarritoCount(0);
       }
     });
 
@@ -51,5 +71,17 @@ export class NavBarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);  
+  }
+
+  actualizarCarritoCount(): void {
+    const carritoKey = `carrito_${this.usuario?.id}_lineas`;
+    const lineas = JSON.parse(localStorage.getItem(carritoKey) || '[]');
+    this.carritoCount = Array.isArray(lineas) ? lineas.length : 0;
+  }
+
+  suscribirseAlCarrito(): void {
+    this.carritoService.carritoCount$.subscribe(count => {
+      this.carritoCount = count;
+    });
   }
 }

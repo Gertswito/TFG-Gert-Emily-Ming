@@ -9,6 +9,7 @@ import { IVenta } from '../../venta/venta.model';
 import { ClienteService } from '../../cliente/cliente.service';
 import { AuthService } from '../../../auth/auth.service';
 import { ICliente } from '../../cliente/cliente.model';
+import { CarritoService } from '../../../layouts/carrito/carrito.service';
 
 @Component({
   standalone: true,
@@ -25,6 +26,7 @@ export class ProductoListComponent implements OnInit {
   private productoService = inject(ProductoService);
   private clienteService = inject(ClienteService);
   private authService = inject(AuthService);
+  private carritoService = inject(CarritoService);
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
@@ -101,6 +103,7 @@ export class ProductoListComponent implements OnInit {
     localStorage.setItem(carritoKey, JSON.stringify(venta));
     localStorage.setItem(`${carritoKey}_lineas`, JSON.stringify(lineas));
     this.calcularPrecioFinal();
+    this.carritoService.actualizarCarritoCount(this.usuario.id!);
   }
 
   calcularPrecioFinal(): void {
