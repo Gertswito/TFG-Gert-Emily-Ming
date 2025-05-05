@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IProducto } from './producto.model';
 import { ProductoService } from './producto.service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { filter, tap } from 'rxjs';
@@ -12,7 +12,7 @@ import { ProductoDeleteComponent } from './producto-delete/producto-delete.compo
 @Component({
   standalone: true,
   selector: 'producto',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './producto.component.html',
   styleUrls: ['../entities.css'],
 })

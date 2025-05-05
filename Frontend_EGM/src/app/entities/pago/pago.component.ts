@@ -7,12 +7,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { PagoDeleteComponent } from './pago-delete/pago-delete.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'pago',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './pago.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -57,4 +57,18 @@ export class PagoComponent implements OnInit {
   crearNuevo(): void {
     this.router.navigate(['/pago-create']);
   }
+
+  cambiarEstado(pago: IPago): void {
+      if (pago.id) {
+        if (pago.activo) {
+          this.pagoService.disablePago(pago.id).subscribe(() => {
+            this.cargarPagos();
+          });
+        } else if (!pago.activo) {
+          this.pagoService.enablePago(pago.id).subscribe(() => {
+            this.cargarPagos();
+          });
+        }
+      }
+    }
 }

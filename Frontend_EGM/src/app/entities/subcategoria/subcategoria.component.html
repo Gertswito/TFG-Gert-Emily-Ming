@@ -32,9 +32,11 @@
                             </td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-primary me-2" (click)="editarSubcategoria(subcategoria)" title="Editar Subcategoría">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+                                    <a [routerLink]="'/subcategoria-create'" [queryParams]="{ id: subcategoria.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Subcategoría">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarSubcategoria(subcategoria)" title="Eliminar Subcategoría">
                                         <i class="bi bi-trash"></i> 
                                     </button>

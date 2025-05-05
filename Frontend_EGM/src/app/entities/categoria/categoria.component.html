@@ -20,9 +20,11 @@
                             <td>{{categoria.nombre}}</td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-primary me-2" (click)="editarCategoria(categoria)" title="Editar Categoría">
-                                        <i class="bi bi-pencil"></i> 
-                                    </button>
+                                    <a [routerLink]="'/categoria-create'" [queryParams]="{ id: categoria.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Categoría">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarCategoria(categoria)" title="Eliminar Categoría">
                                         <i class="bi bi-trash"></i>
                                     </button>

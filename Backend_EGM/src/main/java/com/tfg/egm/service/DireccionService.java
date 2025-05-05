@@ -28,6 +28,10 @@ public class DireccionService {
         return direccionRepository.findAll();
     }
 
+    public Direccion obtenerDireccionPorId(Long id) {
+        return direccionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste"));
+    }
+
     public List<Direccion> obtenerDirecciones(Cliente cliente) {
         return direccionRepository.findByCliente(cliente);
     }
@@ -41,7 +45,13 @@ public class DireccionService {
             direccion.setDireccion(nuevaDireccion.getDireccion()); 
             direccion.setLocalidad(nuevaDireccion.getLocalidad()); 
             direccion.setCodigoPostal(nuevaDireccion.getCodigoPostal()); 
-            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma()); 
+            direccion.setComunidadAutonoma(nuevaDireccion.getComunidadAutonoma());
+            if(nuevaDireccion.getActivo() != null) {
+                direccion.setActivo(nuevaDireccion.getActivo()); 
+            }
+            if (nuevaDireccion.getCliente() != direccion.getCliente()) {
+                direccion.setCliente(nuevaDireccion.getCliente()); 
+            }
             return direccionRepository.save(direccion); 
         });
     }
@@ -66,7 +76,20 @@ public class DireccionService {
             direccion.setActivo(false);
             direccionRepository.save(direccion);
         } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "direccionNoSePuedeEliminar", e);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "errorInesperadoSetFalse", e);
+        }
+    }
+
+    public void enableDireccion(Long id) {
+        if (!direccionRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoExiste");
+        }
+        try {
+            Direccion direccion = direccionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "direccionNoEncontrada"));
+            direccion.setActivo(true);
+            direccionRepository.save(direccion);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "errorInesperadoSetTrue", e);
         }
     }
 }

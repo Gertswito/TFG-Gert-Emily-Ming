@@ -24,6 +24,10 @@ public class SubcategoriaService {
         return subcategoriaRepository.findAll();
     }
 
+    public Subcategoria obtenerSubcategoriaPorId(Long id) {
+        return subcategoriaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste"));
+    }
+
     public List<Subcategoria> obtenerSubcategoriasConIdCategoria(int id) {
         return subcategoriaRepository.findByCategoriaId(id);
     }
@@ -41,6 +45,14 @@ public class SubcategoriaService {
 
     public Subcategoria save(Subcategoria subcategoria) {
         if (subcategoriaRepository.existsByNombre(subcategoria.getNombre())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
+        }
+        return subcategoriaRepository.save(subcategoria);
+    }
+
+    public Subcategoria update(Subcategoria subcategoria) {
+        Subcategoria existente = subcategoriaRepository.findByNombre(subcategoria.getNombre());
+        if (existente != null && !existente.getId().equals(subcategoria.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
         }
         return subcategoriaRepository.save(subcategoria);

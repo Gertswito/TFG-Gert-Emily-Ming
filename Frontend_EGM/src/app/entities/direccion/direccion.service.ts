@@ -14,6 +14,10 @@ export class DireccionService {
     return this.http.get<IDireccion[]>(`${this.resourceUrl}/all`);
   }
 
+  getDireccion(id: number): Observable<IDireccion> {
+    return this.http.get<IDireccion>(`${this.resourceUrl}/find/${id}`);
+  }
+
   getDireccionesPorCliente(user: string): Observable<IDireccion[]> {
     return this.http.get<IDireccion[]>(`${this.resourceUrl}/cliente/${user}`);
   }
@@ -32,5 +36,9 @@ export class DireccionService {
 
   disableDireccion(id: number): Observable<any> {
     return this.http.delete<IDireccion>(`${this.resourceUrl}/disable/${id}`, { observe: 'response' });
+  }
+
+  enableDireccion(id: number): Observable<any> {
+    return this.http.delete<IDireccion>(`${this.resourceUrl}/enable/${id}`, { observe: 'response' });
   }
 }

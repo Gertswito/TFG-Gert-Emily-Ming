@@ -34,9 +34,11 @@
                             <td>{{cliente.rol}}</td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-primary me-2" (click)="editarCliente(cliente)" title="Editar Cliente">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+                                    <a [routerLink]="'/cliente-create'" [queryParams]="{ id: cliente.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Cliente">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarCliente(cliente)" title="Eliminar Cliente">
                                         <i class="bi bi-trash"></i>
                                     </button>

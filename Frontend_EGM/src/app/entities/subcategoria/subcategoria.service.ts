@@ -14,6 +14,10 @@ export class SubcategoriaService {
     return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/all`);
   }
 
+  getSubcategoria(id: number): Observable<ISubcategoria> {
+    return this.http.get<ISubcategoria>(`${this.resourceUrl}/find/${id}`);
+  }
+
   getSubcategoriasConIdCategoria(id: number): Observable<ISubcategoria[]> {
     return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/categoria/${id}`);
   }
@@ -24,5 +28,9 @@ export class SubcategoriaService {
 
   crearSubcategoria(subcategoria: ISubcategoria): Observable<HttpResponse<ISubcategoria>> {
     return this.http.post<ISubcategoria>(`${this.resourceUrl}/new`, subcategoria, { observe: 'response' });
+  }
+
+  editarSubcategoria(subcategoria: ISubcategoria): Observable<HttpResponse<ISubcategoria>> {
+    return this.http.put<ISubcategoria>(`${this.resourceUrl}/update/${subcategoria.id}`, subcategoria, { observe: 'response' });
   }
 }

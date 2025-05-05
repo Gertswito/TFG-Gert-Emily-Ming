@@ -28,9 +28,11 @@
                             <td>{{lineaVenta.precioTotal || 0}} €</td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-primary me-2" (click)="editarLineaVenta(lineaVenta)" title="Editar Línea de Venta">
-                                        <i class="bi bi-pencil"></i> 
-                                    </button>
+                                    <a [routerLink]="'/lineasVenta-create'" [queryParams]="{ id: lineaVenta.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Línea de Venta">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarLineaVenta(lineaVenta)" title="Eliminar Línea de Venta">
                                         <i class="bi bi-trash"></i> 
                                     </button>

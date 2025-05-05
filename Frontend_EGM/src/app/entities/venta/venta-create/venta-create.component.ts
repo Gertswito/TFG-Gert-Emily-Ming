@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { VentaService } from '../venta.service';
 import { IVenta } from '../venta.model';
 import { ClienteService } from '../../cliente/cliente.service';
@@ -23,18 +23,22 @@ export class VentaCreateComponent implements OnInit {
     clientesCollection: ICliente[] = [];
     pagosCollection: IPago[] = [];
     direccionesCollection: IDireccion[] = [];
+    booleanEditarExistente = false;
+    ignorarCambioDireccionYPago = false;
 
     protected router = inject(Router);
     protected ventaService = inject(VentaService);
     protected clienteService = inject(ClienteService);
     protected pagoService = inject(PagoService);
     protected direccionService = inject(DireccionService);
+    private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
         this.loadClientes();
         this.loadPagos();
         this.loadDirecciones();
         this.crearVentaFormulario = new FormGroup({
+            id: new FormControl(null),
             cliente: new FormControl(null, [Validators.required]),
             pago: new FormControl({ value: null, disabled: true }, [Validators.required]),
             direccion: new FormControl({ value: null, disabled: true }, [Validators.required]),
@@ -42,35 +46,61 @@ export class VentaCreateComponent implements OnInit {
             precioFinal: new FormControl(null, [Validators.required, Validators.min(0)]),
         });
 
-        this.crearVentaFormulario.get('cliente')?.valueChanges.subscribe((cliente: ICliente) => {
-            if (cliente && cliente.usuario) {
-                this.direccionService.getDireccionesPorCliente(cliente.usuario).pipe(debounceTime(300)).subscribe((res) => {
-                    console.log(cliente.id);
-                    this.direccionesCollection = res || [];
-                    if (this.direccionesCollection.length > 0) {
-                        this.crearVentaFormulario.get('direccion')?.enable();
-                    } else {
-                        this.crearVentaFormulario.get('direccion')?.disable();
-                        this.crearVentaFormulario.get('cliente')?.setErrors({ 'clienteSinCosas': true });
-                    }
+        this.route.queryParams.subscribe(params => {
+            const id = params['id'];
+            if (id) {
+            this.booleanEditarExistente = true;
+            this.ventaService.getVenta(id).subscribe((res) => {
+                setTimeout(() => {
+                const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
+                const pagoCorrespondiente = this.pagosCollection.find(c => c.id === res.pago?.id);
+                const direccionCorrespondiente = this.direccionesCollection.find(c => c.id === res.direccion?.id);
+                this.crearVentaFormulario.get('direccion')?.enable();
+                this.crearVentaFormulario.get('pago')?.enable();
+                this.ignorarCambioDireccionYPago = true;
+
+                this.crearVentaFormulario.patchValue({
+                    id: res.id,
+                    cliente: clienteCorrespondiente,
+                    pago: pagoCorrespondiente,
+                    direccion: direccionCorrespondiente,
+                    fechaHora: res.fechaHora,
+                    precioFinal: res.precioFinal
                 });
-                this.pagoService.getPagosByCliente(cliente.usuario).pipe(debounceTime(300)).subscribe((res) => {
-                    console.log(cliente.id);
-                    this.pagosCollection = res || [];
-                    if (this.pagosCollection.length > 0) {
-                        this.crearVentaFormulario.get('pago')?.enable();
-                    } else {
-                        this.crearVentaFormulario.get('pago')?.disable();
-                        this.crearVentaFormulario.get('cliente')?.setErrors({ 'clienteSinCosas': true });
-                    }
-                });
-            } else {
-                this.loadDirecciones();
-                this.loadPagos();
-                this.crearVentaFormulario.get('pago')?.disable();
-                this.crearVentaFormulario.get('direccion')?.disable();
+                }, 25);
+            });
             }
-            console.log(this.crearVentaFormulario.errors);
+        });
+
+        this.crearVentaFormulario.get('cliente')?.valueChanges.subscribe((cliente: ICliente) => {
+            if (!this.ignorarCambioDireccionYPago) {
+                if (cliente && cliente.usuario) {
+                    this.direccionService.getDireccionesPorCliente(cliente.usuario).pipe(debounceTime(300)).subscribe((res) => {
+                        this.direccionesCollection = res || [];
+                        if (this.direccionesCollection.length > 0) {
+                            this.crearVentaFormulario.get('direccion')?.enable();
+                        } else {
+                            this.crearVentaFormulario.get('direccion')?.disable();
+                            this.crearVentaFormulario.get('cliente')?.setErrors({ 'clienteSinCosas': true });
+                        }
+                    });
+                    this.pagoService.getPagosByCliente(cliente.usuario).pipe(debounceTime(300)).subscribe((res) => {
+                        this.pagosCollection = res || [];
+                        if (this.pagosCollection.length > 0) {
+                            this.crearVentaFormulario.get('pago')?.enable();
+                        } else {
+                            this.crearVentaFormulario.get('pago')?.disable();
+                            this.crearVentaFormulario.get('cliente')?.setErrors({ 'clienteSinCosas': true });
+                        }
+                    });
+                } else {
+                    this.loadDirecciones();
+                    this.loadPagos();
+                    this.crearVentaFormulario.get('pago')?.disable();
+                    this.crearVentaFormulario.get('direccion')?.disable();
+                }
+            }
+            this.ignorarCambioDireccionYPago = false;
         });
     }
 
@@ -103,18 +133,26 @@ export class VentaCreateComponent implements OnInit {
           fechaHora = `${fechaHora}:00`;
         } 
         this.crearVentaFormulario.get('fechaHora')?.setValue(fechaHora);
-        this.ventaService.crearVenta(this.crearVentaFormulario.value).subscribe({
-            next: (response) => {
-              this.router.navigate(['/venta'], { queryParams: { creado: 'true' } });
-            },
-            error: (error) => {
-              if (error.error && error.error.error) {
-                if (error.error.error === 'fechaInvalida') {
-                    this.crearVentaFormulario.get('fechaHora')?.setErrors({ 'fechaInvalida': true });
+        if (this.booleanEditarExistente) {
+            this.ventaService.editarVenta(this.crearVentaFormulario.value).subscribe({
+                next: (response) => {
+                    this.router.navigate(['/venta'], { queryParams: { editado: 'true' } });
                 }
-              }
-            }
-        });
+            });
+        } else {
+            this.ventaService.crearVenta(this.crearVentaFormulario.value).subscribe({
+                next: (response) => {
+                  this.router.navigate(['/venta'], { queryParams: { creado: 'true' } });
+                },
+                error: (error) => {
+                  if (error.error && error.error.error) {
+                    if (error.error.error === 'fechaInvalida') {
+                        this.crearVentaFormulario.get('fechaHora')?.setErrors({ 'fechaInvalida': true });
+                    }
+                  }
+                }
+            });
+        }
     }
 
     volver(): void{

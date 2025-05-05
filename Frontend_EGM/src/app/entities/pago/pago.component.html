@@ -25,17 +25,19 @@
                         <td>{{ pago.cvv }}</td>
                         <td>
                             @if (pago.activo) {
-                                <button type="button" class="btn btn-success btn-small">Activado</button>
+                                <button type="button" class="btn btn-success btn-small w-100" (click)="cambiarEstado(pago)">Activado</button>
                             } @else {
-                                <button type="button" class="btn btn-danger btn-small">Desactivado</button>
+                                <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(pago)">Desactivado</button>
                             }
                         </td>
                         <td>{{ pago.cliente?.usuario }}</td>
                         <td>
                             <div class="botones-accion">
-                                <button class="btn btn-primary me-2" (click)="editarPago(pago)" title="Editar Pago">
-                                    <i class="bi bi-pencil"></i> 
-                                </button>
+                                <a [routerLink]="'/pago-create'" [queryParams]="{ id: pago.id }">
+                                    <button class="btn btn-primary me-2" title="Editar Pago">
+                                        <i class="bi bi-pencil"></i> 
+                                    </button>
+                                </a>
                                 <button class="btn btn-danger" (click)="eliminarPago(pago)" title="Eliminar Pago">
                                     <i class="bi bi-trash"></i> 
                                 </button>

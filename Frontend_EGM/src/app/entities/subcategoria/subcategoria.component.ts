@@ -7,12 +7,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { SubcategoriaDeleteComponent } from './subcategoria-delete/subcategoria-delete.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'subcategoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './subcategoria.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -32,10 +32,6 @@ export class SubcategoriaComponent implements OnInit {
     this.subcategoriaService.getAllSubcategorias().subscribe((res) => {
       this.subcategoriaList = res || [];
     });
-  }
-
-  editarSubcategoria(subcategoria: any) {
-    console.log('Editar Subcategoría:', subcategoria);
   }
 
   eliminarSubcategoria(subcategoria: ISubcategoria) {

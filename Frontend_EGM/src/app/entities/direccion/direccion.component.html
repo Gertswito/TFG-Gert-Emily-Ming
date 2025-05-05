@@ -27,17 +27,19 @@
                         <td>{{direccion.comunidadAutonoma}}</td>
                         <td>
                             @if (direccion.activo) {
-                                <button type="button" class="btn btn-success btn-small">Activado</button>
+                                <button type="button" class="btn btn-success btn-small w-100" (click)="cambiarEstado(direccion)">Activado</button>
                             } @else {
-                                <button type="button" class="btn btn-danger btn-small">Desactivado</button>
+                                <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(direccion)">Desactivado</button>
                             }
                         </td>
                         <td>{{direccion.cliente?.usuario}}</td>
                         <td>
                             <div class="botones-accion">
-                                <button class="btn btn-primary me-2" (click)="editarDireccion(direccion)" title="Editar Dirección">
-                                    <i class="bi bi-pencil"></i> 
-                                </button>
+                                <a [routerLink]="'/direccion-create'" [queryParams]="{ id: direccion.id }">
+                                    <button class="btn btn-primary me-2" title="Editar Dirección">
+                                        <i class="bi bi-pencil"></i> 
+                                    </button>
+                                </a>
                                 <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
                                     <i class="bi bi-trash"></i> 
                                 </button>

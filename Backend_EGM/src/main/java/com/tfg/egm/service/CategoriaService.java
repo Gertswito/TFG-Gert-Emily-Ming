@@ -26,6 +26,10 @@ public class CategoriaService {
         return categoriaRepository.findAll();
     }
 
+    public Categoria obtenerCategoriaPorId(Long id) {
+        return categoriaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste"));
+    }
+
     public void deleteCategoria(Long id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste");
@@ -39,6 +43,14 @@ public class CategoriaService {
 
     public Categoria save(Categoria categoria) {
         if (categoriaRepository.existsByNombre(categoria.getNombre())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
+        }
+        return categoriaRepository.save(categoria);
+    }
+
+    public Categoria update(Categoria categoria) {
+        Categoria existente = categoriaRepository.findByNombre(categoria.getNombre());
+        if (existente != null && !existente.getId().equals(categoria.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreExiste");
         }
         return categoriaRepository.save(categoria);

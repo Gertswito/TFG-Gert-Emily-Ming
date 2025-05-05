@@ -36,16 +36,18 @@
                 </div>
             </div>
         }
-        <div>
-            @if (rol) {
-                <div class="d-flex flex-row">
-                    <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
-                    <div class="d-flex justify-content-center align-items-center ps-1"><div *ngIf="carritoCount > 0" class="carrito-count">{{ carritoCount }}</div></div>
-                </div>
-            } @else {
-                <a [routerLink]="'/login'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
-            }
-        </div>
+        @if (rol != "ADMIN") {
+            <div>
+                @if (rol == "USER") {
+                    <div class="d-flex flex-row">
+                        <a [routerLink]="'/carrito'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+                        <div class="d-flex justify-content-center align-items-center ps-1"><div *ngIf="carritoCount > 0" class="carrito-count">{{ carritoCount }}</div></div>
+                    </div>
+                } @else {
+                    <a [routerLink]="'/login'"><fa-icon [icon]="faShoppingCart"></fa-icon></a>
+                }
+            </div>
+        }
         <div>
             @if (!isLoggedIn) {
                 <a [routerLink]="'/login'"><fa-icon [icon]="faUser"></fa-icon></a>

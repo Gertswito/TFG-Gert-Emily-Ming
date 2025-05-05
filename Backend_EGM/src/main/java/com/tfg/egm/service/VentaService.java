@@ -1,6 +1,7 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Categoria;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.entity.Venta;
 import com.tfg.egm.repository.VentaRepository;
 
@@ -26,6 +27,10 @@ public class VentaService {
         return ventaRepository.findAll();
     }
 
+    public Venta obtenerVentaPorId(Long id) {
+        return ventaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ventaNoExiste"));
+    }
+
     public void deleteVenta(Long id) {
         if (!ventaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ventaNoExiste");
@@ -44,6 +49,10 @@ public class VentaService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
             }
         }
+        return ventaRepository.save(venta);
+    }
+
+    public Venta update(Venta venta) {
         return ventaRepository.save(venta);
     }
 }

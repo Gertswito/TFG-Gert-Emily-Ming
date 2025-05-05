@@ -7,12 +7,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { filter, tap } from 'rxjs';
 import { CategoriaDeleteComponent } from './categoria-delete/categoria-delete.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'categoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './categoria.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -32,10 +32,6 @@ export class CategoriaComponent implements OnInit {
     this.categoriaService.getAllCategorias().subscribe((res) => {
       this.categoriaList = res || [];
     });
-  }
-
-  editarCategoria(Categoria: any) {
-    console.log('Editar Categoría:', Categoria);
   }
 
   eliminarCategoria(categoria: ICategoria) {

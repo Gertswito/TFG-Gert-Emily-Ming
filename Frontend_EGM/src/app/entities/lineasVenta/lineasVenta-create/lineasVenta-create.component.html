@@ -6,7 +6,7 @@
                 <label>Venta a la que pertenece<span class="text-danger"> *</span></label>
                 <select class="form-control" name="venta" formControlName="venta">
                     @for (venta of ventasCollection; track $index) {
-                      <option [ngValue]="venta">Venta {{ venta.id }} realizada por {{ venta.cliente?.usuario }}</option>
+                      <option [ngValue]="venta">Venta {{ venta.id }} (realizada por {{ venta.cliente?.usuario }})</option>
                     }
                 </select>
                 <div *ngIf="crearLineaVentaFormulario.get('venta')?.touched && crearLineaVentaFormulario.get('venta')?.invalid" class="text-danger">

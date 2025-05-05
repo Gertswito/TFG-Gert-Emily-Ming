@@ -7,13 +7,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { filter, tap } from 'rxjs';
 import { ClienteDeleteComponent } from './cliente-delete/cliente-delete.component';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 
 @Component({
   standalone: true,
   selector: 'cliente',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
   templateUrl: './cliente.component.html',
   styleUrls: ['../entities.css'],
 })

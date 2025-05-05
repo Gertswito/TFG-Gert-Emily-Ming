@@ -36,6 +36,16 @@ public class DireccionController {
         return direccionService.obtenerDirecciones();
     }
 
+    @GetMapping("/direcciones/find/{id}")
+    public ResponseEntity<Direccion> obtenerDireccionPorId(@PathVariable Long id) {
+        try {
+            Direccion direccion = direccionService.obtenerDireccionPorId(id);
+            return ResponseEntity.ok(direccion);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/direcciones/cliente/{user}")
     public List<Direccion> obtenerDireccionesPorCliente(@PathVariable String user) {
         return direccionService.obtenerDirecciones(clienteService.obtenerClientePorUsuario(user));
@@ -70,6 +80,16 @@ public class DireccionController {
     public ResponseEntity<Void> disableDireccion(@PathVariable Long id) {
         try {
             direccionService.disableDireccion(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/direcciones/enable/{id}")
+    public ResponseEntity<Void> enableDireccion(@PathVariable Long id) {
+        try {
+            direccionService.enableDireccion(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

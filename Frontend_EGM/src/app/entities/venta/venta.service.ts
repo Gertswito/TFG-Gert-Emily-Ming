@@ -22,11 +22,19 @@ export class VentaService {
     return this.http.get<IVenta[]>(`${this.resourceUrl}/all`);
   }
 
+  getVenta(id: number): Observable<IVenta> {
+    return this.http.get<IVenta>(`${this.resourceUrl}/find/${id}`);
+  }
+
   deleteVenta(id: number): Observable<any> {
     return this.http.delete<IVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }
 
   crearVenta(venta: IVenta): Observable<HttpResponse<IVenta>> {
     return this.http.post<IVenta>(`${this.resourceUrl}/new`, venta, { observe: 'response' });
+  }
+
+  editarVenta(venta: IVenta): Observable<HttpResponse<IVenta>> {
+    return this.http.put<IVenta>(`${this.resourceUrl}/update/${venta.id}`, venta, { observe: 'response' });
   }
 }

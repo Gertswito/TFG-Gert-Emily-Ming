@@ -31,9 +31,11 @@
                                     <button class="btn btn-success me-2" (click)="verLineasVenta(venta)" title="Ver Líneas de Venta">
                                         <i class="bi bi-eye"></i> 
                                     </button>
-                                    <button class="btn btn-primary me-2" (click)="editarVenta(venta)" title="Editar Venta">
-                                        <i class="bi bi-pencil"></i> 
-                                    </button>
+                                    <a [routerLink]="'/venta-create'" [queryParams]="{ id: venta.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Venta">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
                                     <button class="btn btn-danger" (click)="eliminarVenta(venta)" title="Eliminar Venta">
                                         <i class="bi bi-trash"></i>
                                     </button>

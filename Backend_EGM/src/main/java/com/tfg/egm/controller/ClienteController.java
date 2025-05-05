@@ -1,6 +1,7 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Cliente;
+import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.ClienteService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -39,6 +40,16 @@ public class ClienteController {
     @GetMapping("/clientes/usuario/{usuario}")
     public Cliente obtenerCliente(@PathVariable String usuario) {
         return clienteService.obtenerClientePorUsuario(usuario);
+    }
+
+    @GetMapping("/clientes/find/{id}")
+    public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
+        try {
+            Cliente cliente = clienteService.obtenerClientePorId(id);
+            return ResponseEntity.ok(cliente);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/clientes/new")
