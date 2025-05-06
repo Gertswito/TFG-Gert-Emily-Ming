@@ -8,16 +8,6 @@ body {
   background-color: #f5f5f5;
 }
 
-.body-carrito {
-  padding: 2rem;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
-  max-width: 900px;
-  width: 100%;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
 hr {
   opacity: 1;
   border: none;
@@ -48,9 +38,9 @@ hr:hover {
 /* Estilo general del carrito */
 .body-carrito {
   padding: 2rem;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  background-color: #f6f6f6;
   border-radius: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   max-width: 900px;
   margin: 2rem auto;
   animation: fadeIn 0.5s ease-in-out;
@@ -214,5 +204,21 @@ h5 {
   100% {
       opacity: 0;
       transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+@media screen and (max-width: 315px) {
+  .botones {
+    display: flex!important;
+    flex-direction: column!important;
+  }
+
+  .btn-danger {
+    margin-top: 0.5rem!important;
+    width: 2.05rem!important;
+  }
+
+  .btn-secondary {
+    margin-top: 0.5rem!important;
   }
 }
