@@ -1,8 +1,20 @@
 <div class="bg-img">
     <div class="formulario-login-div d-flex align-items-center justify-content-start flex-column custom-padding">
         @if (estaRegistrado) {
-            <div class="alert alert-success alert-dismissible fade show alerta-personalizada mt-2 me-2 ms-2" role="alert">
-                <strong>¡Bienvenido!</strong> Tu cuenta se ha creado con éxito. Ya puedes iniciar sesión.
+            <div class="alert alert-success alert-dismissible fade show alerta-personalizada mt-2 me-2 ms-2 position-relative" role="alert">
+              <strong>¡Bienvenido!</strong> Tu cuenta se ha creado con éxito. Ya puedes iniciar sesión.
+              <button type="button" class="btn-close position-absolute top-50 end-0 translate-middle-y me-2"
+                      aria-label="Cerrar"
+                      (click)="cerrarAlerta('registrado')">
+              </button>
+            </div>
+          } @else if (necesitaLogin) {
+            <div class="alert alert-danger alert-dismissible fade show alerta-personalizada mt-2 me-2 ms-2 position-relative" role="alert">
+              <strong>¡Atención!</strong> Necesitas iniciar sesión para acceder al carrito.
+              <button type="button" class="btn-close position-absolute top-50 end-0 translate-middle-y me-2"
+                      aria-label="Cerrar"
+                      (click)="cerrarAlerta('carrito')">
+              </button>
             </div>
         }
         <div class="mt-5">

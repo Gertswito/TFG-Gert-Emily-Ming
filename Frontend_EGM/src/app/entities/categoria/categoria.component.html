@@ -1,42 +1,42 @@
 <div class="body-entidades">
-    <h1 class="titulo">Categorías</h1>
-    @if (errorMessage != '') {
-        <div class="alert alert-danger">{{ errorMessage }}</div>
-    }
-    @if (categoriaList.length > 0) {
-        <div class="tabla-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr class="table-primary">
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let categoria of categoriaList">
-                        <tr>
-                            <td>{{categoria.id}}</td>
-                            <td>{{categoria.nombre}}</td>
-                            <td>
-                                <div class="botones-accion">
-                                    <a [routerLink]="'/categoria-create'" [queryParams]="{ id: categoria.id }">
-                                        <button class="btn btn-primary me-2" title="Editar Categoría">
-                                            <i class="bi bi-pencil"></i> 
-                                        </button>
+  <h1 class="titulo">Categorías</h1>
+  @if (errorMessage != '') {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+  @if (categoriaList.length > 0) {
+      <div class="tabla-body">
+          <table class="table table-striped table-bordered">
+              <thead>
+                  <tr class="table-primary">
+                      <th>ID</th>
+                      <th>Nombre</th>
+                      <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <ng-container *ngFor="let categoria of categoriaList">
+                      <tr>
+                          <td>{{categoria.id}}</td>
+                          <td>{{categoria.nombre}}</td>
+                          <td>
+                              <div class="botones-accion">
+                                <a [routerLink]="'/categoria-create'" [queryParams]="{ id: categoria.id }">
+                                  <button class="btn btn-primary me-2" title="Editar Categoría">
+                                      <i class="bi bi-pencil"></i>
+                                  </button>
                                     </a>
                                     <button class="btn btn-danger" (click)="eliminarCategoria(categoria)" title="Eliminar Categoría">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-        </div>
-    } @else {
-        <p>No se ha encontrado nada</p>
-        <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
-    }
+                                      <i class="bi bi-trash"></i>
+                                  </button>
+                              </div>
+                          </td>
+                      </tr>
+                  </ng-container>
+              </tbody>
+          </table>
+      </div>
+  } @else {
+      <p>No se ha encontrado nada</p>
+      <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
+  }
 </div>

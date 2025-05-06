@@ -64,6 +64,10 @@ export class ProductoListComponent implements OnInit {
     });
   }
 
+  alertaIniciarSesion() {
+    alert('Debes iniciar sesión para añadir productos al carrito');
+  }
+
   addCarrito(producto: IProducto): void {
     if (!this.usuario) return;
   

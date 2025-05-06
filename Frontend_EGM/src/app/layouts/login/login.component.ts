@@ -13,6 +13,7 @@ import { ClienteService } from '../../entities/cliente/cliente.service';
 })
 export class LoginComponent implements OnInit {
   estaRegistrado = false;
+  necesitaLogin = false;
   loginFormulario!: FormGroup;
 
   protected route = inject(ActivatedRoute); 
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.estaRegistrado = params['registrado'];
+      this.necesitaLogin = params['necesitaLogin'];
     });
     this.loginFormulario = new FormGroup({
       usuario: new FormControl(null, [Validators.required]),
@@ -52,5 +54,13 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+  }
+
+  cerrarAlerta(tipo: 'registrado' | 'carrito'): void {
+    if (tipo === 'registrado') {
+      this.estaRegistrado = false;
+    } else if (tipo === 'carrito') {
+      this.necesitaLogin = false;
+    }
   }
 }
