@@ -27,6 +27,7 @@ import { DireccionCreateComponent } from './entities/direccion/direccion-create/
 import { PagoCreateComponent } from './entities/pago/pago-create/pago-create.component';
 import { ProductoInfoComponent } from './entities/producto/producto-info/producto-info.component';
 import { CompraComponent } from './layouts/compra/compra.component';
+import { CompraExitoComponent } from './layouts/compra/compra-exito/compra-exito.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -57,4 +58,5 @@ export const routes: Routes = [
     { path: 'compra', component: CompraComponent },
     { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'error-sin-autorizacion', component: ErrorComponent },
+    { path: 'compra-exito', component: CompraExitoComponent },
 ];

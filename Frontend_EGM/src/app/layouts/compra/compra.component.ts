@@ -9,13 +9,14 @@ import { ILineasVenta } from '../../entities/lineasVenta/lineasVenta.model';
 import { CarritoService } from '../carrito/carrito.service';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IDireccion } from '../../entities/direccion/direccion.model';
 import { IPago } from '../../entities/pago/pago.model';
 import { DireccionService } from '../../entities/direccion/direccion.service';
 import { PagoService } from '../../entities/pago/pago.service';
 import { DireccionAjusteComponent } from "../../entities/direccion/direccion-ajuste/direccion-ajuste.component";
 import { PagoAjusteComponent } from "../../entities/pago/pago-ajuste/pago-ajuste.component";
+import { VentaService } from '../../entities/venta/venta.service';
 
 @Component({
   standalone: true,
@@ -37,6 +38,8 @@ export class CompraComponent implements OnInit {
   private clienteService = inject(ClienteService);
   private direccionService = inject(DireccionService);
   private pagoService = inject(PagoService);
+  private ventaService = inject(VentaService);
+  protected router = inject(Router);
 
   ngOnInit(): void {
     const usuarioNombre = this.authService.getUsuario();
@@ -95,8 +98,16 @@ export class CompraComponent implements OnInit {
     }
   }
 
+  getLastDayOfMonth(monthString: string): Date {
+    const [year, month] = monthString.split("-").map(Number);
+    return new Date(year, month, 0); 
+  }
+
   finalizarCompra(): void {
-    this.venta = JSON.parse(localStorage.getItem(`carrito_${this.usuario!.id}`) ?? 'null');
+    if(this.usuario == null || this.usuario.id == null) return;
+    this.venta = JSON.parse(localStorage.getItem(`carrito_${this.usuario.id}`) ?? 'null');
+    this.lineasVenta = JSON.parse(localStorage.getItem(`carrito_${this.usuario.id}_lineas`) ?? '[]');
+
     if (this.venta && this.venta.direccion == null && this.venta.pago == null) {
       this.error = true;
       this.errorMessage = 'Por favor, seleccione una dirección de envío y un metodo de pago.';
@@ -113,6 +124,30 @@ export class CompraComponent implements OnInit {
 
     this.error = false;
     this.errorMessage = '';
-    
+    if (this.venta && this.lineasVenta && this.venta.pago && this.venta.direccion) {
+      const monthYear = this.venta.pago?.fechaCaducidad;
+      if (typeof monthYear === 'string') {
+        const lastDayOfMonth = this.getLastDayOfMonth(monthYear);
+        this.venta.pago.fechaCaducidad = lastDayOfMonth;
+      } 
+      if (this.venta.pago.numeroTarjeta) {
+        this.venta.pago.numeroTarjeta = this.venta.pago.numeroTarjeta.replace(/\s/g, "");
+      }
+      this.ventaService.finalizarCompra(this.venta, this.lineasVenta).subscribe((res) => {
+        if (res.status === 201) {
+          localStorage.removeItem(`carrito_${this.usuario!.id}`);
+          localStorage.removeItem(`carrito_${this.usuario!.id}_lineas`);
+          this.venta = null;
+          this.lineasVenta = [];
+          this.error = false;
+          this.errorMessage = '';
+
+          this.router.navigate(['/compra-exito']).then(() => {});
+        } else {
+          this.error = true;
+          this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
+        }
+      });
+    }
   }
 }

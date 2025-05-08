@@ -43,7 +43,15 @@ public class VentaService {
     }
 
     public Venta save(Venta venta) {
-        if(venta.getFechaHora() != null) {
+        if(venta.getFechaHora() == null) {
+            LocalDateTime fechaHoy = LocalDateTime.now();
+            venta.setFechaHora(fechaHoy);
+        }
+        return ventaRepository.save(venta);
+    }
+
+    public Venta update(Venta venta) {
+        if (venta.getFechaHora() != null) {
             LocalDateTime fechaHoy = LocalDateTime.now();
             if (venta.getFechaHora().isAfter(fechaHoy)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInvalida");
@@ -52,7 +60,10 @@ public class VentaService {
         return ventaRepository.save(venta);
     }
 
-    public Venta update(Venta venta) {
+    public Venta finalizarCompra(Venta venta) {
+        if (venta.getFechaHora() == null) {
+            venta.setFechaHora(LocalDateTime.now());
+        }
         return ventaRepository.save(venta);
     }
 }

@@ -39,7 +39,7 @@ export class VentaService {
     return this.http.put<IVenta>(`${this.resourceUrl}/update/${venta.id}`, venta, { observe: 'response' });
   }
 
-  finalizarVenta(venta: IVenta, lineasVentas: ILineasVenta): Observable<HttpResponse<IVenta>> {
+  finalizarCompra(venta: IVenta, lineasVentas: ILineasVenta[]): Observable<HttpResponse<IVenta>> {
     const ventaFinal = {
       id: venta.id,
       cliente: venta.cliente,

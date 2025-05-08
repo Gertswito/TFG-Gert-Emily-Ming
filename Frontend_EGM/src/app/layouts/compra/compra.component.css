@@ -206,19 +206,17 @@ body {
         transform: translateX(-50%) translateY(-20px);
     }
   }
-  
-  @media screen and (max-width: 315px) {
-    .botones {
-      display: flex!important;
-      flex-direction: column!important;
+  .comprar {
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 635px) {
+    .body-compra {
+      padding-left: 0.5em!important;
+      padding-right: 0.5em!important;
     }
-  
-    .btn-danger {
-      margin-top: 0.5rem!important;
-      width: 2.05rem!important;
-    }
-  
-    .btn-secondary {
-      margin-top: 0.5rem!important;
+
+    .comprar-a {
+      width: 100%!important;
     }
   }
