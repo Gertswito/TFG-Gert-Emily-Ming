@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { IVenta } from './venta.model';
+import { ILineasVenta } from '../lineasVenta/lineasVenta.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,18 @@ export class VentaService {
 
   editarVenta(venta: IVenta): Observable<HttpResponse<IVenta>> {
     return this.http.put<IVenta>(`${this.resourceUrl}/update/${venta.id}`, venta, { observe: 'response' });
+  }
+
+  finalizarVenta(venta: IVenta, lineasVentas: ILineasVenta): Observable<HttpResponse<IVenta>> {
+    const ventaFinal = {
+      id: venta.id,
+      cliente: venta.cliente,
+      fechaHora: venta.fechaHora,
+      precioFinal: venta.precioFinal,
+      direccion: venta.direccion,
+      pago: venta.pago,
+      lineasVentas: lineasVentas,
+    };
+    return this.http.post<IVenta>(`${this.resourceUrl}/finalizar-compra`, ventaFinal, { observe: 'response' });
   }
 }

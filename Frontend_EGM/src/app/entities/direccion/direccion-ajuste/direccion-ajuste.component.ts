@@ -11,23 +11,32 @@ import { CommonModule } from "@angular/common";
 import { ClienteService } from "../../cliente/cliente.service";
 import { DireccionService } from "../../direccion/direccion.service";
 import { IDireccion } from "../../direccion/direccion.model";
+import { ICliente } from "../../cliente/cliente.model";
+import { IVenta } from "../../venta/venta.model";
+import { RouterLink } from "@angular/router";
 
 @Component({
   standalone: true,
   selector: "app-direccion-ajuste",
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: "./direccion-ajuste.component.html",
   styleUrls: ["./direccion-ajuste.component.css"],
 })
 export class DireccionAjusteComponent implements OnInit {
   @Input() usuario: string | null = null
+  @Input() esUnaCompra: boolean = false
 
   direccionesForm: FormGroup
   loading = false
   success = false
   error = false
+  selectedDireccion = false
   errorMessage = ""
   direccionesOriginales: IDireccion[] = []
+  user: ICliente | null = null
+  venta: IVenta | null = null
+  direccionSeleccionada: IDireccion | null = null
+  indexDireccionSeleccionada: number | null = null
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +49,9 @@ export class DireccionAjusteComponent implements OnInit {
   ngOnInit(): void {
     if (this.usuario) {
       this.loadDirecciones(this.usuario)
+      this.clienteService.getCliente(this.usuario).subscribe((res) => {
+        this.user = res || null
+      });
     } else {
       this.error = true
       this.errorMessage = "No se pudo obtener el usuario"
@@ -211,6 +223,43 @@ export class DireccionAjusteComponent implements OnInit {
         this.markFormGroupTouched(control)
       }
     })
+  }
+
+  chooseDireccion(index: number): void {
+    const direccionFormGroup = this.direccionesFormArray.at(index);
+    if (!direccionFormGroup) {
+      this.error = true;
+      this.errorMessage = "No se encontró la dirección seleccionada.";
+      return;
+    }
+  
+    const direccion = direccionFormGroup.value as IDireccion;
+  
+    if (this.user) {
+      const carritoKey = `carrito_${this.user.id}`;
+
+      this.venta = JSON.parse(localStorage.getItem(carritoKey) ?? 'null');
+      this.venta!.direccion = direccion;
+      localStorage.setItem(carritoKey, JSON.stringify(this.venta));
+
+      this.direccionSeleccionada = direccion;
+      this.indexDireccionSeleccionada = index;
+      this.selectedDireccion = true;
+    }
+  }
+
+  removeSelectedDireccion(): void {
+    if (this.user) {
+      const carritoKey = `carrito_${this.user.id}`;
+
+      this.venta = JSON.parse(localStorage.getItem(carritoKey) ?? 'null');
+      this.venta!.direccion = null;
+      localStorage.setItem(carritoKey, JSON.stringify(this.venta));
+
+      this.direccionSeleccionada = null;
+      this.indexDireccionSeleccionada = null;
+      this.selectedDireccion = false;
+    }
   }
 }
 

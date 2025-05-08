@@ -4,9 +4,11 @@
         <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
         <h5 class="mb-0">Direcciones</h5>
       </div>
-      <button type="button" class="btn btn-sm btn-outline-primary" (click)="addDireccion()">
-        <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
-      </button>
+      @if (!esUnaCompra) {
+        <button type="button" class="btn btn-outline-primary" (click)="addDireccion()">
+          <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
+        </button>
+      }
     </div>
     
     <!-- Spinner de carga -->
@@ -25,6 +27,13 @@
       </div>
       <button type="button" class="btn-close" (click)="success = false" aria-label="Cerrar"></button>
     </div>
+
+    <div *ngIf="selectedDireccion" class="alert custom-alert-success alert-dismissible fade show bg-success-subtle text-success-emphasis mx-3 mt-3" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+        <span>Dirección seleccionada.</span>
+      </div>
+    </div>
     
     <!-- Alerta de error -->
     <div *ngIf="error" class="alert custom-alert-danger alert-dismissible fade show bg-danger-subtle text-danger-emphasis mx-3 mt-3" role="alert">
@@ -35,87 +44,196 @@
       <button type="button" class="btn-close" (click)="error = false" aria-label="Cerrar"></button>
     </div>
     
-    <div class="card-body" *ngIf="!loading">
-      <form [formGroup]="direccionesForm" (ngSubmit)="onSubmit()">
-        <div formArrayName="direcciones">
-          <div *ngFor="let direccionForm of direccionesFormArray.controls; let i = index" class="address-card mb-3">
-            <div [formGroupName]="i">
-              <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
-                <h6 class="fw-bold text-primary"><i class="bi bi-house me-2"></i>Dirección #{{ i + 1 }}</h6>
-                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeDireccion(i)">
-                  <i class="bi bi-trash me-1"></i> Eliminar
+    @if (!selectedDireccion) {
+      <div class="card-body" *ngIf="!loading">
+        <form [formGroup]="direccionesForm" (ngSubmit)="onSubmit()">
+          <div formArrayName="direcciones">
+            <div *ngFor="let direccionForm of direccionesFormArray.controls; let i = index" class="address-card mb-3">
+              <div [formGroupName]="i">
+                <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                  <h6 class="fw-bold text-primary"><i class="bi bi-house me-2"></i>Dirección #{{ i + 1 }}</h6>
+                  @if (esUnaCompra) {
+                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="chooseDireccion(i)">
+                      Seleccionar
+                    </button>
+                  } @else {
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeDireccion(i)">
+                      <i class="bi bi-trash me-1"></i> Eliminar
+                    </button>
+                  }
+                </div>
+                
+                @if (esUnaCompra) {
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label class="form-label fw-medium">Dirección</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-signpost"></i></span>
+                        <input type="text" class="form-control" formControlName="direccion" readonly>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Código Postal</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                        <input type="text" class="form-control" formControlName="codigoPostal" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Localidad</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" class="form-control" formControlName="localidad" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Comunidad Autónoma</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-map"></i></span>
+                        <input type="text" class="form-control" formControlName="comunidadAutonoma" readonly>
+                      </div>
+                    </div>
+                  </div>
+                } @else {
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label class="form-label fw-medium">Dirección <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-signpost"></i></span>
+                        <input type="text" class="form-control" formControlName="direccion" required>
+                      </div>
+                      <div *ngIf="direccionForm.get('direccion')?.invalid && direccionForm.get('direccion')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>La dirección es obligatoria
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Código Postal <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                        <input type="text" class="form-control" formControlName="codigoPostal" required>
+                      </div>
+                      <div *ngIf="direccionForm.get('codigoPostal')?.invalid && direccionForm.get('codigoPostal')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>Introduce un código postal válido (5 dígitos)
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Localidad <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" class="form-control" formControlName="localidad" required>
+                      </div>
+                      <div *ngIf="direccionForm.get('localidad')?.invalid && direccionForm.get('localidad')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>La localidad es obligatoria
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Comunidad Autónoma <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-map"></i></span>
+                        <input type="text" class="form-control" formControlName="comunidadAutonoma" required>
+                      </div>
+                      <div *ngIf="direccionForm.get('comunidadAutonoma')?.invalid && direccionForm.get('comunidadAutonoma')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>La comunidad autónoma es obligatoria
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            
+            <div *ngIf="direccionesFormArray.length === 0" class="text-center py-4 empty-state">
+              <i class="bi bi-geo-alt fs-1 text-muted mb-2"></i>
+              <p class="text-muted">No hay direcciones añadidas</p>
+              @if (esUnaCompra) {
+                <a [routerLink]="'/cliente-ajustes'">
+                  <button type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Añadir Dirección desde Ajustes
+                  </button>
+                </a>
+              } @else {
+                <button type="button" class="btn btn-outline-primary" (click)="addDireccion()">
+                  <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
                 </button>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label class="form-label fw-medium">Dirección <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-signpost"></i></span>
-                    <input type="text" class="form-control" formControlName="direccion" required>
-                  </div>
-                  <div *ngIf="direccionForm.get('direccion')?.invalid && direccionForm.get('direccion')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>La dirección es obligatoria
-                  </div>
-                </div>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label class="form-label fw-medium">Código Postal <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
-                    <input type="text" class="form-control" formControlName="codigoPostal" required>
-                  </div>
-                  <div *ngIf="direccionForm.get('codigoPostal')?.invalid && direccionForm.get('codigoPostal')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>Introduce un código postal válido (5 dígitos)
-                  </div>
-                </div>
-                
-                <div class="col-md-4 mb-3">
-                  <label class="form-label fw-medium">Localidad <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-building"></i></span>
-                    <input type="text" class="form-control" formControlName="localidad" required>
-                  </div>
-                  <div *ngIf="direccionForm.get('localidad')?.invalid && direccionForm.get('localidad')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>La localidad es obligatoria
-                  </div>
-                </div>
-                
-                <div class="col-md-4 mb-3">
-                  <label class="form-label fw-medium">Comunidad Autónoma <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-map"></i></span>
-                    <input type="text" class="form-control" formControlName="comunidadAutonoma" required>
-                  </div>
-                  <div *ngIf="direccionForm.get('comunidadAutonoma')?.invalid && direccionForm.get('comunidadAutonoma')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>La comunidad autónoma es obligatoria
-                  </div>
-                </div>
-              </div>
+              }
             </div>
           </div>
           
-          <div *ngIf="direccionesFormArray.length === 0" class="text-center py-4 empty-state">
-            <i class="bi bi-geo-alt fs-1 text-muted mb-2"></i>
-            <p class="text-muted">No hay direcciones añadidas</p>
-            <button type="button" class="btn btn-outline-primary" (click)="addDireccion()">
-              <i class="bi bi-plus-circle me-1"></i> Añadir Dirección
-            </button>
+          @if (!esUnaCompra) {
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+                <i class="bi bi-x-circle me-1"></i> Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="direccionesForm.invalid || loading">
+                <i class="bi bi-save me-1"></i> Guardar Cambios
+              </button>
+            </div>
+          }
+        </form>
+      </div>
+    } @else {
+      <div class="card-body" *ngIf="!loading">
+        <form [formGroup]="direccionesForm" (ngSubmit)="onSubmit()">
+          <div formArrayName="direcciones">
+            <div *ngIf="direccionSeleccionada !== null" class="address-card mb-3">
+              <div [formGroupName]="indexDireccionSeleccionada">
+                <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                  <h6 class="fw-bold text-primary"><i class="bi bi-house me-2"></i>Dirección seleccionada</h6>
+                  <button type="button" class="btn btn-outline-danger" (click)="removeSelectedDireccion()">
+                    Cambiar dirección
+                  </button>
+                </div>
+                
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label class="form-label fw-medium">Dirección</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-signpost"></i></span>
+                        <input type="text" class="form-control" formControlName="direccion" readonly>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Código Postal</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-mailbox"></i></span>
+                        <input type="text" class="form-control" formControlName="codigoPostal" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Localidad</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input type="text" class="form-control" formControlName="localidad" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label fw-medium">Comunidad Autónoma</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-map"></i></span>
+                        <input type="text" class="form-control" formControlName="comunidadAutonoma" readonly>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
           </div>
-        </div>
-        
-        <div class="d-flex justify-content-end gap-2 mt-3">
-          <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
-            <i class="bi bi-x-circle me-1"></i> Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary" [disabled]="direccionesForm.invalid || loading">
-            <i class="bi bi-save me-1"></i> Guardar Cambios
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    }
   </div>
   
   

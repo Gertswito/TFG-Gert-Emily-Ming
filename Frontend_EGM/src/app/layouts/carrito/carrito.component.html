@@ -1,43 +1,48 @@
 <div class="body-carrito">
-  <div class="d-flex flex-column align-items-center justify-content-center contenedor-producto">
-      <h1 class="mb-0 text-primary fw-bold">Carrito de compras</h1>
-      <hr class="w-75">
-      @if (venta && venta.precioFinal !== null && venta.precioFinal > 0) {
-          <div class="d-flex flex-column w-100 p-3 bg-light rounded shadow-sm">
-              <div class="d-flex flex-row justify-content-between mb-1">
-                  <div><h4 class="text-secondary">Producto</h4></div>
-              </div>
-              <ng-container *ngFor="let linea of lineasVenta">
-                  <div class="d-flex flex-row justify-content-between mb-2 w-100 border-bottom pb-2">
-                      <div class="d-flex flex-row justify-content-between align-items-center w-100 me-2">
-                          <div class="text-dark">
-                              <strong>{{linea.producto?.marca}}</strong> - {{linea.producto?.nombre}}
-                              <span class="text-muted">|</span>
-                              <span class="badge bg-secondary ms-1">x{{linea.cantidadPedida}}</span>
-                          </div>
-                          <div class="text-success fw-bold">{{linea.precioTotal | number:'1.2-2'}}€</div>
-                      </div>
-                      <div class="d-flex flex-row justify-content-center align-items-center borde-izquierda botones">
-                          <button type="button" class="btn btn-primary btn-sm me-1 shadow-sm" (click)="addUno(linea)" style="width: 2em;">
-                              <b>+</b>
-                          </button>
-                          <button type="button" class="btn btn-secondary btn-sm me-1 shadow-sm" (click)="deleteUno(linea)" style="width: 2em;">
-                              <b>-</b>
-                          </button>
-                          <button type="button" class="btn btn-danger btn-sm me-1 shadow-sm" (click)="deleteLinea(linea)">
-                              <i class="bi bi-trash"></i>
-                          </button>
-                      </div>
-                  </div>
-              </ng-container>
-              <hr>
-              <div class="d-flex flex-row justify-content-between mb-3">
-                  <h5 class="text-dark">Total:</h5>
-                  <h5 class="text-success fw-bold">{{venta.precioFinal | number:'1.2-2'}}€</h5>
-              </div>
-          </div>
-      } @else {
-          <h2 class="mb-0 text-danger">No hay productos en el carrito</h2>
-      }
-  </div>
+    <div class="d-flex flex-column align-items-center justify-content-center contenedor-producto">
+        <h1 class="mb-0 text-primary fw-bold">Carrito de compras</h1>
+        <hr class="w-75">
+        @if (venta && venta.precioFinal !== null && venta.precioFinal > 0) {
+            <div class="d-flex flex-column w-100 p-3 bg-light rounded shadow-sm">
+                <div class="d-flex flex-row justify-content-between mb-1">
+                    <div><h4 class="text-secondary">Producto</h4></div>
+                </div>
+                <ng-container *ngFor="let linea of lineasVenta">
+                    <div class="d-flex flex-row justify-content-between mb-2 w-100 border-bottom pb-2">
+                        <div class="d-flex flex-row justify-content-between align-items-center w-100 me-2">
+                            <div class="text-dark">
+                                <strong>{{linea.producto?.marca}}</strong> - {{linea.producto?.nombre}}
+                                <span class="text-muted">|</span>
+                                <span class="badge bg-secondary ms-1">x{{linea.cantidadPedida}}</span>
+                            </div>
+                            <div class="text-success fw-bold">{{linea.precioTotal | number:'1.2-2'}}€</div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center align-items-center borde-izquierda botones">
+                            <button type="button" class="btn btn-primary btn-sm me-1 shadow-sm" (click)="addUno(linea)" style="width: 2em;">
+                                    <fa-icon [icon]="faPlus"></fa-icon>
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm me-1 shadow-sm" (click)="deleteUno(linea)" style="width: 2em;">
+                                    <fa-icon [icon]="faMinus"></fa-icon>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm me-1 shadow-sm" (click)="deleteLinea(linea)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+                <hr>
+                <div class="d-flex flex-row justify-content-between mb-3">
+                    <h5 class="text-dark">Total:</h5>
+                    <h5 class="text-success fw-bold">{{venta.precioFinal | number:'1.2-2'}}€</h5>
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center w-100 mt-2">
+                    <a class="w-25" [routerLink]="'/compra'">
+                        <button type="button" class="btn btn-primary w-100">Tramitar pedido</button>
+                    </a>
+                </div>
+            </div>
+        } @else {
+            <h2 class="mb-0 text-danger">No hay productos en el carrito</h2>
+        }
+    </div>
 </div>
