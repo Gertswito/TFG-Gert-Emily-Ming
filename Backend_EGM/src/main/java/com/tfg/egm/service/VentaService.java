@@ -1,9 +1,12 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.Categoria;
+import com.tfg.egm.entity.LineasVentas;
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.entity.Venta;
 import com.tfg.egm.repository.VentaRepository;
+
+import jakarta.transaction.Transactional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -19,8 +22,11 @@ public class VentaService {
 
     private final VentaRepository ventaRepository;
 
-    public VentaService(VentaRepository ventaRepository) {
+    private final LineasVentasService lineasVentasService;
+
+    public VentaService(VentaRepository ventaRepository, LineasVentasService lineasVentasService) {
         this.ventaRepository = ventaRepository;
+        this.lineasVentasService = lineasVentasService;
     }
 
     public List<Venta> obtenerVentas() {
@@ -60,10 +66,15 @@ public class VentaService {
         return ventaRepository.save(venta);
     }
 
+    @Transactional
     public Venta finalizarCompra(Venta venta) {
-        if (venta.getFechaHora() == null) {
-            venta.setFechaHora(LocalDateTime.now());
+        Venta nuevaVenta = ventaRepository.save(venta);
+
+        for (LineasVentas linea : venta.getLineasVentas()) {
+            linea.setVenta(nuevaVenta);
+            lineasVentasService.guardarLineaYCalcularStock(linea); // ← aquí lanzará excepción si no hay stock
         }
-        return ventaRepository.save(venta);
+
+        return nuevaVenta;
     }
 }

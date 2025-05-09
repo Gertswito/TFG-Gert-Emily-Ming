@@ -134,8 +134,8 @@ export class CompraComponent implements OnInit {
       if (this.venta.pago.numeroTarjeta) {
         this.venta.pago.numeroTarjeta = this.venta.pago.numeroTarjeta.replace(/\s/g, "");
       }
-      this.ventaService.finalizarCompra(this.venta, this.lineasVenta).subscribe((res) => {
-        if (res.status === 201) {
+      this.ventaService.finalizarCompra(this.venta, this.lineasVenta).subscribe({
+        next: (res) => {
           localStorage.removeItem(`carrito_${this.usuario!.id}`);
           localStorage.removeItem(`carrito_${this.usuario!.id}_lineas`);
           if (this.usuario) {
@@ -145,11 +145,17 @@ export class CompraComponent implements OnInit {
           this.lineasVenta = [];
           this.error = false;
           this.errorMessage = '';
-          
-          this.router.navigate(['/compra-exito']).then(() => {});
-        } else {
-          this.error = true;
-          this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
+      
+          this.router.navigate(['/compra-exito']);
+        },
+        error: (err) => {
+          if (err.status === 400 && err.error?.error === 'stockInsuficiente') {
+            this.error = true;
+            this.errorMessage = 'No hay suficiente stock para uno o más productos del carrito.';
+          } else {
+            this.error = true;
+            this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
+          }
         }
       });
     }

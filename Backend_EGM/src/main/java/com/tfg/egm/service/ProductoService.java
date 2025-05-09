@@ -1,5 +1,6 @@
 package com.tfg.egm.service;
 
+import com.tfg.egm.entity.LineasVentas;
 import com.tfg.egm.entity.Producto;
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.repository.ProductoRepository;
@@ -52,5 +53,14 @@ public class ProductoService {
 
     public Producto update(Producto producto) {
         return productoRepository.save(producto);
+    }
+
+    public void restarStockProducto(LineasVentas lineaVenta) {
+        Producto producto = productoRepository.findById(lineaVenta.getProducto().getId().longValue()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste"));
+        if (producto.getStock() < lineaVenta.getCantidadPedida()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stockInsuficiente");
+        }
+        producto.setStock(producto.getStock() - lineaVenta.getCantidadPedida());
+        productoRepository.save(producto);
     }
 }

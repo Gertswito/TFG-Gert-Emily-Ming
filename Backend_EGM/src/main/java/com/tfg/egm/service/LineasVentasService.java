@@ -1,7 +1,9 @@
 package com.tfg.egm.service;
 
 import com.tfg.egm.entity.LineasVentas;
+import com.tfg.egm.entity.Producto;
 import com.tfg.egm.entity.Subcategoria;
+import com.tfg.egm.entity.Venta;
 import com.tfg.egm.repository.LineasVentasRepository;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,8 +18,11 @@ public class LineasVentasService {
 
     private final LineasVentasRepository lineasVentasRepository;
 
-    public LineasVentasService(LineasVentasRepository lineasVentasRepository) {
+    private final ProductoService productoService;
+
+    public LineasVentasService(LineasVentasRepository lineasVentasRepository, ProductoService productoService) {
         this.lineasVentasRepository = lineasVentasRepository;
+        this.productoService = productoService;
     }
 
     public List<LineasVentas> obtenerLineasVentas() {
@@ -46,4 +51,10 @@ public class LineasVentasService {
     public LineasVentas update(LineasVentas lineasVentas) {
         return lineasVentasRepository.save(lineasVentas);
     }
+
+    public LineasVentas guardarLineaYCalcularStock(LineasVentas lineaVenta) {
+        productoService.restarStockProducto(lineaVenta); 
+        return lineasVentasRepository.save(lineaVenta);
+    }
+    
 }

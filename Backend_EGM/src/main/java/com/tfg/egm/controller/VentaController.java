@@ -1,7 +1,5 @@
 package com.tfg.egm.controller;
 
-import com.tfg.egm.entity.LineasVentas;
-import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.entity.Venta;
 import com.tfg.egm.service.LineasVentasService;
 import com.tfg.egm.service.VentaService;
@@ -28,10 +26,7 @@ public class VentaController {
 
     private final VentaService ventaService;
 
-    private final LineasVentasService lineasVentasService;
-
     public VentaController(VentaService ventaService, LineasVentasService lineasVentasService) {
-        this.lineasVentasService = lineasVentasService;
         this.ventaService = ventaService;
     }
 
@@ -88,11 +83,7 @@ public class VentaController {
     @PostMapping("/ventas/finalizar-compra")
     public ResponseEntity<Object> finalizarCompra(@RequestBody Venta venta) throws URISyntaxException {
         try {
-            Venta nuevaVenta = ventaService.save(venta);
-            for(LineasVentas linea: venta.getLineasVentas()) {
-                linea.setVenta(nuevaVenta);
-                lineasVentasService.save(linea);
-            }
+            Venta nuevaVenta = ventaService.finalizarCompra(venta);
             URI location = new URI("/venta/new/" + nuevaVenta.getId());
             return ResponseEntity.created(location).body(nuevaVenta);
         } catch (ResponseStatusException ex) {
