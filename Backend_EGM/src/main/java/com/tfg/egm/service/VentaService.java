@@ -68,6 +68,10 @@ public class VentaService {
 
     @Transactional
     public Venta finalizarCompra(Venta venta) {
+        if(venta.getFechaHora() == null) {
+            LocalDateTime fechaHoy = LocalDateTime.now();
+            venta.setFechaHora(fechaHoy);
+        }
         Venta nuevaVenta = ventaRepository.save(venta);
 
         for (LineasVentas linea : venta.getLineasVentas()) {
