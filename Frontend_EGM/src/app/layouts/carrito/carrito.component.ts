@@ -7,15 +7,21 @@ import { ICliente } from '../../entities/cliente/cliente.model';
 import { IVenta } from '../../entities/venta/venta.model';
 import { ILineasVenta } from '../../entities/lineasVenta/lineasVenta.model';
 import { CarritoService } from './carrito.service';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'carrito',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, FontAwesomeModule, RouterLink],
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
 })
 export class CarritoComponent implements OnInit {
+  faPlus = faPlus;
+  faMinus = faMinus;
+
   usuario: ICliente | null = null;
   venta: IVenta | null = null;
   lineasVenta: ILineasVenta[] = [];

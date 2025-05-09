@@ -4,9 +4,11 @@
         <i class="bi bi-credit-card-fill me-2 text-primary"></i>
         <h5 class="mb-0">Métodos de Pago</h5>
       </div>
-      <button type="button" class="btn btn-sm btn-outline-primary" (click)="addPago()">
-        <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
-      </button>
+      @if (!esUnaCompra) {
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="addPago()">
+          <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
+        </button>
+      }
     </div>
     
     <!-- Spinner de carga -->
@@ -25,6 +27,13 @@
       </div>
       <button type="button" class="btn-close" (click)="success = false" aria-label="Cerrar"></button>
     </div>
+
+    <div *ngIf="selectedPago" class="alert custom-alert-success alert-dismissible fade show bg-success-subtle text-success-emphasis mx-3 mt-3" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+        <span>Método de pago seleccionado.</span>
+      </div>
+    </div>
     
     <!-- Alerta de error -->
     <div *ngIf="error" class="alert custom-alert-danger alert-dismissible fade show bg-danger-subtle text-danger-emphasis mx-3 mt-3" role="alert">
@@ -35,77 +44,172 @@
       <button type="button" class="btn-close" (click)="error = false" aria-label="Cerrar"></button>
     </div>
     
-    <div class="card-body" *ngIf="!loading">
-      <form [formGroup]="pagosForm" (ngSubmit)="onSubmit()">
-        <div formArrayName="pagos">
-          <div *ngFor="let pagoForm of pagosFormArray.controls; let i = index" class="payment-card mb-3">
-            <div [formGroupName]="i">
-              <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
-                <h6 class="fw-bold text-primary"><i class="bi bi-credit-card me-2"></i>Tarjeta #{{ i + 1 }}</h6>
-                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePago(i)">
-                  <i class="bi bi-trash me-1"></i> Eliminar
-                </button>
+    @if (!selectedPago) {
+      <div class="card-body" *ngIf="!loading">
+        <form [formGroup]="pagosForm" (ngSubmit)="onSubmit()">
+          <div formArrayName="pagos">
+            <div *ngFor="let pagoForm of pagosFormArray.controls; let i = index" class="payment-card mb-3">
+              <div [formGroupName]="i">
+                <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                  <h6 class="fw-bold text-primary"><i class="bi bi-credit-card me-2"></i>Tarjeta #{{ i + 1 }}</h6>
+                  @if (esUnaCompra) {
+                    <button type="button" class="btn btn-sm btn-outline-primary" (click)="choosePago(i)">
+                      Seleccionar
+                    </button>
+                  } @else {
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePago(i)">
+                      <i class="bi bi-trash me-1"></i> Eliminar
+                    </button>
+                  }
+                </div>
+                
+                @if (esUnaCompra) {
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label fw-medium">Número de Tarjeta</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                        <input type="text" class="form-control" formControlName="numeroTarjeta" 
+                               (input)="formatCardNumber($event, i)" 
+                               placeholder="XXXX XXXX XXXX XXXX" 
+                               maxlength="19" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label fw-medium">Fecha de Caducidad</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <input type="month" class="form-control" formControlName="fechaCaducidad" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label fw-medium">CVV</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                        <input type="text" class="form-control" formControlName="cvv" readonly>
+                      </div>
+                    </div>
+                  </div>
+                } @else {
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label fw-medium">Número de Tarjeta <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                        <input type="text" class="form-control" formControlName="numeroTarjeta" 
+                               (input)="formatCardNumber($event, i)" 
+                               placeholder="XXXX XXXX XXXX XXXX" 
+                               maxlength="19" required>
+                      </div>
+                      <div *ngIf="pagoForm.get('numeroTarjeta')?.invalid && pagoForm.get('numeroTarjeta')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>Introduce un número de tarjeta válido (16 dígitos)
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label fw-medium">Fecha de Caducidad <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <input type="month" class="form-control" formControlName="fechaCaducidad" required>
+                      </div>
+                      <div *ngIf="pagoForm.get('fechaCaducidad')?.invalid && pagoForm.get('fechaCaducidad')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>La fecha de caducidad es obligatoria
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                      <label class="form-label fw-medium">CVV <span class="text-danger">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                        <input type="text" class="form-control" formControlName="cvv" required>
+                      </div>
+                      <div *ngIf="pagoForm.get('cvv')?.invalid && pagoForm.get('cvv')?.touched" class="invalid-feedback d-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>Introduce un CVV válido (3 dígitos)
+                      </div>
+                    </div>
+                  </div>
+                }
               </div>
-              
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label fw-medium">Número de Tarjeta <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
-                    <input type="text" class="form-control" formControlName="numeroTarjeta" 
-                           (input)="formatCardNumber($event, i)" 
-                           placeholder="XXXX XXXX XXXX XXXX" 
-                           maxlength="19" required>
-                  </div>
-                  <div *ngIf="pagoForm.get('numeroTarjeta')?.invalid && pagoForm.get('numeroTarjeta')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>Introduce un número de tarjeta válido (16 dígitos)
-                  </div>
+            </div>
+            
+            <div *ngIf="pagosFormArray.length === 0" class="text-center py-4 empty-state">
+              <i class="bi bi-credit-card fs-1 text-muted mb-2"></i>
+              <p class="text-muted">No hay métodos de pago añadidos</p>
+              @if (esUnaCompra) {
+                <a [routerLink]="'/cliente-ajustes'">
+                  <button type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago desde Ajustes
+                  </button>
+                </a>
+              } @else {
+                <button type="button" class="btn btn-outline-primary" (click)="addPago()">
+                  <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
+                </button>
+              }
+            </div>
+          </div>
+          
+          @if (!esUnaCompra) {
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+                <i class="bi bi-x-circle me-1"></i> Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="pagosForm.invalid || loading">
+                <i class="bi bi-save me-1"></i> Guardar Cambios
+              </button>
+            </div>
+          }
+        </form>
+      </div>
+    } @else {
+      <div class="card-body" *ngIf="!loading">
+        <form [formGroup]="pagosForm" (ngSubmit)="onSubmit()">
+          <div formArrayName="pagos">
+            <div *ngIf="pagoSeleccionado !== null" class="payment-card mb-3">
+              <div [formGroupName]="indexPagoSeleccionado">
+                <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                  <h6 class="fw-bold text-primary"><i class="bi bi-credit-card me-2"></i>Tarjeta seleccionada</h6>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSelectedPago()">
+                    Cambiar
+                  </button>
                 </div>
-                
-                <div class="col-md-3 mb-3">
-                  <label class="form-label fw-medium">Fecha de Caducidad <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                    <input type="month" class="form-control" formControlName="fechaCaducidad" required>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-medium">Número de Tarjeta</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-credit-card-2-front"></i></span>
+                      <input type="text" class="form-control" formControlName="numeroTarjeta" 
+                             (input)="formatCardNumber($event, indexPagoSeleccionado!)" 
+                             placeholder="XXXX XXXX XXXX XXXX" 
+                             maxlength="19" readonly>
+                    </div>
                   </div>
-                  <div *ngIf="pagoForm.get('fechaCaducidad')?.invalid && pagoForm.get('fechaCaducidad')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>La fecha de caducidad es obligatoria
+                  
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label fw-medium">Fecha de Caducidad</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                      <input type="month" class="form-control" formControlName="fechaCaducidad" required>
+                    </div>
                   </div>
-                </div>
-                
-                <div class="col-md-3 mb-3">
-                  <label class="form-label fw-medium">CVV <span class="text-danger">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
-                    <input type="text" class="form-control" formControlName="cvv" required>
-                  </div>
-                  <div *ngIf="pagoForm.get('cvv')?.invalid && pagoForm.get('cvv')?.touched" class="invalid-feedback d-block">
-                    <i class="bi bi-exclamation-circle me-1"></i>Introduce un CVV válido (3 dígitos)
+                  
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label fw-medium">CVV</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                      <input type="text" class="form-control" formControlName="cvv" readonly>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div *ngIf="pagosFormArray.length === 0" class="text-center py-4 empty-state">
-            <i class="bi bi-credit-card fs-1 text-muted mb-2"></i>
-            <p class="text-muted">No hay métodos de pago añadidos</p>
-            <button type="button" class="btn btn-outline-primary" (click)="addPago()">
-              <i class="bi bi-plus-circle me-1"></i> Añadir Método de Pago
-            </button>
-          </div>
-        </div>
-        
-        <div class="d-flex justify-content-end gap-2 mt-3">
-          <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
-            <i class="bi bi-x-circle me-1"></i> Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary" [disabled]="pagosForm.invalid || loading">
-            <i class="bi bi-save me-1"></i> Guardar Cambios
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    }
   </div>
   
   

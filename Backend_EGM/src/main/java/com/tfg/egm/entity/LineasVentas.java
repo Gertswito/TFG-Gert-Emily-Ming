@@ -1,5 +1,8 @@
 package com.tfg.egm.entity;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +18,7 @@ public class LineasVentas implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
+    @JsonIgnoreProperties(value = { "lineasVentas", "cliente", "direccion", "pago" }, allowSetters = true)
     private Venta venta;
 
     @ManyToOne

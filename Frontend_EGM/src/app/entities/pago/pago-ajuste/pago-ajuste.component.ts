@@ -4,23 +4,32 @@ import { CommonModule } from "@angular/common";
 import { ClienteService } from "../../cliente/cliente.service";
 import { PagoService } from "../../pago/pago.service";
 import { IPago } from "../../pago/pago.model";
+import { ICliente } from "../../cliente/cliente.model";
+import { IVenta } from "../../venta/venta.model";
+import { RouterLink } from "@angular/router";
 
 @Component({
   standalone: true,
   selector: "app-pago-ajuste",
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: "./pago-ajuste.component.html",
   styleUrls: ["./pago-ajuste.component.css"],
 })
 export class PagoAjusteComponent implements OnInit {
   @Input() usuario: string | null = null
+  @Input() esUnaCompra: boolean = false
 
   pagosForm: FormGroup
   loading = false
   success = false
   error = false
+  selectedPago = false
   errorMessage = ""
   pagosOriginales: IPago[] = []
+  user: ICliente | null = null
+  venta: IVenta | null = null
+  pagoSeleccionado: IPago | null = null
+  indexPagoSeleccionado: number | null = null
 
   constructor(
     private fb: FormBuilder,
@@ -33,6 +42,9 @@ export class PagoAjusteComponent implements OnInit {
   ngOnInit(): void {
     if (this.usuario) {
       this.loadPagos(this.usuario)
+      this.clienteService.getCliente(this.usuario).subscribe((res) => {
+        this.user = res || null
+      });
     } else {
       this.error = true
       this.errorMessage = "No se pudo obtener el usuario"
@@ -300,6 +312,43 @@ export class PagoAjusteComponent implements OnInit {
         this.markFormGroupTouched(control)
       }
     })
+  }
+
+  choosePago(index: number): void {
+    const pagoFormGroup = this.pagosFormArray.at(index);
+    if (!pagoFormGroup) {
+      this.error = true;
+      this.errorMessage = "No se encontró el pago seleccionada.";
+      return;
+    }
+  
+    const pago = pagoFormGroup.value as IPago;
+  
+    if (this.user) {
+      const carritoKey = `carrito_${this.user.id}`;
+
+      this.venta = JSON.parse(localStorage.getItem(carritoKey) ?? 'null');
+      this.venta!.pago = pago;
+      localStorage.setItem(carritoKey, JSON.stringify(this.venta));
+
+      this.pagoSeleccionado = pago;
+      this.indexPagoSeleccionado = index;
+      this.selectedPago = true;
+    }
+  }
+
+  removeSelectedPago(): void {
+    if (this.user) {
+      const carritoKey = `carrito_${this.user.id}`;
+
+      this.venta = JSON.parse(localStorage.getItem(carritoKey) ?? 'null');
+      this.venta!.pago = null;
+      localStorage.setItem(carritoKey, JSON.stringify(this.venta));
+
+      this.pagoSeleccionado = null;
+      this.indexPagoSeleccionado = null;
+      this.selectedPago = false;
+    }
   }
 }
 

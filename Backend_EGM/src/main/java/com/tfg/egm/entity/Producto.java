@@ -1,6 +1,9 @@
 package com.tfg.egm.entity;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -28,10 +31,12 @@ public class Producto implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
+    @JsonIgnoreProperties(value = { "subcategorias" }, allowSetters = true)
     private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name = "subcategoria_id")
+    @JsonIgnoreProperties(value = { "categoria" }, allowSetters = true)
     private Subcategoria subcategoria;
 
     @Column(name = "descripcion", length = 3000)

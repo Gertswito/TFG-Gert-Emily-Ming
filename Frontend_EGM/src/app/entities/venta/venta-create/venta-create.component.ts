@@ -129,9 +129,9 @@ export class VentaCreateComponent implements OnInit {
             return;
         }  
         let fechaHora = this.crearVentaFormulario.get('fechaHora')?.value;
-        if (fechaHora) {
+        if (fechaHora && (fechaHora.match(/:/g) || []).length === 1) {
           fechaHora = `${fechaHora}:00`;
-        } 
+        }
         this.crearVentaFormulario.get('fechaHora')?.setValue(fechaHora);
         if (this.booleanEditarExistente) {
             this.ventaService.editarVenta(this.crearVentaFormulario.value).subscribe({

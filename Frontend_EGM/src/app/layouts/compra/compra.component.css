@@ -1,0 +1,226 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+  
+  hr {
+    opacity: 1;
+    border: none;
+    height: 1px;
+    background-color: #b4b4b4;
+    margin: 1.5rem 0;
+    transition: background-color 0.3s ease;
+  }
+  
+  hr:hover {
+    background-color: #007bff;
+  }
+  
+  .borde-izquierda {
+    border-left: 2px solid #b4b4b4;
+    padding-left: 0.5em;
+    transition: border-color 0.3s ease;
+  }
+  
+  .borde-izquierda:hover {
+    border-color: #007bff;
+  }
+  
+  .color-gris {
+    color: #6c757d !important;
+  }
+  
+  /* Estilo general del carrito */
+  .body-compra {
+    padding: 2rem;
+    background-color: #f6f6f6;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    max-width: 900px;
+    margin: 2rem auto;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .contenedor-producto {
+    width: 100%;
+  }
+  
+  /* Flex Utilities */
+  .d-flex {
+    display: flex;
+  }
+  
+  .flex-column {
+    flex-direction: column;
+  }
+  
+  .flex-row {
+    flex-direction: row;
+  }
+  
+  .justify-content-between {
+    justify-content: space-between;
+  }
+  
+  .align-items-center {
+    align-items: center;
+  }
+  
+  /* Borders */
+  .border-bottom {
+    border-bottom: 1px solid #ddd !important;
+  }
+  
+  /* Buttons */
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* Text */
+  .text-success {
+    color: #28a745 !important;
+  }
+  
+  .text-danger {
+    color: #dc3545 !important;
+  }
+  
+  .text-secondary {
+    color: #6c757d !important;
+  }
+  
+  h5 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  /* Icono carrito */
+  .icono-carrito {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: #007bff;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .icono-carrito:hover {
+    color: #0056b3;
+    transform: rotate(10deg);
+  }
+  
+  .icono-carrito .contador {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Notificación */
+  .notificacion {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    10%, 90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+  }
+  .comprar {
+    white-space: nowrap;
+  }
+
+  .comprar-a {
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 635px) {
+    .body-compra {
+      padding-left: 0.5em!important;
+      padding-right: 0.5em!important;
+    }
+
+    .comprar-a {
+      width: 100%!important;
+    }
+  }

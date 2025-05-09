@@ -1,7 +1,9 @@
 package com.tfg.egm.controller;
 
+import com.tfg.egm.entity.LineasVentas;
 import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.entity.Venta;
+import com.tfg.egm.service.LineasVentasService;
 import com.tfg.egm.service.VentaService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -26,7 +28,10 @@ public class VentaController {
 
     private final VentaService ventaService;
 
-    public VentaController(VentaService ventaService) {
+    private final LineasVentasService lineasVentasService;
+
+    public VentaController(VentaService ventaService, LineasVentasService lineasVentasService) {
+        this.lineasVentasService = lineasVentasService;
         this.ventaService = ventaService;
     }
 
@@ -79,4 +84,19 @@ public class VentaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/ventas/finalizar-compra")
+    public ResponseEntity<Object> finalizarCompra(@RequestBody Venta venta) throws URISyntaxException {
+        try {
+            Venta nuevaVenta = ventaService.save(venta);
+            for(LineasVentas linea: venta.getLineasVentas()) {
+                linea.setVenta(nuevaVenta);
+                lineasVentasService.save(linea);
+            }
+            URI location = new URI("/venta/new/" + nuevaVenta.getId());
+            return ResponseEntity.created(location).body(nuevaVenta);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+        }
+    } 
 }

@@ -180,6 +180,10 @@ h5 {
   animation: fadeInOut 3s ease-in-out;
 }
 
+.comprar {
+  white-space: nowrap;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
   from {
@@ -207,7 +211,15 @@ h5 {
   }
 }
 
-@media screen and (max-width: 315px) {
+.comprar-a {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 635px) {
+  .comprar-a {
+    width: 100%!important;
+  }
+
   .botones {
     display: flex!important;
     flex-direction: column!important;
