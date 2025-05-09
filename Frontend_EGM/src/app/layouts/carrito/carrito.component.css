@@ -211,6 +211,10 @@ h5 {
   }
 }
 
+.comprar-a {
+  text-decoration: none;
+}
+
 @media screen and (max-width: 635px) {
   .comprar-a {
     width: 100%!important;

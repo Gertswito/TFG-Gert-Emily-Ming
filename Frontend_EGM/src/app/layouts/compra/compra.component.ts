@@ -39,6 +39,7 @@ export class CompraComponent implements OnInit {
   private direccionService = inject(DireccionService);
   private pagoService = inject(PagoService);
   private ventaService = inject(VentaService);
+  private carritoService = inject(CarritoService);
   protected router = inject(Router);
 
   ngOnInit(): void {
@@ -137,11 +138,14 @@ export class CompraComponent implements OnInit {
         if (res.status === 201) {
           localStorage.removeItem(`carrito_${this.usuario!.id}`);
           localStorage.removeItem(`carrito_${this.usuario!.id}_lineas`);
+          if (this.usuario) {
+            this.carritoService.actualizarCarritoCount(this.usuario.id!);
+          }
           this.venta = null;
           this.lineasVenta = [];
           this.error = false;
           this.errorMessage = '';
-
+          
           this.router.navigate(['/compra-exito']).then(() => {});
         } else {
           this.error = true;
