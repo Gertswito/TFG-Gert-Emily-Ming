@@ -76,7 +76,7 @@ public class VentaService {
 
         for (LineasVentas linea : venta.getLineasVentas()) {
             linea.setVenta(nuevaVenta);
-            lineasVentasService.guardarLineaYCalcularStock(linea); // ← aquí lanzará excepción si no hay stock
+            lineasVentasService.guardarLineaYCalcularStock(linea);
         }
 
         return nuevaVenta;
