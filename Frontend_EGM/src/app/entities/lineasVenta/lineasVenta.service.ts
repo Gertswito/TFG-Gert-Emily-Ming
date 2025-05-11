@@ -18,6 +18,10 @@ export class LineasVentaService {
     return this.http.get<ILineasVenta>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getLineaVentaConFiltroAdmin(texto: string): Observable<ILineasVenta[]> {
+    return this.http.get<ILineasVenta[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+  
   deleteLineasVenta(id: number): Observable<any> {
     return this.http.delete<ILineasVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

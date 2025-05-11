@@ -94,3 +94,9 @@ hr {
 .low-light {
     color: #555555!important;
 }
+
+buscador {
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+}

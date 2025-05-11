@@ -1,5 +1,7 @@
 <div class="body-entidades">
     <h1 class="titulo">Direcciones</h1>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+
     @if (errorMessage != '') {
         <div class="alert alert-danger">{{ errorMessage }}</div>
     }
@@ -8,12 +10,12 @@
             <thead>
                 <tr class="table-primary">
                     <th>ID</th>
+                    <th>Cliente</th>
                     <th>Código postal</th>
                     <th>Calle</th>
                     <th>Localidad</th>
                     <th>Comunidad autónoma</th>
                     <th>Estado</th>
-                    <th>Cliente</th>
                     <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                 </tr>
             </thead>
@@ -21,6 +23,7 @@
                 <ng-container *ngFor="let direccion of direccionList">
                     <tr>
                         <td>{{direccion.id}}</td>
+                        <td>{{direccion.cliente?.usuario}}</td>
                         <td>{{direccion.codigoPostal}}</td>
                         <td>{{direccion.direccion}}</td>
                         <td>{{direccion.localidad}}</td>
@@ -32,7 +35,6 @@
                                 <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(direccion)">Desactivado</button>
                             }
                         </td>
-                        <td>{{direccion.cliente?.usuario}}</td>
                         <td>
                             <div class="botones-accion">
                                 <a [routerLink]="'/direccion-create'" [queryParams]="{ id: direccion.id }">
@@ -50,7 +52,7 @@
             </tbody>
         </table>
     } @else {
-        <p>No se ha encontrado nada</p>
+        <div class="w-100 alert alert-warning">No se han encontrado direcciones</div>
         <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

@@ -8,11 +8,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { filter, tap } from 'rxjs';
 import { ProductoDeleteComponent } from './producto-delete/producto-delete.component';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'producto',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './producto.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -56,5 +57,15 @@ export class ProductoComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/producto-create']);
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.productoService.getProductoConFiltroAdmin(texto).subscribe((data) => {
+        this.productoList = data;
+      });
+    } else {
+      this.cargarProductos();
+    }
   }
 }

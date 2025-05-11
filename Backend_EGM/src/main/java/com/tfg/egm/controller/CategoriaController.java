@@ -47,6 +47,26 @@ public class CategoriaController {
         }
     }
 
+    @GetMapping("/categorias/busqueda/{texto}")
+    public ResponseEntity<List<Categoria>> obtenerCategoriaFiltro(@PathVariable String texto) {
+        try {
+            List<Categoria> categorias = categoriaService.buscarPorNombreCategoriaOSubcategoria(texto);
+            return ResponseEntity.ok(categorias);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/categorias/admin-busqueda/{texto}")
+    public ResponseEntity<List<Categoria>> obtenerCategoriaFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Categoria> categorias = categoriaService.buscarCategoriaAdmin(texto);
+            return ResponseEntity.ok(categorias);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/categorias/delete/{id}")
     public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
         try {

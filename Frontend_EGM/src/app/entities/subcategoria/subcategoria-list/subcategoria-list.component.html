@@ -1,5 +1,6 @@
 <div class="body-entidades">
     <h1 class="titulo">{{nombreCategoria}}</h1>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
 
     <div *ngIf="subcategoriaList.length > 0; else noSubcategorias">
         <div class="row">
@@ -23,6 +24,6 @@
         </div>
     </div>
     <ng-template #noSubcategorias>
-        <p>No hay subcategorías disponibles.</p>
+        <div class="w-100 alert alert-warning">No se han encontrado subcategorías</div>
     </ng-template>
 </div>

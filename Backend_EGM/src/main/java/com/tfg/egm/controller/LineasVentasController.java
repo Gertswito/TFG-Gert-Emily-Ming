@@ -45,6 +45,16 @@ public class LineasVentasController {
         }
     }
 
+    @GetMapping("/lineas-ventas/admin-busqueda/{texto}")
+    public ResponseEntity<List<LineasVentas>> obtenerLineasVentasFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<LineasVentas> lineasVentas = lineasVentasService.buscarLineaVentaAdmin(texto);
+            return ResponseEntity.ok(lineasVentas);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/lineas-ventas/delete/{id}")
     public ResponseEntity<Void> deleteLineasVentas(@PathVariable Long id) {
         try {

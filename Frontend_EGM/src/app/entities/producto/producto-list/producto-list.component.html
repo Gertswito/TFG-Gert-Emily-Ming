@@ -1,6 +1,7 @@
 <div class="body-entidades">
     <h1 class="titulo">{{nombreSubcategoria}}</h1>
-  
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+
     @if (productoList.length > 0) {
         <div class="cards-productos">
             <ng-container *ngFor="let producto of productoList">
@@ -31,6 +32,6 @@
             </ng-container>
         </div>
     } @else {
-        <p>NADA</p>
+        <div class="w-100 alert alert-warning">No se han encontrado productos</div>
     }
   </div>

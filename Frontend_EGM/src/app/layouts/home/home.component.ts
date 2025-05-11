@@ -5,11 +5,12 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { ICategoria } from '../../entities/categoria/categoria.model';
 import { CategoriaService } from '../../entities/categoria/categoria.service';
+import { BuscadorComponent } from '../buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'home',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterOutlet, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterOutlet, RouterLink, BuscadorComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -48,5 +49,17 @@ export class HomeComponent implements OnInit {
         this.rol = null;
       }
     });
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.categoriaService.getCategoriaConFiltro(texto).subscribe((data) => {
+        this.categoriaList = data;
+      });
+    } else {
+      this.categoriaService.getAllCategorias().subscribe((data) => {
+        this.categoriaList = data;
+      });
+    }
   }
 }

@@ -10,11 +10,12 @@ import { ClienteService } from '../../cliente/cliente.service';
 import { AuthService } from '../../../auth/auth.service';
 import { ICliente } from '../../cliente/cliente.model';
 import { CarritoService } from '../../../layouts/carrito/carrito.service';
+import { BuscadorComponent } from '../../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'producto',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './producto-list.component.html',
   styleUrls: ['./producto-list.component.css'],
 })
@@ -22,6 +23,7 @@ export class ProductoListComponent implements OnInit {
   productoList: IProducto[] = [];
   usuario: ICliente | null = null;
   nombreSubcategoria = '';
+  id: number | null = null;
 
   private productoService = inject(ProductoService);
   private clienteService = inject(ClienteService);
@@ -31,10 +33,10 @@ export class ProductoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const id = params['id'];
+      this.id = params['id'];
 
-      if (id) {
-        this.cargarProductosConId(id);
+      if (this.id) {
+        this.cargarProductosConId(this.id);
         this.nombreSubcategoria = params['nombre'];
       } else {
         this.cargarAllProductos();
@@ -125,6 +127,26 @@ export class ProductoListComponent implements OnInit {
         venta.precioFinal = total;
         localStorage.setItem(carritoKey, JSON.stringify(venta));
       }
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      if (this.id) {
+        this.productoService.getProductoConFiltroSubcategoria(this.id, texto).subscribe((res) => {
+          this.productoList = res || [];
+        });
+      } else {
+        this.productoService.getProductoConFiltro(texto).subscribe((res) => {
+          this.productoList = res || [];
+        });
+      }
+    } else {
+      if (this.id) {
+        this.cargarProductosConId(this.id);
+      } else {
+        this.cargarAllProductos();
+      }
+    }
   }
 }
 

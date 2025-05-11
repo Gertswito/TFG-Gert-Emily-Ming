@@ -24,6 +24,10 @@ export class ClienteService {
     return this.http.get<ICliente>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getClienteConFiltroAdmin(texto: string): Observable<ICliente[]> {
+    return this.http.get<ICliente[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   crearUsuario(cliente: ICliente): Observable<any> { 
     return this.http.post<any>(`${this.resourceUrl}/new`, cliente, { observe: 'response' });
   }

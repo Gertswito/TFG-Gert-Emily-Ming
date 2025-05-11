@@ -1,5 +1,7 @@
 <div class="body-entidades">
     <h1 class="titulo">Productos</h1>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+
     @if (errorMessage != '') {
         <div class="alert alert-danger">{{ errorMessage }}</div>
     }
@@ -38,7 +40,7 @@
                             <td>{{producto.tipoIVA || 0}}%</td>
                             <td>{{producto.cantidad || 0}} uds</td>
                             <td>{{producto.stock || 0}} uds</td>
-                            <td>{{producto.precio || 0}} €</td>
+                            <td>{{producto.precio || 0 | number:'1.2-2' }} €</td>
                             <td>
                                 <div class="botones-accion">
                                     <a [routerLink]="'/producto-create'" [queryParams]="{ id: producto.id }">
@@ -57,7 +59,7 @@
             </table>
         </div>
     } @else {
-        <p>No se ha encontrado nada</p>
+        <div class="w-100 alert alert-warning">No se han encontrado productos</div>
         <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

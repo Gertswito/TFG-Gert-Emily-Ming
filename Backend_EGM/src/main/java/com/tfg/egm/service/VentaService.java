@@ -31,6 +31,10 @@ public class VentaService {
         return ventaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ventaNoExiste"));
     }
 
+    public List<Venta> buscarVentaAdmin(String texto) {
+        return ventaRepository.buscarVentaAdmin(texto);
+    }
+
     public void deleteVenta(Long id) {
         if (!ventaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ventaNoExiste");

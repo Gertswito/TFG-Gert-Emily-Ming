@@ -32,6 +32,18 @@ public class SubcategoriaService {
         return subcategoriaRepository.findByCategoriaId(id);
     }
 
+    public List<Subcategoria> buscarPorNombreSubcategoria(String texto) {
+        return subcategoriaRepository.subcategoriaBusquedaNombres(texto);
+    }
+
+    public List<Subcategoria> buscarPorNombreSubcategoriaIdCategoria(String texto, Long id) {
+        return subcategoriaRepository.subcategoriaBusquedaNombres(texto, id);
+    }
+
+    public List<Subcategoria> buscarSubcategoriaAdmin(String texto) {
+        return subcategoriaRepository.buscarSubcategoriaAdmin(texto);
+    }
+
     public void deleteSubcategoria(Long id) {
         if (!subcategoriaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste");

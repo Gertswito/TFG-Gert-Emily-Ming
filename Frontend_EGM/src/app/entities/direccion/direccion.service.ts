@@ -22,6 +22,10 @@ export class DireccionService {
     return this.http.get<IDireccion[]>(`${this.resourceUrl}/cliente/${user}`);
   }
 
+  getDireccionConFiltroAdmin(texto: string): Observable<IDireccion[]> {
+    return this.http.get<IDireccion[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   createDireccion(user: string,direccion: IDireccion): Observable<IDireccion> {
     return this.http.post<IDireccion>(`${this.resourceUrl}/new/${user}`, direccion);
   }

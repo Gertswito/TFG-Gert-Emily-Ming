@@ -40,12 +40,41 @@ public class ProductoController {
         return productoService.obtenerProductosConIdSubcategoria(id);
     }
 
-
     @GetMapping("/productos/find/{id}")
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
         try {
             Producto producto = productoService.obtenerProductoPorId(id);
             return ResponseEntity.ok(producto);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/productos/busqueda/{texto}")
+    public ResponseEntity<List<Producto>> obtenerProductoFiltro(@PathVariable String texto) {
+        try {
+            List<Producto> productos = productoService.buscarPorNombreProducto(texto);
+            return ResponseEntity.ok(productos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/productos/busqueda/{texto}/subcategoria/{id}")
+    public ResponseEntity<List<Producto>> obtenerProductoFiltroSubcategoria(@PathVariable String texto, @PathVariable Long id) {
+        try {
+            List<Producto> productos = productoService.buscarPorNombreProductoIdSubcategoria(texto, id);
+            return ResponseEntity.ok(productos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/productos/admin-busqueda/{texto}")
+    public ResponseEntity<List<Producto>> obtenerProductoFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Producto> productos = productoService.buscarProductoAdmin(texto);
+            return ResponseEntity.ok(productos);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }

@@ -18,6 +18,14 @@ export class CategoriaService {
     return this.http.get<ICategoria>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getCategoriaConFiltro(texto: string): Observable<ICategoria[]> {
+    return this.http.get<ICategoria[]>(`${this.resourceUrl}/busqueda/${texto}`);
+  }
+
+  getCategoriaConFiltroAdmin(texto: string): Observable<ICategoria[]> {
+    return this.http.get<ICategoria[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   deleteCategoria(id: number): Observable<any> {
     return this.http.delete<ICategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

@@ -35,6 +35,10 @@ public class PagoService {
         return pagoRepository.findByCliente(cliente);
     }
 
+    public List<Pago> buscarPagoAdmin(String texto) {
+        return pagoRepository.buscarPagoAdmin(texto);
+    }
+
     public Pago save(Pago pago) {
         return pagoRepository.save(pago);
     }

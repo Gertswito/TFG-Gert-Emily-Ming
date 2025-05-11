@@ -8,12 +8,13 @@ import { filter, tap } from 'rxjs';
 import { ClienteDeleteComponent } from './cliente-delete/cliente-delete.component';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 
 @Component({
   standalone: true,
   selector: 'cliente',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './cliente.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -57,5 +58,15 @@ export class ClienteComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/cliente-create']);
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.clienteService.getClienteConFiltroAdmin(texto).subscribe((data) => {
+        this.clienteList = data;
+      });
+    } else {
+      this.cargarClientes();
+    }
   }
 }

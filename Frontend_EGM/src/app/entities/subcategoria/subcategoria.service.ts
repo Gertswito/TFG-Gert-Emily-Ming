@@ -22,6 +22,18 @@ export class SubcategoriaService {
     return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/categoria/${id}`);
   }
 
+  getSubcategoriasConFiltro(texto: string): Observable<ISubcategoria[]> {
+    return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/busqueda/${texto}`);
+  }
+
+  getSubcategoriasConFiltroCategoria(id: number, texto: string): Observable<ISubcategoria[]> {
+    return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/busqueda/${texto}/categoria/${id}`);
+  }
+
+  getSubcategoriaConFiltroAdmin(texto: string): Observable<ISubcategoria[]> {
+    return this.http.get<ISubcategoria[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   deleteSubcategoria(id: number): Observable<any> {
     return this.http.delete<ISubcategoria>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

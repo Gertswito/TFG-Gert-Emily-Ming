@@ -36,6 +36,10 @@ public class DireccionService {
         return direccionRepository.findByCliente(cliente);
     }
 
+    public List<Direccion> buscarDireccionAdmin(String texto) {
+        return direccionRepository.buscarDireccionAdmin(texto);
+    }
+
     public Direccion save(Direccion direccion) {
         return direccionRepository.save(direccion);
     }

@@ -1,0 +1,21 @@
+<div class="position-relative w-100">
+    <input
+      type="text"
+      [(ngModel)]="texto"
+      (ngModelChange)="onInputChange()"
+      placeholder="Buscar..."
+      class="form-control w-100 pe-5"
+    />
+  
+    <!-- Botón de limpiar (solo visible si hay texto) -->
+    <button
+      *ngIf="texto"
+      type="button"
+      class="btn btn-sm btn-outline-secondary position-absolute end-0 top-50 translate-middle-y me-2"
+      (click)="limpiar()"
+      style="z-index: 1;"
+      aria-label="Limpiar búsqueda"
+    >
+      ✕
+    </button>
+  </div>

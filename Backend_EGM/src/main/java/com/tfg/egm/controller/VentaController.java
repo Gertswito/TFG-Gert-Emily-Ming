@@ -49,6 +49,16 @@ public class VentaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/ventas/admin-busqueda/{texto}")
+    public ResponseEntity<List<Venta>> obtenerVentaFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Venta> ventas = ventaService.buscarVentaAdmin(texto);
+            return ResponseEntity.ok(ventas);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     
     @DeleteMapping("/ventas/delete/{id}")
     public ResponseEntity<Void> deleteVenta(@PathVariable Long id) {
