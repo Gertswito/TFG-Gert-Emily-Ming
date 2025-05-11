@@ -134,8 +134,8 @@ export class CompraComponent implements OnInit {
       if (this.venta.pago.numeroTarjeta) {
         this.venta.pago.numeroTarjeta = this.venta.pago.numeroTarjeta.replace(/\s/g, "");
       }
-      this.ventaService.finalizarCompra(this.venta, this.lineasVenta).subscribe((res) => {
-        if (res.status === 201) {
+      this.ventaService.finalizarCompra(this.venta, this.lineasVenta).subscribe({
+        next: (res) => {
           localStorage.removeItem(`carrito_${this.usuario!.id}`);
           localStorage.removeItem(`carrito_${this.usuario!.id}_lineas`);
           if (this.usuario) {
@@ -145,11 +145,26 @@ export class CompraComponent implements OnInit {
           this.lineasVenta = [];
           this.error = false;
           this.errorMessage = '';
-          
-          this.router.navigate(['/compra-exito']).then(() => {});
-        } else {
+      
+          this.router.navigate(['/compra-exito']);
+        },
+        error: (err) => {
           this.error = true;
-          this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
+          if (err.status === 400 && Array.isArray(err.error)) {
+            this.errorMessage = 'No se pudo completar la compra por los siguientes errores:\n\n' +
+              err.error.map((e: any) => {
+                switch (e.error) {
+                  case 'stockInsuficiente':
+                    return `El producto "${e.productoNombre}" no tiene suficiente stock.`;
+                  case 'productoNoExiste':
+                    return `El producto "${e.productoNombre}" no existe.`;
+                  default:
+                    return `Error con "${e.productoNombre}": ${e.error}`;
+                }
+              }).join('\n');
+          } else {
+            this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
+          }
         }
       });
     }
