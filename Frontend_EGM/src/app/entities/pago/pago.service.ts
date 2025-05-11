@@ -22,6 +22,10 @@ export class PagoService {
     return this.http.get<IPago[]>(`${this.resourceUrl}/cliente/${user}`);
   }
 
+  getPagoFiltroAdmin(texto: string): Observable<IPago[]> {
+    return this.http.get<IPago[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   createPago(user: string, pago: IPago): Observable<IPago> {
     return this.http.post<IPago>(`${this.resourceUrl}/new/${user}`, pago);
   }

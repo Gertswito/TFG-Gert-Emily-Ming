@@ -27,6 +27,14 @@ export class VentaService {
     return this.http.get<IVenta>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getVentaConFiltroAdmin(texto: string): Observable<IVenta[]> {
+    return this.http.get<IVenta[]>(`${this.resourceUrl}/admin-busqueda/${texto}`).pipe(
+      map((res: any[]) => res.map(venta => ({
+        ...venta,
+      fechaHora: new Date(venta.fechaHora)})))
+    );
+  }
+
   deleteVenta(id: number): Observable<any> {
     return this.http.delete<IVenta>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

@@ -31,6 +31,18 @@ public class ProductoService {
     public Producto obtenerProductoPorId(Long id) {
         return productoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste"));
     }
+
+    public List<Producto> buscarPorNombreProducto(String texto) {
+        return productoRepository.buscarPorNombreProducto(texto);
+    }
+
+    public List<Producto> buscarPorNombreProductoIdSubcategoria(String texto, Long id) {
+        return productoRepository.buscarPorNombreProductoIdSubcategoria(texto, id);
+    }
+
+    public List<Producto> buscarProductoAdmin(String texto) {
+        return productoRepository.buscarProductoAdmin(texto);
+    }
     
     public void deleteProducto(Long id) {
         if (!productoRepository.existsById(id)) {

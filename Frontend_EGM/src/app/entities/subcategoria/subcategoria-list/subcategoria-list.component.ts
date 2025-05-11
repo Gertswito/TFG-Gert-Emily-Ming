@@ -5,31 +5,33 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { SubcategoriaService } from '../subcategoria.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { BuscadorComponent } from '../../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'subcategoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './subcategoria-list.component.html',
   styleUrls: ['./subcategoria-list.component.css'],
 })
 export class SubcategoriaListComponent implements OnInit {
   subcategoriaList: ISubcategoria[] = [];
   nombreCategoria = '';
+  id: number | null = null;
 
   private subcategoriaService = inject(SubcategoriaService);
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const id = params['id'];
+      this.id = params['id'];
 
-      if (id) {
-        this.cargarSubcategoriasConId(id);
+      if (this.id) {
+        this.cargarSubcategoriasConId(this.id);
         this.nombreCategoria = params['nombre'];
       } else {
         this.cargarAllSubcategorias();
-        this.nombreCategoria = 'Todas las subcategorias';
+        this.nombreCategoria = 'Todas las subcategorías';
       }
     });
   }
@@ -44,5 +46,25 @@ export class SubcategoriaListComponent implements OnInit {
     this.subcategoriaService.getAllSubcategorias().subscribe((res) => {
       this.subcategoriaList = res || [];
     });
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      if (this.id) {
+        this.subcategoriaService.getSubcategoriasConFiltroCategoria(this.id, texto).subscribe((data) => {
+          this.subcategoriaList = data;
+        });
+      } else {
+        this.subcategoriaService.getSubcategoriasConFiltro(texto).subscribe((data) => {
+          this.subcategoriaList = data;
+        });
+      }
+    } else {
+      if (this.id) {
+        this.cargarSubcategoriasConId(this.id);
+      } else {
+        this.cargarAllSubcategorias();
+      }
+    }
   }
 }

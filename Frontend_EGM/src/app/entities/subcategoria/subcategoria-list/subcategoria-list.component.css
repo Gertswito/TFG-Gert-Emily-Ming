@@ -107,3 +107,8 @@ a {
     border-bottom-right-radius: var(--bs-card-inner-border-radius);
     border: 1px solid #9c9c9c;
 }
+
+buscador {
+    margin-bottom: 1em;
+    width: 100%;
+}

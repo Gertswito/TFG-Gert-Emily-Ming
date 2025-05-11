@@ -8,11 +8,12 @@ import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { SubcategoriaDeleteComponent } from './subcategoria-delete/subcategoria-delete.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'subcategoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './subcategoria.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -52,5 +53,15 @@ export class SubcategoriaComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/subcategoria-create']);
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.subcategoriaService.getSubcategoriaConFiltroAdmin(texto).subscribe((data) => {
+        this.subcategoriaList = data;
+      });
+    } else {
+      this.cargarSubcategorias();
+    }
   }
 }

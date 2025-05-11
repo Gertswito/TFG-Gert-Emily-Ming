@@ -8,11 +8,12 @@ import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { VentaDeleteComponent } from './venta-delete/venta-delete.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'venta',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './venta.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -60,5 +61,15 @@ export class VentaComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/venta-create']);
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.ventaService.getVentaConFiltroAdmin(texto).subscribe((data) => {
+        this.ventaList = data;
+      });
+    } else {
+      this.cargarVentas();
+    }
   }
 }

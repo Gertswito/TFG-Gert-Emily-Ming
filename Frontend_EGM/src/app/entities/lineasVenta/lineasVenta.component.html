@@ -1,5 +1,7 @@
 <div class="body-entidades">
     <h1 class="titulo">Líneas de venta</h1>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+
     @if (errorMessage != '') {
         <div class="alert alert-danger">{{ errorMessage }}</div>
     }
@@ -24,8 +26,8 @@
                             <td>{{lineaVenta.venta?.id}}</td>
                             <td>{{ lineaVenta.producto?.referencia }} | {{ lineaVenta.producto?.marca }} {{lineaVenta.producto?.nombre}}</td>
                             <td>{{lineaVenta.cantidadPedida || 0}} uds</td>
-                            <td>{{lineaVenta.precioUnitario || 0}} €</td>
-                            <td>{{lineaVenta.precioTotal || 0}} €</td>
+                            <td>{{ lineaVenta.precioUnitario || 0 | number:'1.2-2' }} €</td>
+                            <td>{{ lineaVenta.precioTotal || 0 | number:'1.2-2' }} €</td>
                             <td>
                                 <div class="botones-accion">
                                     <a [routerLink]="'/lineasVenta-create'" [queryParams]="{ id: lineaVenta.id }">
@@ -44,7 +46,7 @@
             </table>
         </div>
     } @else {
-        <p>No se ha encontrado nada</p>
+        <div class="w-100 alert alert-warning">No se han encontrado líneas de venta</div>
         <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
     }
 </div>

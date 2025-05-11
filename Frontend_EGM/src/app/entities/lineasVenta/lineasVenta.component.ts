@@ -8,11 +8,12 @@ import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { LineasVentaDeleteComponent } from './lineasVenta-delete/lineasVenta-delete.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'lineas-venta',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './lineasVenta.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -56,5 +57,15 @@ export class LineasVentaComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/lineasVenta-create']);
+  }
+  
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.lineasVentaService.getLineaVentaConFiltroAdmin(texto).subscribe((data) => {
+        this.lineasVentaList = data;
+      });
+    } else {
+      this.cargarLineasVenta();
+    }
   }
 }

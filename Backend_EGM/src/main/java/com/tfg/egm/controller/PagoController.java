@@ -49,6 +49,16 @@ public class PagoController {
         return pagoService.obtenerPagos(clienteService.obtenerClientePorUsuario(user));
     }
 
+    @GetMapping("/pagos/admin-busqueda/{texto}")
+    public ResponseEntity<List<Pago>> obtenerPagosFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Pago> pagos = pagoService.buscarPagoAdmin(texto);
+            return ResponseEntity.ok(pagos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/pagos/new/{user}")
     public ResponseEntity<Pago> crearPago(@PathVariable String user, @RequestBody Pago pago) {
         Cliente cliente = clienteService.obtenerClientePorUsuario(user);

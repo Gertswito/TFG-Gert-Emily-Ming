@@ -51,6 +51,16 @@ public class DireccionController {
         return direccionService.obtenerDirecciones(clienteService.obtenerClientePorUsuario(user));
     }
 
+    @GetMapping("/direcciones/admin-busqueda/{texto}")
+    public ResponseEntity<List<Direccion>> obtenerDireccionFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Direccion> direcciones = direccionService.buscarDireccionAdmin(texto);
+            return ResponseEntity.ok(direcciones);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/direcciones/new/{user}")
     public ResponseEntity<Direccion> crearDireccion(@PathVariable String user, @RequestBody Direccion direccion) {
         Cliente cliente = clienteService.obtenerClientePorUsuario(user);

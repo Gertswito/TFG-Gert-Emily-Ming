@@ -50,6 +50,36 @@ public class SubcategoriaController {
         return subcategoriaService.obtenerSubcategoriasConIdCategoria(id);
     }
 
+    @GetMapping("/subcategorias/busqueda/{texto}")
+    public ResponseEntity<List<Subcategoria>> obtenerSubcategoriaFiltro(@PathVariable String texto) {
+        try {
+            List<Subcategoria> subcategorias = subcategoriaService.buscarPorNombreSubcategoria(texto);
+            return ResponseEntity.ok(subcategorias);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/subcategorias/busqueda/{texto}/categoria/{id}")
+    public ResponseEntity<List<Subcategoria>> obtenerSubcategoriaFiltroCategoria(@PathVariable String texto, @PathVariable Long id) {
+        try {
+            List<Subcategoria> subcategorias = subcategoriaService.buscarPorNombreSubcategoriaIdCategoria(texto, id);
+            return ResponseEntity.ok(subcategorias);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/subcategorias/admin-busqueda/{texto}")
+    public ResponseEntity<List<Subcategoria>> obtenerSubcategoriaFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Subcategoria> subcategorias = subcategoriaService.buscarSubcategoriaAdmin(texto);
+            return ResponseEntity.ok(subcategorias);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/subcategorias/delete/{id}")
     public ResponseEntity<Void> deleteSubcategoria(@PathVariable Long id) {
         try {

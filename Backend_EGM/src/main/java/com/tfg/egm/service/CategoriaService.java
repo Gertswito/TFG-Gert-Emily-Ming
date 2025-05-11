@@ -30,6 +30,14 @@ public class CategoriaService {
         return categoriaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste"));
     }
 
+    public List<Categoria> buscarPorNombreCategoriaOSubcategoria(String texto) {
+        return categoriaRepository.categoriaBusquedaNombres(texto);
+    }
+
+    public List<Categoria> buscarCategoriaAdmin(String texto) {
+        return categoriaRepository.buscarCategoriaAdmin(texto);
+    }
+
     public void deleteCategoria(Long id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categoriaNoExiste");

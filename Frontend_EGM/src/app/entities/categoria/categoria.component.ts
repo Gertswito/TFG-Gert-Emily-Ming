@@ -8,11 +8,12 @@ import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { filter, tap } from 'rxjs';
 import { CategoriaDeleteComponent } from './categoria-delete/categoria-delete.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'categoria',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './categoria.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -52,5 +53,15 @@ export class CategoriaComponent implements OnInit {
 
   crearNuevo(): void {
     this.router.navigate(['/categoria-create']);
+  }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.categoriaService.getCategoriaConFiltroAdmin(texto).subscribe((data) => {
+        this.categoriaList = data;
+      });
+    } else {
+      this.cargarCategorias();
+    }
   }
 }

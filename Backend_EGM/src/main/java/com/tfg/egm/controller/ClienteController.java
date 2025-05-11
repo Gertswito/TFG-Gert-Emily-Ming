@@ -52,6 +52,16 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/clientes/admin-busqueda/{texto}")
+    public ResponseEntity<List<Cliente>> obtenerClienteFiltroAdmin(@PathVariable String texto) {
+        try {
+            List<Cliente> clientes = clienteService.buscarClienteAdmin(texto);
+            return ResponseEntity.ok(clientes);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/clientes/new")
     public ResponseEntity<Object> createCliente(@RequestBody Cliente cliente) throws URISyntaxException {
         if (cliente.getId() != null) {

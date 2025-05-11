@@ -102,6 +102,14 @@ h2 {
     font-weight: bold;
 }
 
+buscador {
+    width: 100%;
+    max-width: 67em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
 @media screen and (max-width: 850px) {
     .card-subcategoria-link {
         flex: 0 0 9em;

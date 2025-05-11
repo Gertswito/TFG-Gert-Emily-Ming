@@ -8,11 +8,12 @@ import { filter, tap } from 'rxjs';
 import { ITEM_DELETED_EVENT } from '../../config/navigation.constants';
 import { PagoDeleteComponent } from './pago-delete/pago-delete.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { BuscadorComponent } from '../../layouts/buscador/buscador.component';
 
 @Component({
   standalone: true,
   selector: 'pago',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
   templateUrl: './pago.component.html',
   styleUrls: ['../entities.css'],
 })
@@ -71,4 +72,14 @@ export class PagoComponent implements OnInit {
         }
       }
     }
+
+  onBuscar(texto: string): void {
+    if (texto) {
+      this.pagoService.getPagoFiltroAdmin(texto).subscribe((data) => {
+        this.pagoList = data;
+      });
+    } else {
+      this.cargarPagos();
+    }
+  }
 }

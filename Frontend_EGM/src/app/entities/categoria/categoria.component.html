@@ -1,5 +1,7 @@
 <div class="body-entidades">
   <h1 class="titulo">Categorías</h1>
+  <buscador (textoBuscado)="onBuscar($event)"></buscador>
+
   @if (errorMessage != '') {
       <div class="alert alert-danger">{{ errorMessage }}</div>
   }
@@ -36,7 +38,7 @@
           </table>
       </div>
   } @else {
-      <p>No se ha encontrado nada</p>
-      <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
+    <div class="w-100 alert alert-warning">No se han encontrado categorías</div>
+    <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
   }
 </div>

@@ -126,3 +126,7 @@ hr {
 .full-width {
     width: 100% !important;
 }
+
+buscador {
+    margin-bottom: 1em;
+}

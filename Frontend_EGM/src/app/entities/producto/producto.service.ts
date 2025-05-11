@@ -22,6 +22,18 @@ export class ProductoService {
     return this.http.get<IProducto>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getProductoConFiltro(texto: string): Observable<IProducto[]> {
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/busqueda/${texto}`);
+  }
+
+  getProductoConFiltroSubcategoria(id: number, texto: string): Observable<IProducto[]> {
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/busqueda/${texto}/subcategoria/${id}`);
+  }
+
+  getProductoConFiltroAdmin(texto: string): Observable<IProducto[]> {
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
+  }
+
   deleteProducto(id: number): Observable<any> {
     return this.http.delete<IProducto>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }

@@ -41,6 +41,10 @@ public class ClienteService {
         return clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "clienteNoExiste"));
     }
 
+    public List<Cliente> buscarClienteAdmin(String texto) {
+        return clienteRepository.buscarClienteAdmin(texto);
+    }
+
     public Cliente save(Cliente cliente) {
         if (clienteRepository.existsByUsuario(cliente.getUsuario())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nombreUsuarioExiste");

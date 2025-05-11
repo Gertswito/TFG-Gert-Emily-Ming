@@ -39,6 +39,10 @@ public class LineasVentasService {
         }
     }
 
+    public List<LineasVentas> buscarLineaVentaAdmin(String texto) {
+        return lineasVentasRepository.buscarLineaVentaAdmin(texto);
+    }
+
     public LineasVentas save(LineasVentas lineasVentas) {
         return lineasVentasRepository.save(lineasVentas);
     }

@@ -4,10 +4,10 @@
     } @else {
         <h1 class="titulo">¡Bienvenido!</h1>
     }
-  
-    @if (categoriaList.length > 0) {
-        <h2 class="subtitulo">Nuestra selección de productos</h2>
+    <h2 class="subtitulo">Nuestra selección de productos</h2>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
 
+    @if (categoriaList.length > 0) {
         <div class="cards-categorias">
             <ng-container *ngFor="let categoria of categoriaList">
                 @if (categoria.subcategorias && categoria.subcategorias.length > 0) {
@@ -32,6 +32,6 @@
             </ng-container>
         </div>
     } @else {
-        <p>NADA</p>
+        <div class="w-100 alert alert-warning">No se han encontrado categorías</div>
     }
   </div>
