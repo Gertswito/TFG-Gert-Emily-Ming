@@ -33,7 +33,6 @@
                     <ng-container *ngFor="let categoria of categorias">
                         <a ngbDropdownItem [routerLink]="'/subcategoria-list'" [queryParams]="{ id: categoria.id, nombre: categoria.nombre }">{{ categoria.nombre }}</a>
                     </ng-container>
-                    <a ngbDropdownItem [routerLink]="'/subcategoria-list'">Todas las subcategorías</a>
                 </div>
             </div>
         }
