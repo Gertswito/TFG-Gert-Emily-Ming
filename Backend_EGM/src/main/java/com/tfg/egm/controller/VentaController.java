@@ -81,13 +81,15 @@ public class VentaController {
     }
 
     @PostMapping("/ventas/finalizar-compra")
-    public ResponseEntity<Object> finalizarCompra(@RequestBody Venta venta) throws URISyntaxException {
-        try {
-            Venta nuevaVenta = ventaService.finalizarCompra(venta);
-            URI location = new URI("/venta/new/" + nuevaVenta.getId());
-            return ResponseEntity.created(location).body(nuevaVenta);
-        } catch (ResponseStatusException ex) {
-            return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+    public ResponseEntity<Object> finalizarCompra(@RequestBody Venta venta) {
+        Map<String, Object> resultado = ventaService.finalizarCompra(venta);
+    
+        if (resultado.containsKey("errores")) {
+            return ResponseEntity.badRequest().body(resultado.get("errores")); // devuelve el array JSON
         }
-    } 
+    
+        Venta nuevaVenta = (Venta) resultado.get("venta");
+        URI location = URI.create("/venta/new/" + nuevaVenta.getId());
+        return ResponseEntity.created(location).body(nuevaVenta);
+    }
 }

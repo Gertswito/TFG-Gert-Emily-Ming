@@ -149,11 +149,20 @@ export class CompraComponent implements OnInit {
           this.router.navigate(['/compra-exito']);
         },
         error: (err) => {
-          if (err.status === 400 && err.error?.error === 'stockInsuficiente') {
-            this.error = true;
-            this.errorMessage = 'No hay suficiente stock para uno o más productos del carrito.';
+          this.error = true;
+          if (err.status === 400 && Array.isArray(err.error)) {
+            this.errorMessage = 'No se pudo completar la compra por los siguientes errores:\n\n' +
+              err.error.map((e: any) => {
+                switch (e.error) {
+                  case 'stockInsuficiente':
+                    return `El producto "${e.productoNombre}" no tiene suficiente stock.`;
+                  case 'productoNoExiste':
+                    return `El producto "${e.productoNombre}" no existe.`;
+                  default:
+                    return `Error con "${e.productoNombre}": ${e.error}`;
+                }
+              }).join('\n');
           } else {
-            this.error = true;
             this.errorMessage = 'Error al finalizar la compra. Por favor, inténtelo de nuevo.';
           }
         }
