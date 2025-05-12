@@ -5,8 +5,12 @@
 } @else if (productoSeleccionado) {
     <div class="d-flex flex-row align-items-center justify-content-center contenedor-producto">
         <div class="d-flex justify-content-between align-items-center w-100">
-            <h1 class="mb-0">{{productoSeleccionado.marca}} - {{productoSeleccionado.nombre}}</h1>
-               
+            <div>
+                <h1 class="mb-0">{{productoSeleccionado.marca}} - {{productoSeleccionado.nombre}}</h1>
+                @if (productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0) {
+                    <small class="text-danger mt-1">Sin stock disponible</small>
+                }
+            </div>
             <div class="boton-volver">
                 <button type="button" class="btn btn-secondary" (click)="atras()">Volver</button>
             </div>
@@ -50,7 +54,7 @@
                     Añadir al carrito
                 </button>
             } @else {
-                <button type="button" class="btn btn-primary" (click)="addCarrito(productoSeleccionado)" [disabled]="usuario == null || usuario == undefined">
+                <button type="button" class="btn btn-primary" (click)="addCarrito(productoSeleccionado)" [disabled]="(productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0) || usuario == null || usuario == undefined">
                     Añadir al carrito
                 </button>
             }

@@ -6,8 +6,11 @@
         <div class="cards-productos">
             <ng-container *ngFor="let producto of productoList">
                 <div class="card-producto categoria-{{producto.categoria?.id}}">
-                    <div class="header-nombre d-flex justify-content-center align-items-center">
+                    <div class="header-nombre d-flex flex-column justify-content-center align-items-center">
                         <h5 class="text-center">{{producto.marca}} - {{producto.nombre}}</h5>
+                        @if (producto.stock !== null && producto.stock <= 0) {
+                            <small class="text-danger mt-1">Sin stock disponible</small>
+                        }
                     </div>
                     <div class="div-imagen-producto d-flex justify-content-center align-items-center">
                         <img [src]="producto.urlImagen" alt="" class="imagen-productos">
@@ -24,7 +27,7 @@
                             @if (usuario == null || usuario == undefined) {
                                 <button type="button" class="btn btn-primary btn-carrito" (click)="alertaIniciarSesion()">Añadir al carrito</button>
                             } @else {
-                                <button type="button" class="btn btn-primary btn-carrito" (click)="addCarrito(producto)" [disabled]="usuario == null || usuario == undefined">Añadir al carrito</button>
+                                <button type="button" class="btn btn-primary btn-carrito" (click)="addCarrito(producto)" [disabled]="(producto.stock !== null && producto.stock <= 0) || usuario == null || usuario == undefined">Añadir al carrito</button>
                             }
                         </div>
                     </div>
@@ -34,4 +37,4 @@
     } @else {
         <div class="w-100 alert alert-warning">No se han encontrado productos</div>
     }
-  </div>
+</div>
