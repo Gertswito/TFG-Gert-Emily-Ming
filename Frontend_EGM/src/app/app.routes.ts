@@ -28,6 +28,7 @@ import { PagoCreateComponent } from './entities/pago/pago-create/pago-create.com
 import { ProductoInfoComponent } from './entities/producto/producto-info/producto-info.component';
 import { CompraComponent } from './layouts/compra/compra.component';
 import { CompraExitoComponent } from './layouts/compra/compra-exito/compra-exito.component';
+import { HistorialCompraComponent } from './layouts/compra/historial-compra/historial-compra.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -59,4 +60,5 @@ export const routes: Routes = [
     { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard], data: { expectedRole: 'ADMIN' } },
     { path: 'error-sin-autorizacion', component: ErrorComponent },
     { path: 'compra-exito', component: CompraExitoComponent },
+    { path: 'historial-compra', component: HistorialCompraComponent }
 ];

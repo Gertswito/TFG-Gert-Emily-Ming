@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface VentaRepository extends JpaRepository<Venta, Long> {
+    List<Venta> findByClienteId(Long clienteId);
     @Query(value = """
         SELECT v.* FROM venta v
         JOIN cliente c ON v.cliente_id = c.id

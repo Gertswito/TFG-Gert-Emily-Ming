@@ -11,6 +11,14 @@ export class VentaService {
   private resourceUrl = 'http://localhost:8080/ventas';
   protected http = inject(HttpClient);
 
+  getAllVentas(): Observable<IVenta[]> {
+    return this.http.get<IVenta[]>(`${this.resourceUrl}/all`);
+  }
+
+  getVenta(id: number): Observable<IVenta> {
+    return this.http.get<IVenta>(`${this.resourceUrl}/find/${id}`);
+  }
+
   getAllVentasFormateadas(): Observable<IVenta[]> {
     return this.http.get<IVenta[]>(`${this.resourceUrl}/all`).pipe(
       map((res: any[]) => res.map(venta => ({
@@ -19,12 +27,12 @@ export class VentaService {
     );
   }
 
-  getAllVentas(): Observable<IVenta[]> {
-    return this.http.get<IVenta[]>(`${this.resourceUrl}/all`);
-  }
-
-  getVenta(id: number): Observable<IVenta> {
-    return this.http.get<IVenta>(`${this.resourceUrl}/find/${id}`);
+  getVentasByCliente(id: number): Observable<IVenta[]> {
+    return this.http.get<IVenta[]>(`${this.resourceUrl}/cliente/${id}`).pipe(
+      map((res: any[]) => res.map(venta => ({
+        ...venta,
+      fechaHora: new Date(venta.fechaHora)})))
+    );
   }
 
   getVentaConFiltroAdmin(texto: string): Observable<IVenta[]> {

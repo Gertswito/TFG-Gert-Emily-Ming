@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface LineasVentasRepository extends JpaRepository<LineasVentas, Long> {
+    List<LineasVentas> findByVentaId(Long ventaId);
     @Query(value = """
         SELECT lv.* FROM lineasventa lv
         JOIN producto p ON lv.producto_id = p.id

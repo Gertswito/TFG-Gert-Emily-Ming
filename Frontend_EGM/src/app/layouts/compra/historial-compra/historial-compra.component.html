@@ -1,0 +1,44 @@
+<div class="body-historial-compra">
+    <h1 class="titulo">Historial de compras</h1>
+    
+    @if (ventaList && ventaList.length > 0) {
+        <div>
+            <div *ngFor="let venta of ventaList" class="venta-container">
+                <div class="venta-header">
+                    Venta con ID {{ venta.id }} --- {{ venta.fechaHora | date:'dd/MM/yyyy HH:mm' }}<br />
+                </div>
+
+                <div (click)="toggleLineas(venta.id!)" class="ver-lineas-container">
+                    <strong>{{ isVentaDesplegada(venta.id!) ? 'OCULTAR LÍNEAS' : 'VER LÍNEAS' }}</strong>
+                </div>
+        
+                <div *ngIf="isVentaDesplegada(venta.id!)">
+                    <div *ngFor="let linea of getLineasPorVentaId(venta.id!)" class="linea-container">
+                        <div>
+                            Producto: {{ linea.producto?.marca }} {{ linea.producto?.nombre || 'Sin nombre' }} | {{ linea.producto?.referencia || 'Sin referencia' }}<br />
+                            Cantidad: {{ linea.cantidadPedida }} uds<br />
+                            Precio unitario: {{ linea.precioUnitario || 0 | number:'1.2-2' }}€<br />
+                            <strong>Precio total: <span class="text-success">{{ linea.precioTotal || 0 | number:'1.2-2' }}€</span></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="venta-footer">
+                    <div>
+                        <strong>Dirección de envío:</strong><br />
+                        {{ venta.direccion?.direccion }}<br />
+                        {{ venta.direccion?.localidad }}, {{ venta.direccion?.comunidadAutonoma }} | {{ venta.direccion?.codigoPostal }}<br />
+                        <hr>
+                        <strong>Método de pago:</strong><br />
+                        {{ formatearTarjeta(venta.pago?.numeroTarjeta) }} | {{ venta.pago?.fechaCaducidad | date:'MM/yyyy' }}
+                    </div>
+                    <div class="total-container">
+                        <strong>Total: <span class="text-success">{{ venta.precioFinal || 0 | number:'1.2-2' }}€</span></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <div class="w-100 alert alert-warning">No se ha realizado ninguna compra hasta la fecha</div>
+    }
+</div>
