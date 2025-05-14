@@ -49,6 +49,10 @@ public class VentaService {
         return ventaRepository.buscarVentaAdmin(texto);
     }
 
+    public List<Venta> obtenerVentasPorCliente(Long id) {
+        return ventaRepository.findByClienteId(id);
+    }
+
     public void deleteVenta(Long id) {
         if (!ventaRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ventaNoExiste");

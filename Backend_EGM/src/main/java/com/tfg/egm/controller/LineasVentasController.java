@@ -45,6 +45,16 @@ public class LineasVentasController {
         }
     }
 
+    @GetMapping("/lineas-ventas/venta/{id}")
+    public ResponseEntity<List<LineasVentas>> obtenerLineasVentasPorVenta(@PathVariable Long id) {
+        try {
+            List<LineasVentas> lineasVentas = lineasVentasService.obtenerLineasVentasPorVenta(id);
+            return ResponseEntity.ok(lineasVentas);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/lineas-ventas/admin-busqueda/{texto}")
     public ResponseEntity<List<LineasVentas>> obtenerLineasVentasFiltroAdmin(@PathVariable String texto) {
         try {

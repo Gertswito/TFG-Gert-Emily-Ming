@@ -18,6 +18,10 @@ export class LineasVentaService {
     return this.http.get<ILineasVenta>(`${this.resourceUrl}/find/${id}`);
   }
 
+  getLineasVentasByVenta(id: number): Observable<ILineasVenta[]> {
+    return this.http.get<ILineasVenta[]>(`${this.resourceUrl}/venta/${id}`);
+  }
+
   getLineaVentaConFiltroAdmin(texto: string): Observable<ILineasVenta[]> {
     return this.http.get<ILineasVenta[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
   }

@@ -33,6 +33,14 @@ public class LineasVentasService {
         return lineasVentasRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "subcategoriaNoExiste"));
     }
 
+    public List<LineasVentas> obtenerLineasVentasPorVenta(Long id) {
+        return lineasVentasRepository.findByVentaId(id);
+    }
+
+    public List<LineasVentas> buscarLineaVentaAdmin(String texto) {
+        return lineasVentasRepository.buscarLineaVentaAdmin(texto);
+    }
+
     public void deleteLineasVentas(Long id) {
         if (!lineasVentasRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "lineasVentaNoExiste");
@@ -42,10 +50,6 @@ public class LineasVentasService {
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "lineasVentaNoSePuedeEliminar", e);
         }
-    }
-
-    public List<LineasVentas> buscarLineaVentaAdmin(String texto) {
-        return lineasVentasRepository.buscarLineaVentaAdmin(texto);
     }
 
     public LineasVentas save(LineasVentas lineasVentas) {

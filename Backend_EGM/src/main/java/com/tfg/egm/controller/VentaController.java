@@ -54,6 +54,16 @@ public class VentaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/ventas/cliente/{id}")
+    public ResponseEntity<List<Venta>> obtenerVentasPorCliente(@PathVariable Long id) {
+        try {
+            List<Venta> ventas = ventaService.obtenerVentasPorCliente(id);
+            return ResponseEntity.ok(ventas);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
     
     @DeleteMapping("/ventas/delete/{id}")
     public ResponseEntity<Void> deleteVenta(@PathVariable Long id) {

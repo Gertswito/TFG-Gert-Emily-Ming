@@ -4,7 +4,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faHome, faThList, faUser, faShoppingCart, faSignOut, faCog } from '@fortawesome/free-solid-svg-icons'; 
+import { faHome, faThList, faUser, faShoppingCart, faSignOut, faCog, faHistory } from '@fortawesome/free-solid-svg-icons'; 
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../auth/auth.service';
 import { ICategoria } from '../../entities/categoria/categoria.model';
@@ -27,6 +27,7 @@ export class NavBarComponent implements OnInit {
   faSignOut = faSignOut;
   faCog = faCog;
   faShoppingCart = faShoppingCart;
+  faHistory = faHistory;
   isLoggedIn: boolean = false;
   categorias: ICategoria[] = [];
   rol: string | null = '';
