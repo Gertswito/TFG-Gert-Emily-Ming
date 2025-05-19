@@ -9,8 +9,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repositorio JPA para la entidad Pago.
+ * Proporciona métodos para consultar, buscar y filtrar métodos de pago.
+ */
 public interface PagoRepository extends JpaRepository<Pago, Long> {
-    List <Pago> findByCliente(Cliente cliente);
+
+    /**
+     * Busca todos los métodos de pago asociados a un cliente.
+     * @param cliente cliente del que se quieren obtener los métodos de pago
+     * @return lista de métodos de pago del cliente
+     */
+    List<Pago> findByCliente(Cliente cliente);
+
+    /**
+     * Busca métodos de pago para administración filtrando por varios campos.
+     * @param texto texto de búsqueda
+     * @return lista de métodos de pago encontrados
+     */
     @Query(value = """
         SELECT p.* FROM pago p
         JOIN cliente c ON p.cliente_id = c.id

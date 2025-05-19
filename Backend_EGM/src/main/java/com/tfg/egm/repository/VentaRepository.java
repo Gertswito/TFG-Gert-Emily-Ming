@@ -8,8 +8,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repositorio JPA para la entidad Venta.
+ * Proporciona métodos para consultar, buscar y filtrar ventas.
+ */
 public interface VentaRepository extends JpaRepository<Venta, Long> {
+
+    /**
+     * Busca todas las ventas asociadas a un cliente por su ID.
+     * @param clienteId identificador del cliente
+     * @return lista de ventas del cliente
+     */
     List<Venta> findByClienteId(Long clienteId);
+
+    /**
+     * Busca ventas para administración filtrando por varios campos.
+     * @param texto texto de búsqueda
+     * @return lista de ventas encontradas
+     */
     @Query(value = """
         SELECT v.* FROM venta v
         JOIN cliente c ON v.cliente_id = c.id

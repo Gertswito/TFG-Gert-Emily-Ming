@@ -9,8 +9,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repositorio JPA para la entidad Direccion.
+ * Proporciona métodos para consultar, buscar y filtrar direcciones.
+ */
 public interface DireccionRepository extends JpaRepository<Direccion, Long> {
+
+    /**
+     * Busca todas las direcciones asociadas a un cliente.
+     * @param cliente cliente del que se quieren obtener las direcciones
+     * @return lista de direcciones del cliente
+     */
     List<Direccion> findByCliente(Cliente cliente);
+
+    /**
+     * Busca direcciones para administración filtrando por varios campos.
+     * @param texto texto de búsqueda
+     * @return lista de direcciones encontradas
+     */
     @Query("""
         SELECT d FROM Direccion d
         WHERE (

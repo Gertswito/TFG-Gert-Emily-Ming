@@ -8,8 +8,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+/**
+ * Repositorio JPA para la entidad LineasVentas.
+ * Proporciona métodos para consultar y buscar líneas de venta.
+ */
 public interface LineasVentasRepository extends JpaRepository<LineasVentas, Long> {
+
+    /**
+     * Busca todas las líneas de venta asociadas a una venta por su ID.
+     * @param ventaId identificador de la venta
+     * @return lista de líneas de venta de esa venta
+     */
     List<LineasVentas> findByVentaId(Long ventaId);
+
+    /**
+     * Busca líneas de venta para administración filtrando por varios campos.
+     * @param texto texto de búsqueda
+     * @return lista de líneas de venta encontradas
+     */
     @Query(value = """
         SELECT lv.* FROM lineasventa lv
         JOIN producto p ON lv.producto_id = p.id

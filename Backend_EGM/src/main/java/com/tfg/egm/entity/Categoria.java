@@ -33,7 +33,7 @@ public class Categoria implements Serializable {
      * Lista de subcategorías asociadas a esta categoría.
      * Las operaciones en cascada se aplican sobre estas subcategorías.
      */
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = false)
     @JsonIgnoreProperties(value = { "categoria" }, allowSetters = true)
     private List<Subcategoria> subcategorias;
 
