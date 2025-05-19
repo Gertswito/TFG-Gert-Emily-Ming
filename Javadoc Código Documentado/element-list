@@ -1,0 +1,7 @@
+com.tfg.egm
+com.tfg.egm.config
+com.tfg.egm.controller
+com.tfg.egm.entity
+com.tfg.egm.repository
+com.tfg.egm.security
+com.tfg.egm.service
