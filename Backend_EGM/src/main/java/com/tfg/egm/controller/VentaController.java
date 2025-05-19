@@ -21,20 +21,38 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para gestionar las ventas.
+ * Permite obtener, buscar, crear, actualizar, eliminar ventas y finalizar compras.
+ */
 @RestController
 public class VentaController {
 
     private final VentaService ventaService;
 
+    /**
+     * Constructor que inyecta los servicios de venta y líneas de venta.
+     * @param ventaService servicio de ventas
+     * @param lineasVentasService servicio de líneas de venta
+     */
     public VentaController(VentaService ventaService, LineasVentasService lineasVentasService) {
         this.ventaService = ventaService;
     }
 
+    /**
+     * Obtiene la lista de todas las ventas.
+     * @return lista de ventas
+     */
     @GetMapping("/ventas/all")
     public List<Venta> obtenerVentas() {
         return ventaService.obtenerVentas();
     }
 
+    /**
+     * Obtiene una venta por su ID.
+     * @param id identificador de la venta
+     * @return ResponseEntity con la venta o 404 si no se encuentra
+     */
     @GetMapping("/ventas/find/{id}")
     public ResponseEntity<Venta> obtenerVentaPorId(@PathVariable Long id) {
         try {
@@ -45,6 +63,11 @@ public class VentaController {
         }
     }
 
+    /**
+     * Busca ventas para administración.
+     * @param texto texto de búsqueda
+     * @return ResponseEntity con la lista de ventas encontradas o 404
+     */
     @GetMapping("/ventas/admin-busqueda/{texto}")
     public ResponseEntity<List<Venta>> obtenerVentaFiltroAdmin(@PathVariable String texto) {
         try {
@@ -55,6 +78,11 @@ public class VentaController {
         }
     }
 
+    /**
+     * Obtiene todas las ventas de un cliente por su ID.
+     * @param id identificador del cliente
+     * @return ResponseEntity con la lista de ventas o 404 si no se encuentra
+     */
     @GetMapping("/ventas/cliente/{id}")
     public ResponseEntity<List<Venta>> obtenerVentasPorCliente(@PathVariable Long id) {
         try {
@@ -65,6 +93,11 @@ public class VentaController {
         }
     }
     
+    /**
+     * Elimina una venta por su ID.
+     * @param id identificador de la venta
+     * @return ResponseEntity sin contenido o 404 si no se encuentra
+     */
     @DeleteMapping("/ventas/delete/{id}")
     public ResponseEntity<Void> deleteVenta(@PathVariable Long id) {
         try {
@@ -75,6 +108,12 @@ public class VentaController {
         }
     }
 
+    /**
+     * Crea una nueva venta.
+     * @param venta objeto venta a crear
+     * @return ResponseEntity con la nueva venta y la ubicación
+     * @throws URISyntaxException si la URI no es válida
+     */
     @PostMapping("/ventas/new")
     public ResponseEntity<Object> createVenta(@RequestBody Venta venta) throws URISyntaxException {
         try {
@@ -86,6 +125,12 @@ public class VentaController {
         }
     }
 
+    /**
+     * Actualiza una venta existente.
+     * @param id identificador de la venta
+     * @param venta objeto venta con los nuevos datos
+     * @return ResponseEntity con la venta actualizada o 404 si no se encuentra
+     */
     @PutMapping("/ventas/update/{id}")
     public ResponseEntity<Venta> updateVenta(@PathVariable Long id, @RequestBody Venta venta) {
         try {
@@ -100,12 +145,17 @@ public class VentaController {
         }
     }
 
+    /**
+     * Finaliza una compra, creando la venta y devolviendo el resultado.
+     * @param venta objeto venta a finalizar
+     * @return ResponseEntity con la nueva venta o errores si los hay
+     */
     @PostMapping("/ventas/finalizar-compra")
     public ResponseEntity<Object> finalizarCompra(@RequestBody Venta venta) {
         Map<String, Object> resultado = ventaService.finalizarCompra(venta);
     
         if (resultado.containsKey("errores")) {
-            return ResponseEntity.badRequest().body(resultado.get("errores")); // devuelve el array JSON
+            return ResponseEntity.badRequest().body(resultado.get("errores"));
         }
     
         Venta nuevaVenta = (Venta) resultado.get("venta");

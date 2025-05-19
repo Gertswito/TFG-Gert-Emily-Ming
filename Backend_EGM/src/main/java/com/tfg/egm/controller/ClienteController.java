@@ -1,7 +1,6 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Cliente;
-import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.ClienteService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -23,25 +22,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para gestionar los clientes.
+ * Permite obtener, buscar, crear, actualizar, eliminar clientes y login.
+ */
 @RestController
 public class ClienteController {
 
     private final ClienteService clienteService;
 
+    /**
+     * Constructor que inyecta el servicio de clientes.
+     * @param clienteService servicio de clientes
+     */
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
 
+    /**
+     * Obtiene la lista de todos los clientes.
+     * @return lista de clientes
+     */
     @GetMapping("/clientes/all")
     public List<Cliente> obtenerClientes() {
         return clienteService.obtenerClientes();
     }
 
+    /**
+     * Obtiene un cliente por su usuario.
+     * @param usuario nombre de usuario
+     * @return cliente encontrado
+     */
     @GetMapping("/clientes/usuario/{usuario}")
     public Cliente obtenerCliente(@PathVariable String usuario) {
         return clienteService.obtenerClientePorUsuario(usuario);
     }
 
+    /**
+     * Obtiene un cliente por su ID.
+     * @param id identificador del cliente
+     * @return ResponseEntity con el cliente o 404 si no se encuentra
+     */
     @GetMapping("/clientes/find/{id}")
     public ResponseEntity<Cliente> obtenerClientePorId(@PathVariable Long id) {
         try {
@@ -52,6 +73,11 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Busca clientes para administración.
+     * @param texto texto de búsqueda
+     * @return ResponseEntity con la lista de clientes encontrados o 404
+     */
     @GetMapping("/clientes/admin-busqueda/{texto}")
     public ResponseEntity<List<Cliente>> obtenerClienteFiltroAdmin(@PathVariable String texto) {
         try {
@@ -62,6 +88,12 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Crea un nuevo cliente.
+     * @param cliente objeto cliente a crear
+     * @return ResponseEntity con el nuevo cliente y la ubicación
+     * @throws URISyntaxException si la URI no es válida
+     */
     @PostMapping("/clientes/new")
     public ResponseEntity<Object> createCliente(@RequestBody Cliente cliente) throws URISyntaxException {
         if (cliente.getId() != null) {
@@ -76,6 +108,11 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Login de cliente.
+     * @param cliente objeto cliente con usuario y contraseña
+     * @return ResponseEntity con el token generado
+     */
     @PostMapping("/clientes/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Cliente cliente) {
         String token = clienteService.login(cliente);
@@ -84,6 +121,12 @@ public class ClienteController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Actualiza un cliente existente.
+     * @param cliente objeto cliente con los nuevos datos
+     * @return ResponseEntity con el cliente actualizado o error
+     * @throws URISyntaxException si la URI no es válida
+     */
     @PutMapping("/clientes/update")
     public ResponseEntity<Cliente> actualizarCliente(@RequestBody Cliente cliente) throws URISyntaxException {
         try {
@@ -96,6 +139,11 @@ public class ClienteController {
         }
     }
 
+    /**
+     * Elimina un cliente por su ID.
+     * @param id identificador del cliente
+     * @return ResponseEntity sin contenido o 404 si no se encuentra
+     */
     @DeleteMapping("/clientes/delete/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
         try {

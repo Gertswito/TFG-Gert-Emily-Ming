@@ -1,7 +1,6 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Producto;
-import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.ProductoService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,25 +20,47 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para gestionar los productos.
+ * Permite obtener, buscar, crear, actualizar y eliminar productos.
+ */
 @RestController
 public class ProductoController {
 
     private final ProductoService productoService;
 
+    /**
+     * Constructor que inyecta el servicio de productos.
+     * @param productoService servicio de productos
+     */
     public ProductoController(ProductoService productoService) {
         this.productoService = productoService;
     }
 
+    /**
+     * Obtiene la lista de todos los productos.
+     * @return lista de productos
+     */
     @GetMapping("/productos/all")
     public List<Producto> obtenerProductos() {
         return productoService.obtenerProductos();
     }
 
+    /**
+     * Obtiene los productos de una subcategoría por su ID.
+     * @param id identificador de la subcategoría
+     * @return lista de productos de la subcategoría
+     */
     @GetMapping("/productos/subcategoria/{id}")
     public List<Producto> obtenerProductosConIdSubcategoria(@PathVariable int id) {
         return productoService.obtenerProductosConIdSubcategoria(id);
     }
 
+    /**
+     * Obtiene un producto por su ID.
+     * @param id identificador del producto
+     * @return ResponseEntity con el producto o 404 si no se encuentra
+     */
     @GetMapping("/productos/find/{id}")
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable Long id) {
         try {
@@ -50,6 +71,11 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca productos por nombre.
+     * @param texto texto de búsqueda
+     * @return ResponseEntity con la lista de productos encontrados o 404
+     */
     @GetMapping("/productos/busqueda/{texto}")
     public ResponseEntity<List<Producto>> obtenerProductoFiltro(@PathVariable String texto) {
         try {
@@ -60,6 +86,12 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca productos por nombre y subcategoría.
+     * @param texto texto de búsqueda
+     * @param id identificador de la subcategoría
+     * @return ResponseEntity con la lista de productos encontrados o 404
+     */
     @GetMapping("/productos/busqueda/{texto}/subcategoria/{id}")
     public ResponseEntity<List<Producto>> obtenerProductoFiltroSubcategoria(@PathVariable String texto, @PathVariable Long id) {
         try {
@@ -70,6 +102,11 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca productos para administración.
+     * @param texto texto de búsqueda
+     * @return ResponseEntity con la lista de productos encontrados o 404
+     */
     @GetMapping("/productos/admin-busqueda/{texto}")
     public ResponseEntity<List<Producto>> obtenerProductoFiltroAdmin(@PathVariable String texto) {
         try {
@@ -80,6 +117,11 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Elimina un producto por su ID.
+     * @param id identificador del producto
+     * @return ResponseEntity sin contenido o 404 si no se encuentra
+     */
     @DeleteMapping("/productos/delete/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
         try {
@@ -90,6 +132,12 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Crea un nuevo producto.
+     * @param producto objeto producto a crear
+     * @return ResponseEntity con el nuevo producto y la ubicación
+     * @throws URISyntaxException si la URI no es válida
+     */
     @PostMapping("/productos/new")
     public ResponseEntity<Object> createProducto(@RequestBody Producto producto) throws URISyntaxException {
         try {
@@ -101,6 +149,12 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Actualiza un producto existente.
+     * @param id identificador del producto
+     * @param producto objeto producto con los nuevos datos
+     * @return ResponseEntity con el producto actualizado o 404 si no se encuentra
+     */
     @PutMapping("/productos/update/{id}")
     public ResponseEntity<Producto> updateProducto(@PathVariable Long id, @RequestBody Producto producto) {
         try {

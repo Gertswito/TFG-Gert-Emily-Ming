@@ -8,8 +8,7 @@
             "mainClass": "com.tfg.egm.EgmApplication",
             "projectName": "egm",
             "args": "",
-            "envFile": "${workspaceFolder}/.env",
-            "console": "internalConsole"
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

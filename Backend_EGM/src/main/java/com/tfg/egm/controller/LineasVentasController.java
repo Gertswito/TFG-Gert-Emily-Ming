@@ -1,7 +1,6 @@
 package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.LineasVentas;
-import com.tfg.egm.entity.Subcategoria;
 import com.tfg.egm.service.LineasVentasService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,20 +20,37 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador REST para gestionar las líneas de venta.
+ * Permite obtener, buscar, crear, actualizar y eliminar líneas de venta.
+ */
 @RestController
 public class LineasVentasController {
 
     private final LineasVentasService lineasVentasService;
 
+    /**
+     * Constructor que inyecta el servicio de líneas de venta.
+     * @param lineasVentasService servicio de líneas de venta
+     */
     public LineasVentasController(LineasVentasService lineasVentasService) {
         this.lineasVentasService = lineasVentasService;
     }
 
+    /**
+     * Obtiene la lista de todas las líneas de venta.
+     * @return lista de líneas de venta
+     */
     @GetMapping("/lineas-ventas/all")
     public List<LineasVentas> obtenerLineasVentas() {
         return lineasVentasService.obtenerLineasVentas();
     }
 
+    /**
+     * Obtiene una línea de venta por su ID.
+     * @param id identificador de la línea de venta
+     * @return ResponseEntity con la línea de venta o 404 si no se encuentra
+     */
     @GetMapping("/lineas-ventas/find/{id}")
     public ResponseEntity<LineasVentas> obtenerLineaVentaPorId(@PathVariable Long id) {
         try {
@@ -45,6 +61,11 @@ public class LineasVentasController {
         }
     }
 
+    /**
+     * Obtiene todas las líneas de venta asociadas a una venta.
+     * @param id identificador de la venta
+     * @return ResponseEntity con la lista de líneas de venta o 404 si no se encuentra
+     */
     @GetMapping("/lineas-ventas/venta/{id}")
     public ResponseEntity<List<LineasVentas>> obtenerLineasVentasPorVenta(@PathVariable Long id) {
         try {
@@ -55,6 +76,11 @@ public class LineasVentasController {
         }
     }
 
+    /**
+     * Busca líneas de venta para administración.
+     * @param texto texto de búsqueda
+     * @return ResponseEntity con la lista de líneas de venta encontradas o 404
+     */
     @GetMapping("/lineas-ventas/admin-busqueda/{texto}")
     public ResponseEntity<List<LineasVentas>> obtenerLineasVentasFiltroAdmin(@PathVariable String texto) {
         try {
@@ -65,6 +91,11 @@ public class LineasVentasController {
         }
     }
 
+    /**
+     * Elimina una línea de venta por su ID.
+     * @param id identificador de la línea de venta
+     * @return ResponseEntity sin contenido o 404 si no se encuentra
+     */
     @DeleteMapping("/lineas-ventas/delete/{id}")
     public ResponseEntity<Void> deleteLineasVentas(@PathVariable Long id) {
         try {
@@ -75,6 +106,12 @@ public class LineasVentasController {
         }
     }
 
+    /**
+     * Crea una nueva línea de venta.
+     * @param lineasVentas objeto línea de venta a crear
+     * @return ResponseEntity con la nueva línea de venta y la ubicación
+     * @throws URISyntaxException si la URI no es válida
+     */
     @PostMapping("/lineas-ventas/new")
     public ResponseEntity<Object> createLineasVentas(@RequestBody LineasVentas lineasVentas) throws URISyntaxException {
         try {
@@ -86,6 +123,12 @@ public class LineasVentasController {
         }
     }
 
+    /**
+     * Actualiza una línea de venta existente.
+     * @param id identificador de la línea de venta
+     * @param lineasVentas objeto línea de venta con los nuevos datos
+     * @return ResponseEntity con la línea de venta actualizada o 404 si no se encuentra
+     */
     @PutMapping("/lineas-ventas/update/{id}")
     public ResponseEntity<LineasVentas> updateLineasVentas(@PathVariable Long id, @RequestBody LineasVentas lineasVentas) {
         try {
