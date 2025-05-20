@@ -1,60 +1,87 @@
 @if (errorCargado) {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger shadow-sm" role="alert">
         <strong>Error al cargar el producto, vuelva a intentarlo más tarde</strong>
     </div>
 } @else if (productoSeleccionado) {
-    <div class="d-flex flex-row align-items-center justify-content-center contenedor-producto">
-        <div class="d-flex justify-content-between align-items-center w-100">
+    <div class="d-flex flex-column contenedor-producto shadow">
+        <!-- Cabecera con título y botón volver -->
+        <div class="d-flex justify-content-between align-items-center">
             <div>
                 <h1 class="mb-0">{{productoSeleccionado.marca}} - {{productoSeleccionado.nombre}}</h1>
                 @if (productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0) {
-                    <small class="text-danger mt-1">Sin stock disponible</small>
+                    <small class="text-danger mt-2 d-inline-block">
+                        <i class="bi bi-exclamation-circle me-1"></i>Sin stock disponible
+                    </small>
+                } @else {
+                    <small class="text-success mt-2 d-inline-block">
+                        <i class="bi bi-check-circle me-1"></i>En stock
+                    </small>
                 }
             </div>
             <div class="boton-volver">
-                <button type="button" class="btn btn-secondary" (click)="atras()">Volver</button>
+                <button type="button" class="btn btn-secondary d-flex align-items-center" (click)="atras()">
+                    <i class="bi bi-arrow-left me-2"></i>Volver
+                </button>
             </div>
         </div>
-        <div class="div-imagen-producto w-50">
-
+        
+        <!-- Imagen del producto -->
+        <div class="div-imagen-producto mx-auto my-4">
             @if (productoSeleccionado.urlImagen) {
-                <img [src]="productoSeleccionado.urlImagen" alt="" class="imagen-producto">
+                <img [src]="productoSeleccionado.urlImagen" alt="{{productoSeleccionado.nombre}}" class="imagen-producto">
+            } @else {
+                <div class="text-center text-muted">
+                    <i class="bi bi-image fs-1"></i>
+                    <p>Imagen no disponible</p>
+                </div>
             }
         </div>
 
+        <!-- Información del producto -->
         <div class="d-flex flex-column w-100">
+            <!-- Categoría y referencia -->
             <div class="d-flex justify-content-between mb-3">
                 <div>
+                    <i class="bi bi-tag me-2"></i>
                     {{productoSeleccionado.categoria?.nombre}} / {{productoSeleccionado.subcategoria?.nombre}}
                 </div>
                 <div>
-                    {{productoSeleccionado.referencia}}
+                    <i class="bi bi-upc me-2"></i>Ref: {{productoSeleccionado.referencia}}
                 </div>
             </div>
+            
+            <!-- Descripción -->
             <div class="mb-3">
-                {{productoSeleccionado.descripcion}}
+                <h6 class="text-uppercase text-muted mb-2 small">Descripción</h6>
+                <p class="mb-0">{{productoSeleccionado.descripcion}}</p>
             </div>
+            
+            <!-- Ingredientes y precio -->
             <div class="d-flex flex-row justify-content-between">
                 <div class="d-flex flex-column align-items-center">
-                    <h5>Ingredientes:</h5>
-                    {{productoSeleccionado.ingredientes}}
+                    <h5>Ingredientes</h5>
+                    <p class="mb-0 text-center">{{productoSeleccionado.ingredientes}}</p>
                 </div>
                 <div class="d-flex flex-column align-items-center justify-content-between">
                     <div class="d-flex justify-content-end w-100 mb-2">
-                        <span class="text-end">Precio: {{productoSeleccionado.precio | number:'1.2-2'}}€</span>
+                        <span class="text-end">{{productoSeleccionado.precio | number:'1.2-2'}}€</span>
                     </div>
                 </div>
             </div>
-            <hr class="B">
         </div>
 
+        <!-- Botón de compra -->
         <div class="boton-comprar">
             @if (usuario == null || usuario == undefined) {
-                <button type="button" class="btn btn-primary" (click)="alertaIniciarSesion()">
-                    Añadir al carrito
+                <button type="button" class="btn btn-primary d-flex align-items-center" (click)="alertaIniciarSesion()">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Iniciar sesión para comprar
                 </button>
             } @else {
-                <button type="button" class="btn btn-primary" (click)="addCarrito(productoSeleccionado)" [disabled]="(productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0) || usuario == null || usuario == undefined">
+                <button type="button" class="btn btn-primary d-flex align-items-center" 
+                        (click)="addCarrito(productoSeleccionado)" 
+                        [disabled]="(productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0) || usuario == null || usuario == undefined">
+                    <i class="bi bi-cart-plus me-2"></i>
                     Añadir al carrito
                 </button>
             }
