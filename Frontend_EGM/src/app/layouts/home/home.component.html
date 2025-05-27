@@ -4,9 +4,20 @@
     } @else {
         <h1 class="titulo">¡Bienvenido!</h1>
     }
-    <h2 class="subtitulo">Nuestra selección de productos</h2>
-    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+    <h2 class="subtitulo">¡¡¡ A la mejor tienda de alimentos del mercado !!!</h2>
+        
+    <div class="carousel-container">
+        <button class="carousel-btn left" (click)="prevSlide()">&#10094;</button>
+        <div class="carousel-slide" id="carouselSlide">
+            <img src="vegatales_carrusel.jpg" class="carousel-image" />
+            <img src="carne_carrusel.jpeg" class="carousel-image" />
+            <img src="frutos_secos_carrusel.jpg" class="carousel-image" />
+        </div>
+        <button class="carousel-btn right" (click)="nextSlide()">&#10095;</button>
+    </div>
 
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+    <h2 class="subtitulo">Nuestra selección de productos</h2>
     @if (categoriaList.length > 0) {
         <div class="cards-categorias">
             <ng-container *ngFor="let categoria of categoriaList">

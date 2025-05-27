@@ -110,6 +110,56 @@ buscador {
     margin-bottom: 1em;
 }
 
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 67em;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: cover;
+    height: 20em;
+    border-radius: 8px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 2em;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.3em 0.6em;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.carousel-btn.left {
+    left: 10px;
+}
+
+.carousel-btn.right {
+    right: 10px;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(200, 200, 200, 0.6);
+}
+
 @media screen and (max-width: 850px) {
     .card-subcategoria-link {
         flex: 0 0 9em;
@@ -130,5 +180,13 @@ buscador {
 
     .card-categoria {
         margin-bottom: 0.75em;
+    }
+
+    .carousel-image {
+        height: 15em;
+    }
+
+    .subtitulo {
+        text-align: center;
     }
 }

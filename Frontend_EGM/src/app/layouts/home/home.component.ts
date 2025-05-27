@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   usuario: string | null = '';
   rol: string | null = '';
   categoriaList: ICategoria[] = [];
+  currentSlide = 0;
 
   protected authService = inject(AuthService);
   protected router = inject(Router);
@@ -61,5 +62,19 @@ export class HomeComponent implements OnInit {
         this.categoriaList = data;
       });
     }
+  }
+
+  prevSlide() {
+    const slide = document.getElementById('carouselSlide') as HTMLElement;
+    const totalSlides = slide.children.length;
+    this.currentSlide = (this.currentSlide - 1 + totalSlides) % totalSlides;
+    slide.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+  }
+
+  nextSlide() {
+    const slide = document.getElementById('carouselSlide') as HTMLElement;
+    const totalSlides = slide.children.length;
+    this.currentSlide = (this.currentSlide + 1) % totalSlides;
+    slide.style.transform = `translateX(-${this.currentSlide * 100}%)`;
   }
 }
