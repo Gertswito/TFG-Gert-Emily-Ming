@@ -2,7 +2,7 @@
     <h1 class="titulo">Crear categoría</h1>
     <div class="d-flex align-items-center justify-content-center">
         <form class="form create-form" [formGroup]="crearCategoriaFormulario" (ngSubmit)="comprobarForm()">
-            <div class="mb-4">
+            <div class="mb-2">
                 <label>Nombre de categoría<span class="text-danger"> *</span></label>
                 <input type="text" class="form-control" formControlName="nombre" required>
                 <div *ngIf="crearCategoriaFormulario.get('nombre')?.touched && crearCategoriaFormulario.get('nombre')?.invalid" class="text-danger">
@@ -10,6 +10,13 @@
                     <span *ngIf="crearCategoriaFormulario.get('nombre')?.errors?.['required']">El nombre es obligatorio. </span>
                     <span *ngIf="crearCategoriaFormulario.get('nombre')?.errors?.['maxlength']">El nombre tiene como máximo 255 caracteres. </span>
                     <span *ngIf="crearCategoriaFormulario.get('nombre')?.errors?.['nombreExiste']">Una categoría con este nombre ya está registrada. </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label>Url de imagen de subcategoría</label>
+                <input type="text" class="form-control" formControlName="imagenCategoria">
+                <div *ngIf="crearCategoriaFormulario.get('imagenCategoria')?.value" class="mt-2">
+                    <img [src]="crearCategoriaFormulario.get('imagenCategoria')?.value" alt="" class="imagen-productos">
                 </div>
             </div>
             <div>

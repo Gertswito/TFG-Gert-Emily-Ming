@@ -23,7 +23,8 @@ export class CategoriaCreateComponent implements OnInit {
     ngOnInit(): void {
       this.crearCategoriaFormulario = new FormGroup({
         id: new FormControl(null),
-        nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)])
+        nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)]),
+        imagenCategoria: new FormControl(null)
       });
     
       this.route.queryParams.subscribe(params => {
@@ -33,7 +34,8 @@ export class CategoriaCreateComponent implements OnInit {
           this.categoriaService.getCategoria(id).subscribe((res) => {
             this.crearCategoriaFormulario.patchValue({
               id: res.id,
-              nombre: res.nombre
+              nombre: res.nombre,
+              imagenCategoria: res.imagenCategoria
             });
           });
         }

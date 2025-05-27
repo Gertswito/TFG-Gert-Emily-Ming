@@ -15,7 +15,7 @@
             <div class="mb-2">
                 <label>Url de imagen de subcategoría</label>
                 <input type="text" class="form-control" formControlName="imagenSubcategoria">
-                <div *ngIf="crearSubcategoriaFormulario.get('imagenSubcategoria')?.value !== null && crearSubcategoriaFormulario.get('imagenSubcategoria')?.value !== ''" class="mt-2">
+                <div *ngIf="crearSubcategoriaFormulario.get('imagenSubcategoria')?.value" class="mt-2">
                     <img [src]="crearSubcategoriaFormulario.get('imagenSubcategoria')?.value" alt="" class="imagen-productos">
                 </div>
             </div>

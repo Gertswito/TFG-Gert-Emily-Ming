@@ -17,6 +17,7 @@ import { BuscadorComponent } from '../../../layouts/buscador/buscador.component'
 export class SubcategoriaListComponent implements OnInit {
   subcategoriaList: ISubcategoria[] = [];
   nombreCategoria = '';
+  imgCategoria = '';
   id: number | null = null;
 
   private subcategoriaService = inject(SubcategoriaService);
@@ -39,6 +40,7 @@ export class SubcategoriaListComponent implements OnInit {
   cargarSubcategoriasConId(id: number) {
     this.subcategoriaService.getSubcategoriasConIdCategoria(id).subscribe((res) => {
       this.subcategoriaList = res || [];
+      this.imgCategoria = res.length > 0 ? res[0].categoria?.imagenCategoria || '' : '';
     });
   }
 

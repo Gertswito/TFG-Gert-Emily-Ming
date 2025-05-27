@@ -1,16 +1,26 @@
 <div class="body-entidades">
     <h1 class="titulo">{{nombreCategoria}}</h1>
+    <div class="body-img-categoria mb-3">
+        <img *ngIf="imgCategoria; else sinImagen" [src]="imgCategoria" class="img-categoria" alt="">
+        <ng-template #sinImagen>
+            <img src="todas_categorias.jpg" class="img-categoria" alt="">
+        </ng-template>
+      </div>
     <buscador (textoBuscado)="onBuscar($event)"></buscador>
 
-    <div *ngIf="subcategoriaList.length > 0; else noSubcategorias">
+    <div *ngIf="subcategoriaList.length > 0; else noSubcategorias" class="subcategorias">
         <div class="row">
             <ng-container *ngFor="let subcategoria of subcategoriaList">
                 <div class="col-md-4 mb-4">
                     <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }">
                         <div class="card">
-                            <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="Imagen de Subcategoría">
+                            <img *ngIf="subcategoria.imagenSubcategoria; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="Imagen de Subcategoría">
                             <ng-template #sinImagen>
-                                <div class="card-img-top text-center py-5 bg-light">Sin imagen</div>
+                                <div class="card-img-top text-center py-5 bg-light">
+                                    <div class="py-5">
+                                        <div class="py-2">Sin Imagen</div>
+                                    </div>
+                                </div>
                             </ng-template>
                             <div class="card-body">
                                 <h5 class="card-title">

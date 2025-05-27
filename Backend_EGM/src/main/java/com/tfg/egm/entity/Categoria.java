@@ -30,6 +30,12 @@ public class Categoria implements Serializable {
     private String nombre;
 
     /**
+     * URL de la imagen de la categoría.
+     */
+    @Column(name = "imagen_categoria", length = 3000)
+    private String imagenCategoria;
+
+    /**
      * Lista de subcategorías asociadas a esta categoría.
      * Las operaciones en cascada se aplican sobre estas subcategorías.
      */
@@ -71,6 +77,24 @@ public class Categoria implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * Obtiene la URL de la imagen de la categoría.
+     *
+     * @return la URL de la imagen de la categoría
+     */
+    public String getImagenCategoria() {
+        return imagenCategoria;
+    }
+
+    /**
+     * Establece la URL de la imagen de la categoría.
+     *
+     * @param imagenCategoria la nueva URL de la imagen de la categoría
+     */
+    public void setImagenCategoria(String imagenCategoria) {
+        this.imagenCategoria = imagenCategoria;
     }
 
     /**

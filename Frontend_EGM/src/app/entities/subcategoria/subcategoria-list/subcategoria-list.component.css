@@ -110,5 +110,26 @@ a {
 
 buscador {
     margin-bottom: 1em;
+    max-width: 67em;
     width: 100%;
+}
+
+.subcategorias {
+    max-width: 67em;
+    width: 100%;
+}
+
+.body-img-categoria {
+    height: 5em;
+    width: 100%;
+    max-width: 67em;
+    border-radius: 5px;
+}
+
+.img-categoria {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

@@ -22,8 +22,8 @@
                         <tr>
                             <td>{{subcategoria.id}}</td>
                             <td>
-                                <img *ngIf="subcategoria.imagenSubcategoria !== null; else sinImagen" [src]="subcategoria.imagenSubcategoria" alt="" class="imagen-productos">
-                                <ng-template #sinImagen>Sin imagen</ng-template>
+                                <img *ngIf="subcategoria.imagenSubcategoria; else sinImagen" [src]="subcategoria.imagenSubcategoria" alt="" class="imagen-productos">
+                                <ng-template #sinImagen>Sin Imagen</ng-template>
                             </td>
                             <td>{{subcategoria.nombre}}</td>
                             <td>

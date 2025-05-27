@@ -10,15 +10,20 @@
           <table class="table table-striped table-bordered">
               <thead>
                   <tr class="table-primary">
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                   </tr>
               </thead>
               <tbody>
                   <ng-container *ngFor="let categoria of categoriaList">
                       <tr>
                           <td>{{categoria.id}}</td>
+                          <td>
+                            <img *ngIf="categoria.imagenCategoria; else sinImagen" [src]="categoria.imagenCategoria" alt="" class="imagen-productos">
+                            <ng-template #sinImagen>Sin Imagen</ng-template>
+                          </td>
                           <td>{{categoria.nombre}}</td>
                           <td>
                               <div class="botones-accion">
