@@ -1,6 +1,15 @@
 <div class="body-entidades">
-    <h1 class="titulo">{{nombreSubcategoria}}</h1>
-    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+    <div class="body-img-subcategoria mb-3 d-flex flex-column align-items-center justify-content-center">
+        <h1 class="titulo-overlay">{{nombreSubcategoria}}</h1>
+        <img *ngIf="imgSubcategoria; else sinImagen" [src]="imgSubcategoria" class="img-subcategoria" alt="">
+        <ng-template #sinImagen>
+            <img src="todas_categorias.jpg" class="img-subcategoria" alt="">
+        </ng-template>
+    </div>
+    
+    <div class="buscador-wrapper d-flex justify-content-center">
+        <buscador (textoBuscado)="onBuscar($event)"></buscador>
+    </div>
 
     @if (productoList.length > 0) {
         <div class="cards-productos">
@@ -16,18 +25,18 @@
                         <img [src]="producto.urlImagen" alt="" class="imagen-productos">
                     </div>
                     <div class="d-flex flex-row justify-content-between align-items-end">
-                        <div>
-                            <span class="mb-3 low-light">Unidades: {{producto.cantidad}}</span>
+                        <div class="w-100 mt-3 d-flex flex-column align-items-start">
+                            <span class="low-light">Unidades: {{producto.cantidad}}</span>
                             <a [routerLink]="'/producto-info'" [queryParams]="{ id: producto.id }">
                                 <button type="button" class="btn btn-secondary btn-ver mt-3">Ver producto</button>
                             </a>
                         </div>
-                        <div class="d-flex flex-column align-items-end mt-3">
+                        <div class="d-flex flex-column align-items-end mt-3 w-100">
                             <span class="mb-3">Precio: <span class="text-success">{{producto.precio | number:'1.2-2'}}€</span></span>
                             @if (usuario == null || usuario == undefined) {
-                                <button type="button" class="btn btn-primary btn-carrito" (click)="alertaIniciarSesion()">Añadir al carrito</button>
+                                <button type="button" class="btn btn-primary btn-carrito" (click)="alertaIniciarSesion()" [disabled]="(producto.stock !== null && producto.stock <= 0)"><fa-icon [icon]="faPlus"></fa-icon></button>
                             } @else {
-                                <button type="button" class="btn btn-primary btn-carrito" (click)="addCarrito(producto)" [disabled]="(producto.stock !== null && producto.stock <= 0) || usuario == null || usuario == undefined">Añadir al carrito</button>
+                                <button type="button" class="btn btn-primary btn-carrito" (click)="addCarrito(producto)" [disabled]="(producto.stock !== null && producto.stock <= 0) || usuario == null || usuario == undefined"><fa-icon [icon]="faPlus"></fa-icon></button>
                             }
                         </div>
                     </div>

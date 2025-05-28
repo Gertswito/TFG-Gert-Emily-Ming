@@ -1,12 +1,14 @@
 <div class="body-entidades">
-    @if (usuario !== null) {
-        <h1 class="titulo">¡Bienvenido {{usuario}}!</h1>
-    } @else {
-        <h1 class="titulo">¡Bienvenido!</h1>
-    }
-    <h2 class="subtitulo">¡¡¡ A la mejor tienda de alimentos del mercado !!!</h2>
-        
     <div class="carousel-container">
+        <div class="carousel-overlay-text">
+            @if (usuario !== null) {
+                <h1 class="titulo">¡Bienvenido {{usuario}}!</h1>
+            } @else {
+                <h1 class="titulo">¡Bienvenido!</h1>
+            }
+            <h2 class="subtitulo">¡¡¡ A la mejor tienda de alimentos del mercado !!!</h2>
+        </div>
+
         <button class="carousel-btn left" (click)="prevSlide()">&#10094;</button>
         <div class="carousel-slide" id="carouselSlide">
             <img src="vegatales_carrusel.jpg" class="carousel-image" />
@@ -43,6 +45,6 @@
             </ng-container>
         </div>
     } @else {
-        <div class="w-100 alert alert-warning">No se han encontrado categorías</div>
+        <div class="alerta alert alert-warning">No se han encontrado categorías</div>
     }
   </div>

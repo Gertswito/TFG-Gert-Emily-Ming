@@ -1,11 +1,11 @@
 <div class="body-entidades">
-    <h1 class="titulo">{{nombreCategoria}}</h1>
     <div class="body-img-categoria mb-3">
+        <h1 class="titulo-overlay">{{nombreCategoria}}</h1>
         <img *ngIf="imgCategoria; else sinImagen" [src]="imgCategoria" class="img-categoria" alt="">
         <ng-template #sinImagen>
             <img src="todas_categorias.jpg" class="img-categoria" alt="">
         </ng-template>
-      </div>
+    </div>
     <buscador (textoBuscado)="onBuscar($event)"></buscador>
 
     <div *ngIf="subcategoriaList.length > 0; else noSubcategorias" class="subcategorias">

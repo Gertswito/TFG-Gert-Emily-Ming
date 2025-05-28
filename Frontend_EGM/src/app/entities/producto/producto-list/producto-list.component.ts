@@ -11,18 +11,23 @@ import { AuthService } from '../../../auth/auth.service';
 import { ICliente } from '../../cliente/cliente.model';
 import { CarritoService } from '../../../layouts/carrito/carrito.service';
 import { BuscadorComponent } from '../../../layouts/buscador/buscador.component';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   standalone: true,
   selector: 'producto',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, BuscadorComponent, RouterLink, RouterOutlet, FontAwesomeModule],
   templateUrl: './producto-list.component.html',
   styleUrls: ['./producto-list.component.css'],
 })
 export class ProductoListComponent implements OnInit {
+  faPlus = faPlus;
+
   productoList: IProducto[] = [];
   usuario: ICliente | null = null;
   nombreSubcategoria = '';
+  imgSubcategoria = '';
   id: number | null = null;
 
   private productoService = inject(ProductoService);
@@ -57,6 +62,7 @@ export class ProductoListComponent implements OnInit {
   cargarProductosConId(id: number) {
     this.productoService.getProductosConIdSubcategoria(id).subscribe((res) => {
       this.productoList = res || [];
+      this.imgSubcategoria = res.length > 0 ? res[0].subcategoria?.imagenSubcategoria || '' : '';
     });
   }
 
