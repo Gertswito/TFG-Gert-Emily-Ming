@@ -54,7 +54,7 @@
                         </div>
                         <div class="boton-comprar">
                             @if (usuario == null || usuario == undefined) {
-                                <button type="button" class="btn btn-primary boton-compra" (click)="alertaIniciarSesion()">
+                                <button type="button" class="btn btn-primary boton-compra" (click)="alertaIniciarSesion()" [disabled]="(productoSeleccionado.stock !== null && productoSeleccionado.stock <= 0)">
                                     Añadir al carrito
                                 </button>
                             } @else {
