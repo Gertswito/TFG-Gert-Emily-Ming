@@ -145,8 +145,10 @@ public class ProductoService {
 
     /**
      * Aumenta el stock de un producto.
-     * @param producto objeto producto con la cantidad a aumentar
+     * @param id identificador del producto
+     * @param stock cantidad de stock a añadir
      * @throws ResponseStatusException si no existe el producto
+     * @return el producto con el stock actualizado
      */
     public Producto aumentarStockProducto(Long id, Long stock) {
         Producto productoExistente = productoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste"));
