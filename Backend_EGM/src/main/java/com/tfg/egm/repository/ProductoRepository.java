@@ -29,6 +29,13 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     boolean existsByReferencia(String referencia);
 
     /**
+     * Busca todos los productos cuyo stock sea menor a 100.
+     * @return lista de productos con stock bajo
+     */
+    @Query("SELECT p FROM Producto p WHERE p.stock < 100")
+    List<Producto> findByStockBajo();
+
+    /**
      * Busca productos por nombre o marca que contengan el texto dado (ignorando mayúsculas/minúsculas).
      * @param texto texto de búsqueda
      * @return lista de productos encontrados

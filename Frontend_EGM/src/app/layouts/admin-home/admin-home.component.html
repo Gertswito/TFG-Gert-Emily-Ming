@@ -1,6 +1,6 @@
 <div class="body">
-    <div>
-        <h1>Zona admin - Todas las entidades</h1>
+    <div class="w-100 pe-3 ps-3">
+        <h1 class="titulo">Zona admin - Todas las entidades</h1>
     </div>
     
     <div class="entidades">
@@ -24,4 +24,37 @@
             <a [routerLink]="'/lineasVenta'"><button class="btn btn-primary">Líneas de venta</button></a>
         </div>
     </div>
+
+    @if (productosConStockBajo && productosConStockBajo.length > 0) {
+        <div class="reponer-stock mt-4 w-75">
+            <div class="d-flex justify-content-center align-items-center titulo-reponer">
+                <h2 class="subtitulo">Productos con stock bajo</h2>
+            </div>
+
+            <hr>
+
+            <div class="tabla-body w-100">
+                <table class="table table-striped table-bordered w-100">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>Id</th>
+                            <th>Producto</th>
+                            <th>Stock actual</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (producto of productosConStockBajo; track producto.id) {
+                            <tr>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.referencia }} | {{ producto.marca }} - {{ producto.nombre }}</td>
+                                <td>{{ producto.stock }} unidades</td>
+                                <td><button type="button" class="btn btn-primary btn-subir" (click)="openAddStockModal(producto)"><fa-icon [icon]="faPlus"></fa-icon></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 </div>

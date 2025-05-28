@@ -77,25 +77,6 @@ hr {
 .card-producto div span {
     font-weight: bold;
 }
-  
-.card-producto.categoria-1 {
-    border-left: 5px solid #ff0000
-}
-  
-.card-producto.categoria-2 {
-    border-left: 5px solid #00ff00;
-}
-  
-.card-producto.categoria-3 {
-    border-left: 5px solid #0000ff; 
-}
-
-.card-producto.categoria-4 {
-    border-left: 5px solid #fe11af;  
-}
-.card-producto.categoria-4 {
-    border-left: 5px solid #d8ee30;  
-}
 
 ::ng-deep .modal-content {
     margin-top: 15em;

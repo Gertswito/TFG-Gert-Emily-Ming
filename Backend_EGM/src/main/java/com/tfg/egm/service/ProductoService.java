@@ -56,6 +56,14 @@ public class ProductoService {
     }
 
     /**
+     * Obtiene los productos con stock bajo.
+     * @return lista de productos con un stock de menos de 100 unidades
+     */
+    public List<Producto> obtenerProductosStockBajo() {
+        return productoRepository.findByStockBajo();
+    }
+
+    /**
      * Busca productos por nombre o marca.
      * @param texto texto de búsqueda
      * @return lista de productos encontrados
@@ -133,5 +141,16 @@ public class ProductoService {
         }
         producto.setStock(producto.getStock() - lineaVenta.getCantidadPedida());
         productoRepository.save(producto);
+    }
+
+    /**
+     * Aumenta el stock de un producto.
+     * @param producto objeto producto con la cantidad a aumentar
+     * @throws ResponseStatusException si no existe el producto
+     */
+    public Producto aumentarStockProducto(Long id, Long stock) {
+        Producto productoExistente = productoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "productoNoExiste"));
+        productoExistente.setStock(productoExistente.getStock() + stock);
+        return productoRepository.save(productoExistente);
     }
 }

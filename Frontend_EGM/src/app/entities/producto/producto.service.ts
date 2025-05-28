@@ -34,6 +34,10 @@ export class ProductoService {
     return this.http.get<IProducto[]>(`${this.resourceUrl}/admin-busqueda/${texto}`);
   }
 
+  getProductosConStockBajo(): Observable<IProducto[]> {
+    return this.http.get<IProducto[]>(`${this.resourceUrl}/stock-bajo`);
+  }
+
   deleteProducto(id: number): Observable<any> {
     return this.http.delete<IProducto>(`${this.resourceUrl}/delete/${id}`, { observe: 'response' });
   }
@@ -44,5 +48,9 @@ export class ProductoService {
 
   editarProducto(producto: IProducto): Observable<HttpResponse<IProducto>> {
     return this.http.put<IProducto>(`${this.resourceUrl}/update/${producto.id}`, producto, { observe: 'response' });
+  }
+
+  addStockAlProducto(id: number, stock: number): Observable<HttpResponse<IProducto>> {
+    return this.http.post<IProducto>(`${this.resourceUrl}/add-stock/${id}/${stock}`, {}, { observe: 'response' });
   }
 }

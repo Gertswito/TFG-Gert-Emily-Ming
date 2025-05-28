@@ -31,6 +31,7 @@ export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
   categorias: ICategoria[] = [];
   rol: string | null = '';
+  nombreUsuario: string | null = null;
   usuario: ICliente | null = null;
   carritoCount = 0;
 
@@ -46,6 +47,7 @@ export class NavBarComponent implements OnInit {
 
       if (status) {
         this.rol = this.authService.getRol();
+        this.nombreUsuario = this.authService.getUsuario();
         const nombreUsuario = this.authService.getUsuario();
         if (nombreUsuario != null) {
           this.clienteService.getCliente(nombreUsuario).subscribe((res) => {

@@ -1,0 +1,27 @@
+@if (producto) {
+    <form name="deleteForm" class="deleteForm" (ngSubmit)="addStock(producto.id!)">
+        <div class="modal-header">
+            <h4 class="modal-title">Añadir stock al producto</h4>
+        </div>
+    
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="stock">Cantidad de stock a añadir</label>
+                <input type="number" id="stock" name="stock" class="form-control" [(ngModel)]="stock" min="1" required />
+                @if(errorMessage != '') {
+                    <small class="text-danger">{{ errorMessage }}</small>
+                }
+            </div>
+        </div>
+    
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cancelar()">
+                <span>Cancelar</span>
+            </button>
+    
+            <button type="submit" class="btn btn-primary">
+                <span>Añadir</span>
+            </button>
+        </div>
+    </form>
+}

@@ -72,6 +72,20 @@ public class ProductoController {
     }
 
     /**
+     * Obtiene los productos con stock bajo.
+     * @return lista de productos con stock bajo
+     */
+    @GetMapping("/productos/stock-bajo")
+    public ResponseEntity<List<Producto>> obtenerProductosStockBajo() {
+        try {
+            List<Producto> productos = productoService.obtenerProductosStockBajo();
+            return ResponseEntity.ok(productos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
      * Busca productos por nombre.
      * @param texto texto de búsqueda
      * @return ResponseEntity con la lista de productos encontrados o 404
@@ -165,6 +179,22 @@ public class ProductoController {
                 return ResponseEntity.notFound().build();
             }
         } catch (ResponseStatusException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Añade stock a un producto existente.
+     * @param id identificador del producto
+     * @param stock cantidad de stock a añadir
+     * @return ResponseEntity con el producto actualizado o 404 si no se encuentra
+     */
+    @PostMapping("/productos/add-stock/{id}/{stock}")
+    public ResponseEntity<Producto> addStock(@PathVariable Long id, @PathVariable Long stock) {
+        try {
+            Producto producto = productoService.aumentarStockProducto(id, stock);
+            return ResponseEntity.ok(producto);
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

@@ -53,9 +53,15 @@
                 <a [routerLink]="'/login'"><fa-icon [icon]="faUser"></fa-icon></a>
             } @else {
                 <div ngbDropdown class="d-inline-block">
-                    <a href="javascript:void(0);" id="usuarioMenu" ngbDropdownToggle>
-                        <fa-icon [icon]="faUser"></fa-icon>
-                    </a>
+                    @if (usuario) {
+                        <a href="javascript:void(0);" id="usuarioMenu" ngbDropdownToggle>
+                            <span>{{ usuario.nombre }} &nbsp; <fa-icon [icon]="faUser"></fa-icon></span>
+                        </a>
+                    } @else {
+                        <a href="javascript:void(0);" id="usuarioMenu" ngbDropdownToggle>
+                            <fa-icon [icon]="faUser"></fa-icon>
+                        </a>
+                    }
                     <div ngbDropdownMenu aria-labelledby="usuarioMenu">
                         @if (rol == "USER") {
                             <a ngbDropdownItem [routerLink]="'/historial-compra'"><fa-icon [icon]="faHistory"></fa-icon>&nbsp;&nbsp;Historial de compra</a>
