@@ -1,44 +1,94 @@
 <div class="body-historial-compra">
-    <h1 class="titulo">Historial de compras</h1>
+    <h1 class="titulo">
+        <i class="bi bi-clock-history me-2"></i>Historial de compras
+    </h1>
     
     @if (ventaList && ventaList.length > 0) {
-        <div>
-            <div *ngFor="let venta of ventaList" class="venta-container">
+        <div class="container-fluid px-0">
+            <div *ngFor="let venta of ventaList.slice().reverse(); let i = index" class="venta-container" [attr.data-index]="i">
                 <div class="venta-header">
-                    Venta con ID {{ venta.id }} --- {{ venta.fechaHora | date:'dd/MM/yyyy HH:mm' }}<br />
+                    <div>
+                        <i class="bi bi-receipt me-2"></i>
+                        Venta #{{ venta.id }}
+                    </div>
+                    <div>
+                        <i class="bi bi-calendar-event me-2"></i>
+                        {{ venta.fechaHora | date:'dd/MM/yyyy HH:mm' }}
+                    </div>
                 </div>
 
                 <div (click)="toggleLineas(venta.id!)" class="ver-lineas-container">
-                    <strong>{{ isVentaDesplegada(venta.id!) ? 'OCULTAR LÍNEAS' : 'VER LÍNEAS' }}</strong>
+                    <strong>
+                        {{ isVentaDesplegada(venta.id!) ? 'OCULTAR LÍNEAS' : 'VER LÍNEAS' }}
+                    </strong>
                 </div>
         
                 <div *ngIf="isVentaDesplegada(venta.id!)">
                     <div *ngFor="let linea of getLineasPorVentaId(venta.id!)" class="linea-container">
-                        <div>
-                            Producto: {{ linea.producto?.marca }} {{ linea.producto?.nombre || 'Sin nombre' }} | {{ linea.producto?.referencia || 'Sin referencia' }}<br />
-                            Cantidad: {{ linea.cantidadPedida }} uds<br />
-                            Precio unitario: {{ linea.precioUnitario || 0 | number:'1.2-2' }}€<br />
-                            <strong>Precio total: <span class="text-success">{{ linea.precioTotal || 0 | number:'1.2-2' }}€</span></strong>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="badge bg-primary-subtle text-primary me-2">Producto</span>
+                                    <strong>{{ linea.producto?.marca }} {{ linea.producto?.nombre || 'Sin nombre' }}</strong>
+                                </div>
+                                <div class="small text-muted mb-2">
+                                    <i class="bi bi-upc me-1"></i>Ref: {{ linea.producto?.referencia || 'Sin referencia' }}
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div class="mb-1">
+                                    <span class="badge bg-secondary-subtle text-secondary me-1">Cantidad</span>
+                                    {{ linea.cantidadPedida }} uds
+                                </div>
+                                <div class="mb-1">
+                                    <span class="badge bg-secondary-subtle text-secondary me-1">Precio unitario</span>
+                                    {{ linea.precioUnitario || 0 | number:'1.2-2' }}€
+                                </div>
+                                <div>
+                                    <span class="badge bg-success-subtle text-success me-1">Total</span>
+                                    <strong>{{ linea.precioTotal || 0 | number:'1.2-2' }}€</strong>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="venta-footer">
                     <div>
-                        <strong>Dirección de envío:</strong><br />
-                        {{ venta.direccion?.direccion }}<br />
-                        {{ venta.direccion?.localidad }}, {{ venta.direccion?.comunidadAutonoma }} | {{ venta.direccion?.codigoPostal }}<br />
-                        <hr>
-                        <strong>Método de pago:</strong><br />
-                        {{ formatearTarjeta(venta.pago?.numeroTarjeta) }} | {{ venta.pago?.fechaCaducidad | date:'MM/yyyy' }}
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
+                                <strong>Dirección de envío</strong>
+                            </div>
+                            <div class="ps-4">
+                                {{ venta.direccion?.direccion }}<br />
+                                {{ venta.direccion?.localidad }}, {{ venta.direccion?.comunidadAutonoma }} | {{ venta.direccion?.codigoPostal }}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-credit-card-fill me-2 text-primary"></i>
+                                <strong>Método de pago</strong>
+                            </div>
+                            <div class="ps-4">
+                                {{ formatearTarjeta(venta.pago?.numeroTarjeta) }} | {{ venta.pago?.fechaCaducidad | date:'MM/yyyy' }}
+                            </div>
+                        </div>
                     </div>
                     <div class="total-container">
-                        <strong>Total: <span class="text-success">{{ venta.precioFinal || 0 | number:'1.2-2' }}€</span></strong>
+                        <div class="d-flex flex-column align-items-end">
+                            <span class="text-muted small mb-1">Importe total</span>
+                            <span class="text-success fs-4">{{ venta.precioFinal || 0 | number:'1.2-2' }}€</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     } @else {
-        <div class="w-100 alert alert-warning">No se ha realizado ninguna compra hasta la fecha</div>
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
+            <span>No se ha realizado ninguna compra hasta la fecha</span>
+        </div>
     }
 </div>
