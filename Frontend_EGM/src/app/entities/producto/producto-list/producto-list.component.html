@@ -18,17 +18,23 @@
                     <div class="header-nombre d-flex flex-column justify-content-center align-items-center">
                         <h5 class="text-center">{{producto.marca}} - {{producto.nombre}}</h5>
                         @if (producto.stock !== null && producto.stock <= 0) {
-                            <small class="text-danger mt-1">Sin stock disponible</small>
+                            <small class="text-danger mt-1">
+                                <i class="bi bi-exclamation-circle me-1"></i>Sin stock disponible
+                            </small>
                         }
                     </div>
                     <div class="div-imagen-producto d-flex justify-content-center align-items-center">
-                        <img [src]="producto.urlImagen" alt="" class="imagen-productos">
+                        @if (producto.urlImagen && producto.urlImagen !== '') {
+                            <img [src]="producto.urlImagen" alt="" class="imagen-productos">
+                        } @else {
+                            <img src="sin_imagen.png" alt="" class="imagen-productos">
+                        }
                     </div>
                     <div class="d-flex flex-row justify-content-between align-items-end">
                         <div class="w-100 mt-3 d-flex flex-column align-items-start">
                             <span class="low-light">Unidades: {{producto.cantidad}}</span>
                             <a [routerLink]="'/producto-info'" [queryParams]="{ id: producto.id }">
-                                <button type="button" class="btn btn-secondary btn-ver mt-3">Ver producto</button>
+                                <button type="button" class="btn btn-outline-secondary btn-ver mt-3">Ver producto</button>
                             </a>
                         </div>
                         <div class="d-flex flex-column align-items-end mt-3 w-100">

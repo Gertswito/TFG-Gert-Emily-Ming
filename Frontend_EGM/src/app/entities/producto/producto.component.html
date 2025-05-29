@@ -30,7 +30,7 @@
                             <td>{{producto.id}}</td>
                             <td>
                                 <img *ngIf="producto.urlImagen !== null; else sinImagen" [src]="producto.urlImagen" alt="" class="imagen-productos">
-                                <ng-template #sinImagen>Sin imagen</ng-template>
+                                <ng-template #sinImagen><img src="sin_imagen.png" alt="" class="imagen-productos"></ng-template>
                             </td>
                             <td>{{producto.referencia}}</td>
                             <td>{{producto.nombre}}</td>

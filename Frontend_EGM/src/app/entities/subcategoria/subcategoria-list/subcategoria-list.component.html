@@ -14,13 +14,9 @@
                 <div class="col-md-4 mb-4">
                     <a [routerLink]="'/producto-list'" [queryParams]="{ id: subcategoria.id, nombre: subcategoria.nombre }">
                         <div class="card">
-                            <img *ngIf="subcategoria.imagenSubcategoria; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="Imagen de Subcategoría">
+                            <img *ngIf="subcategoria.imagenSubcategoria; else sinImagen" [src]="subcategoria.imagenSubcategoria" class="card-img-top" alt="">
                             <ng-template #sinImagen>
-                                <div class="card-img-top text-center py-5 bg-light">
-                                    <div class="py-5">
-                                        <div class="py-2">Sin Imagen</div>
-                                    </div>
-                                </div>
+                                <img src="sin_imagen.png" class="card-img-top" alt="">
                             </ng-template>
                             <div class="card-body">
                                 <h5 class="card-title">

@@ -17,6 +17,13 @@ h2 {
 .subtitulo {
     text-align: center;
 }
+
+.subtitulo-pagina {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #5a5a5a;
+    margin-bottom: 1rem;
+}
   
 .body-entidades {
     width: 100%;
@@ -85,7 +92,8 @@ h2 {
     border-radius: 5px;
     background-color: #ecf1ff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 19em;
+    height: 18em;
+    width: 15em;
     text-align: center;
 } 
 

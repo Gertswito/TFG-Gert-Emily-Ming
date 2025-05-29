@@ -25,9 +25,7 @@
             <div class="div-imagen">
                 <img *ngIf="productoSeleccionado.urlImagen; else sinImagen" [src]="productoSeleccionado.urlImagen" class="imagen-producto" alt="">
                 <ng-template #sinImagen>
-                    <div class="imagen-producto text-center py-5 bg-light">
-                        Sin Imagen
-                    </div>
+                    <img src="sin_imagen.png" class="imagen-producto" alt="">
                 </ng-template>
             </div>
 
