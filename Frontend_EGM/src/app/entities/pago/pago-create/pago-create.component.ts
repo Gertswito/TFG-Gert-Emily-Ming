@@ -38,20 +38,25 @@ export class PagoCreateComponent implements OnInit {
             const id = params['id'];
             if (id) {
                 this.booleanEditarExistente = true;
-                this.pagoService.getPago(id).subscribe((res) => {
+                this.pagoService.getPago(id).subscribe({
+                next: (res) => {
                     setTimeout(() => {
-                        const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
-
-                        this.crearPagoFormulario.patchValue({
-                            id: res.id,
-                            numeroTarjeta: this.formatCardNumberForDisplay(res.numeroTarjeta),
-                            fechaCaducidad: this.formatearFechaParaInput(res.fechaCaducidad),
-                            cvv: res.cvv,
-                            activo: res.activo,
-                            cliente: clienteCorrespondiente
-                        });
+                    const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
+                
+                    this.crearPagoFormulario.patchValue({
+                        id: res.id,
+                        numeroTarjeta: this.formatCardNumberForDisplay(res.numeroTarjeta),
+                        fechaCaducidad: this.formatearFechaParaInput(res.fechaCaducidad),
+                        cvv: res.cvv,
+                        activo: res.activo,
+                        cliente: clienteCorrespondiente
+                    });
                     }, 25);
-                });
+                },
+                error: (err) => {
+                    this.booleanEditarExistente = false;
+                }
+            });
             }
         });
     }

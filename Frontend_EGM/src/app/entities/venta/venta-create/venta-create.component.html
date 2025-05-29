@@ -1,5 +1,9 @@
 <div class="body-entidades">
-    <h1 class="titulo">Crear venta</h1>
+    @if (booleanEditarExistente) {
+        <h1 class="titulo">Editar Venta</h1>
+    } @else {
+        <h1 class="titulo">Crear Venta</h1>
+    }
     <div class="d-flex align-items-center justify-content-center">
         <form class="form create-form" [formGroup]="crearVentaFormulario" (ngSubmit)="comprobarForm()">
             <div class="mb-2">

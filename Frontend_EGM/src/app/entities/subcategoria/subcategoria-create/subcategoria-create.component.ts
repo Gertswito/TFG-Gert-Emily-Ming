@@ -35,17 +35,22 @@ export class SubcategoriaCreateComponent implements OnInit {
           const id = params['id'];
           if (id) {
             this.booleanEditarExistente = true;
-            this.subcategoriaService.getSubcategoria(id).subscribe((res) => {
-              setTimeout(() => {
-                const categoriaCorrespondiente = this.categoriasCollection.find(c => c.id === res.categoria?.id);
-                
-                this.crearSubcategoriaFormulario.patchValue({
-                  id: res.id,
-                  nombre: res.nombre,
-                  categoria: categoriaCorrespondiente,
-                  imagenSubcategoria: res.imagenSubcategoria
-                });
-              }, 25);
+            this.subcategoriaService.getSubcategoria(id).subscribe({
+              next: (res) => {
+                setTimeout(() => {
+                  const categoriaCorrespondiente = this.categoriasCollection.find(c => c.id === res.categoria?.id);
+                  
+                  this.crearSubcategoriaFormulario.patchValue({
+                    id: res.id,
+                    nombre: res.nombre,
+                    categoria: categoriaCorrespondiente,
+                    imagenSubcategoria: res.imagenSubcategoria
+                  });
+                }, 25);
+              },
+              error: (err) => {
+                this.booleanEditarExistente = false;
+              }
             });
           }
         });

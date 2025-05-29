@@ -1,5 +1,9 @@
 <div class="body-entidades">
-    <h1 class="titulo">Crear cliente</h1>
+    @if (booleanEditarExistente) {
+        <h1 class="titulo">Editar Cliente</h1>
+    } @else {
+        <h1 class="titulo">Crear Cliente</h1>
+    }
     <div class="d-flex align-items-center justify-content-center">
         <form class="form create-form" [formGroup]="crearClienteFormulario" (ngSubmit)="comprobarForm()">
             <div class="d-flex flex-row">

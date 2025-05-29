@@ -43,20 +43,25 @@ export class LineasVentaCreateComponent implements OnInit {
             const id = params['id'];
             if (id) {
               this.booleanEditarExistente = true;
-              this.lineasVentaService.getLineaVenta(id).subscribe((res) => {
-                setTimeout(() => {
-                  const ventaCorrespondiente = this.ventasCollection.find(c => c.id === res.venta?.id);
-                  const productoCorrespondiente = this.productosCollection.find(c => c.id === res.producto?.id);
-
-                  this.crearLineaVentaFormulario.patchValue({
-                    id: res.id,
-                    venta: ventaCorrespondiente,
-                    producto: productoCorrespondiente,
-                    cantidadPedida: res.cantidadPedida,
-                    precioUnitario: res.precioUnitario,
-                    precioTotal: res.precioTotal
-                  });
-                }, 25);
+              this.lineasVentaService.getLineaVenta(id).subscribe({
+                next: (res) => {
+                  setTimeout(() => {
+                    const ventaCorrespondiente = this.ventasCollection.find(c => c.id === res.venta?.id);
+                    const productoCorrespondiente = this.productosCollection.find(c => c.id === res.producto?.id);
+              
+                    this.crearLineaVentaFormulario.patchValue({
+                      id: res.id,
+                      venta: ventaCorrespondiente,
+                      producto: productoCorrespondiente,
+                      cantidadPedida: res.cantidadPedida,
+                      precioUnitario: res.precioUnitario,
+                      precioTotal: res.precioTotal
+                    });
+                  }, 25);
+                },
+                error: (err) => {
+                    this.booleanEditarExistente = false;
+                }
               });
             }
         });

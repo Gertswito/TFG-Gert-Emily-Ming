@@ -31,12 +31,17 @@ export class CategoriaCreateComponent implements OnInit {
         const id = params['id'];
         if (id) {
           this.booleanEditarExistente = true;
-          this.categoriaService.getCategoria(id).subscribe((res) => {
-            this.crearCategoriaFormulario.patchValue({
-              id: res.id,
-              nombre: res.nombre,
-              imagenCategoria: res.imagenCategoria
-            });
+          this.categoriaService.getCategoria(id).subscribe({
+            next: (res) => {
+              this.crearCategoriaFormulario.patchValue({
+                id: res.id,
+                nombre: res.nombre,
+                imagenCategoria: res.imagenCategoria
+              });
+            },
+            error: (err) => {
+              this.booleanEditarExistente = false;
+            }
           });
         }
       });

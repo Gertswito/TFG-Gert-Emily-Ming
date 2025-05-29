@@ -1,5 +1,9 @@
 <div class="body-entidades">
-    <h1 class="titulo">Crear categoría</h1>
+    @if (booleanEditarExistente) {
+        <h1 class="titulo">Editar Categoría</h1>
+    } @else {
+        <h1 class="titulo">Crear Categoría</h1>
+    }
     <div class="d-flex align-items-center justify-content-center">
         <form class="form create-form" [formGroup]="crearCategoriaFormulario" (ngSubmit)="comprobarForm()">
             <div class="mb-2">

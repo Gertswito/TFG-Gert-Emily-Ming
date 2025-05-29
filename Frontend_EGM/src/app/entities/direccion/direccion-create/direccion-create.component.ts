@@ -39,20 +39,25 @@ export class DireccionCreateComponent implements OnInit {
             const id = params['id'];
             if (id) {
               this.booleanEditarExistente = true;
-              this.direccionService.getDireccion(id).subscribe((res) => {
-                setTimeout(() => {
-                  const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
-                  
-                  this.crearDireccionFormulario.patchValue({
-                    id: res.id,
-                    direccion: res.direccion,
-                    localidad: res.localidad,
-                    comunidadAutonoma: res.comunidadAutonoma,
-                    codigoPostal: res.codigoPostal,
-                    activo: res.activo,
-                    cliente: clienteCorrespondiente,
-                  });
-                }, 25);
+              this.direccionService.getDireccion(id).subscribe({
+                next: (res) => {
+                  setTimeout(() => {
+                    const clienteCorrespondiente = this.clientesCollection.find(c => c.id === res.cliente?.id);
+                    
+                    this.crearDireccionFormulario.patchValue({
+                      id: res.id,
+                      direccion: res.direccion,
+                      localidad: res.localidad,
+                      comunidadAutonoma: res.comunidadAutonoma,
+                      codigoPostal: res.codigoPostal,
+                      activo: res.activo,
+                      cliente: clienteCorrespondiente,
+                    });
+                  }, 25);
+                },
+                error: (err) => {
+                    this.booleanEditarExistente = false;
+                }
               });
             }
         });

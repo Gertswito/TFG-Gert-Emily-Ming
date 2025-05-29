@@ -51,29 +51,36 @@ export class ProductoCreateComponent implements OnInit {
             const id = params['id'];
             if (id) {
               this.booleanEditarExistente = true;
-              this.productoService.getProducto(id).subscribe((res) => {
-                setTimeout(() => {
+              this.productoService.getProducto(id).subscribe({
+                next: (res) => {
+                  setTimeout(() => {
                     const categoriaCorrespondiente = this.categoriasCollection.find(c => c.id === res.categoria?.id);
                     const subcategoriaCorrespondiente = this.subcategoriasCollection.find(c => c.id === res.subcategoria?.id);
+                    
                     this.crearProductoFormulario.get('subcategoria')?.enable();
                     this.ignorarCambioCategoria = true;
-
+              
                     this.crearProductoFormulario.patchValue({
-                        id: res.id,
-                        nombre: res.nombre,
-                        marca: res.marca,
-                        referencia: res.referencia,
-                        categoria: categoriaCorrespondiente,
-                        subcategoria: subcategoriaCorrespondiente,
-                        urlImagen: res.urlImagen,
-                        descripcion: res.descripcion,
-                        ingredientes: res.ingredientes,
-                        tipoIVA: res.tipoIVA,
-                        cantidad: res.cantidad,
-                        stock: res.stock,
-                        precio: res.precio
+                      id: res.id,
+                      nombre: res.nombre,
+                      marca: res.marca,
+                      referencia: res.referencia,
+                      categoria: categoriaCorrespondiente,
+                      subcategoria: subcategoriaCorrespondiente,
+                      urlImagen: res.urlImagen,
+                      descripcion: res.descripcion,
+                      ingredientes: res.ingredientes,
+                      tipoIVA: res.tipoIVA,
+                      cantidad: res.cantidad,
+                      stock: res.stock,
+                      precio: res.precio
                     });
-                }, 25);
+                  }, 25);
+                },
+                error: (err) => {
+                    this.booleanEditarExistente = false;
+                    this.crearProductoFormulario.get('subcategoria')?.disable();
+                }
               });
             }
         });

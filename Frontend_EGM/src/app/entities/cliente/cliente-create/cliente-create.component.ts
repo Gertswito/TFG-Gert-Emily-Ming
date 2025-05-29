@@ -39,21 +39,26 @@ export class ClienteCreateComponent implements OnInit {
         const id = params['id'];
         if (id) {
           this.booleanEditarExistente = true;
-          this.clienteService.getClienteById(id).subscribe((res) => {
-            this.crearClienteFormulario.patchValue({
-              id: res.id,
-              usuario: res.usuario,
-              nombre: res.nombre,
-              apellidos: res.apellidos,
-              email: res.email,
-              telefono: res.telefono,
-              dni: res.dni,
-              contrasenha: res.contrasenha,
-              rol: res.rol,
-              fechaNac: this.formatearFechaParaInput(res.fechaNac)
-            });
-            if(res.dni){
-              this.determinarTipoDoc(res.dni);
+          this.clienteService.getClienteById(id).subscribe({
+            next: (res) => {
+              this.crearClienteFormulario.patchValue({
+                id: res.id,
+                usuario: res.usuario,
+                nombre: res.nombre,
+                apellidos: res.apellidos,
+                email: res.email,
+                telefono: res.telefono,
+                dni: res.dni,
+                contrasenha: res.contrasenha,
+                rol: res.rol,
+                fechaNac: this.formatearFechaParaInput(res.fechaNac)
+              });
+              if(res.dni){
+                this.determinarTipoDoc(res.dni);
+              }
+            },
+            error: (err) => {
+              this.booleanEditarExistente = false;
             }
           });
         }
