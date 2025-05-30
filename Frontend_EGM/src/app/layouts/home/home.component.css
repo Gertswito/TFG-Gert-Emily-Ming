@@ -206,6 +206,7 @@ buscador {
     .card-subcategoria {
         flex: 0 0 9em;
         height: 12em;
+        width: 10em;
     }
 
     .cards-categorias {
