@@ -11,7 +11,15 @@ export class CarritoService {
     actualizarCarritoCount(usuarioId: number): void {
         const key = `carrito_${usuarioId}_lineas`;
         const lineas = JSON.parse(localStorage.getItem(key) ?? '[]');
-        const count = Array.isArray(lineas) ? lineas.length : 0;
+        
+        let count = 0;
+        if (Array.isArray(lineas)) {
+            count = lineas.reduce((total: number, linea: any) => {
+                const cantidad = Number(linea.cantidadPedida) || 0;
+                return total + cantidad;
+            }, 0);
+        }
+
         this.carritoCountSubject.next(count);
     }
 }
