@@ -134,6 +134,7 @@
     .body-info-producto {
         height: 100%;
         max-height: unset;
+        min-height: calc(100vh - 145px);
     }
 
     .body-info-extra {

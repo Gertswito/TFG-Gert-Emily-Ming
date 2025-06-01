@@ -18,8 +18,8 @@ export class CompraExitoComponent implements OnInit {
     protected router = inject(Router);
     
     ngOnInit(): void {
-        setTimeout(() => {
-          this.router.navigate(['/home']);
-        }, 2000);
+        // setTimeout(() => {
+        //   this.router.navigate(['/home']);
+        // }, 2000);
     }
 }

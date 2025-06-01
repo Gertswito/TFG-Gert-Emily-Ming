@@ -42,6 +42,8 @@ hr:hover {
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
   max-width: 900px;
+  height: 100%;
+  min-height: calc(100vh - 144px);
   margin: 2rem auto;
   animation: fadeIn 0.5s ease-in-out;
 }

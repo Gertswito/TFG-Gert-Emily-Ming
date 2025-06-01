@@ -21,6 +21,7 @@ hr {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
+    min-height: calc(100vh - 96px);
 }
 
 .botones-accion {

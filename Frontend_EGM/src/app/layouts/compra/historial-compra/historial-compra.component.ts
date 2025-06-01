@@ -64,8 +64,9 @@ export class HistorialCompraComponent implements OnInit {
 
     formatearTarjeta(numero: string | number | null | undefined): string {
         if (!numero) return '';
-        const str = numero.toString();
-        return str.replace(/(.{4})/g, '$1 ').trim();
+        const str = numero.toString().replace(/\s+/g, ''); 
+        const ultimos4 = str.slice(-4);
+        return '**** **** **** ' + ultimos4;
     }
 
     toggleLineas(ventaId: number): void {
