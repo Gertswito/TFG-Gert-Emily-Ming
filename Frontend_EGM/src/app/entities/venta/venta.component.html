@@ -30,9 +30,6 @@
                             <td>{{ venta.precioFinal || 0 | number:'1.2-2' }} €</td>
                             <td>
                                 <div class="botones-accion">
-                                    <button class="btn btn-success me-2" (click)="verLineasVenta(venta)" title="Ver Líneas de Venta">
-                                        <i class="bi bi-eye"></i> 
-                                    </button>
                                     <a [routerLink]="'/venta-create'" [queryParams]="{ id: venta.id }">
                                         <button class="btn btn-primary me-2" title="Editar Venta">
                                             <i class="bi bi-pencil"></i> 

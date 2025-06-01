@@ -1,8 +1,30 @@
 .error-container {
-    text-align: center;
-    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 96px);
+    width: 100%;
+    padding: 2em;
+    box-sizing: border-box;
 }
 
-.router-outlet {
-    height: calc(100vh);
+.error-box {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 3em 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+}
+
+.error-box h1 {
+    font-size: 1.8em;
+    color: #dc3545;
+    margin-bottom: 0.5em;
+}
+
+.error-box p {
+    font-size: 1.1em;
+    color: #6c757d;
 }

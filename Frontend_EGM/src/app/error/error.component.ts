@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -10,4 +10,12 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './error.component.html',
   styleUrls: ['../app.component.css']
 })
-export class ErrorComponent {}
+export class ErrorComponent implements OnInit{
+  protected router = inject(Router);
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 2000);
+  }
+}

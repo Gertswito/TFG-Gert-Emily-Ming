@@ -55,10 +55,6 @@ export class VentaComponent implements OnInit {
       .subscribe();
   }
 
-  verLineasVenta(venta: any) {
-    console.log('Ver Líneas de Venta:', venta);
-  }
-
   crearNuevo(): void {
     this.router.navigate(['/venta-create']);
   }

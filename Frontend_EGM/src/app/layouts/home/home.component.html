@@ -1,5 +1,5 @@
 <div class="body-entidades">
-    <div class="carousel-container">
+    <div class="carousel-container mb-2">
         <div class="carousel-overlay-text">
             @if (usuario !== null) {
                 <h1 class="titulo">¡Bienvenido {{usuario}}!</h1>
@@ -18,14 +18,28 @@
         <button class="carousel-btn right" (click)="nextSlide()">&#10095;</button>
     </div>
 
-    <buscador (textoBuscado)="onBuscar($event)"></buscador>
+    <div class="contenedor-grande d-flex flex-column justify-content-center align-items-center mb-4">
+        <div class="contenedor-mediano d-flex flex-row justify-content-center align-items-center">
+            <div class="contenedor">
+                <img src="tienda_fresma_banner.png" alt="" class="img-contenedor" />
+            </div>
+            <div class="contenedor">
+                <img src="oferta.png" alt="" class="img-contenedor" />
+            </div>
+        </div>
+    </div>
+
     <h2 class="subtitulo-pagina">Nuestra selección de productos</h2>
+    <buscador (textoBuscado)="onBuscar($event)"></buscador>
     @if (categoriaList.length > 0) {
         <div class="cards-categorias">
             <ng-container *ngFor="let categoria of categoriaList">
                 @if (categoria.subcategorias && categoria.subcategorias.length > 0) {
                     <div class="card-categoria">
-                        <h2>{{categoria.nombre}}</h2>
+                        <div class="body-img-categoria mb-3">
+                            <h2 class="titulo-overlay">{{categoria.nombre}}</h2>
+                            <img src="azul.png" class="img-categoria" alt="">
+                        </div>
                         <div class="subcategorias-container">
                             <div class="subcategorias">
                                 <ng-container *ngFor="let subcategoria of categoria.subcategorias">
