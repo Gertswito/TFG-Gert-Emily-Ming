@@ -55,7 +55,7 @@ export class RegistroComponent implements OnInit {
       return;
     }
   
-    this.clienteService.crearUsuario(this.registroFormulario.value).subscribe({
+    this.clienteService.registrar(this.registroFormulario.value).subscribe({
       next: (response) => {
         this.router.navigate(['/login'], { queryParams: { registrado: 'true' } });
       },

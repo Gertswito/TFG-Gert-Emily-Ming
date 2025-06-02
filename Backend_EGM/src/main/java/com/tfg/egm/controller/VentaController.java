@@ -146,7 +146,7 @@ public class VentaController {
     }
 
     /**
-     * Finaliza una compra, creando la venta y devolviendo el resultado.
+     * Finaliza una compra, creando la venta, enviando un email y devolviendo el resultado.
      * @param venta objeto venta a finalizar
      * @return ResponseEntity con la nueva venta o errores si los hay
      */
@@ -159,6 +159,7 @@ public class VentaController {
         }
     
         Venta nuevaVenta = (Venta) resultado.get("venta");
+        ventaService.enviarCorreoVenta(nuevaVenta);
         URI location = URI.create("/venta/new/" + nuevaVenta.getId());
         return ResponseEntity.created(location).body(nuevaVenta);
     }

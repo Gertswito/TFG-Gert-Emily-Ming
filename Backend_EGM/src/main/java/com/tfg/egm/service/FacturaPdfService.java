@@ -22,7 +22,7 @@ import java.util.Map;
 public class FacturaPdfService {
 
     private final SpringTemplateEngine templateEngine;
-    private final VentaService ventaService;
+
     private final LineasVentasService lineasVentasService;
 
     /**
@@ -32,33 +32,31 @@ public class FacturaPdfService {
      * @param ventaService servicio para obtener información de ventas
      * @param lineasVentasService servicio para obtener las líneas de venta asociadas a una venta
      */
-    public FacturaPdfService(SpringTemplateEngine templateEngine, VentaService ventaService, LineasVentasService lineasVentasService) {
+    public FacturaPdfService(SpringTemplateEngine templateEngine, LineasVentasService lineasVentasService) {
         this.templateEngine = templateEngine;
-        this.ventaService = ventaService;
         this.lineasVentasService = lineasVentasService;
     }
 
     /**
      * Genera un archivo PDF de la factura correspondiente a la venta indicada.
      *
-     * @param ventaId identificador de la venta
+     * @param venta la venta para la cual se generará el PDF
      * @return un array de bytes que representa el PDF generado
      * @throws IllegalArgumentException si la venta o sus líneas no existen
      * @throws RuntimeException si ocurre un error durante la generación del PDF
      */
-    public byte[] generarFacturaPdf(Long ventaId) {
-        Venta venta = ventaService.obtenerVentaPorId(ventaId);
+    public byte[] generarFacturaPdf(Venta venta) {
         if (venta == null) {
-            throw new IllegalArgumentException("Venta no encontrada con ID: " + ventaId);
+            throw new IllegalArgumentException("Venta no encontrada con ID: " + venta.getId());
         }
 
-        List<LineasVentas> lineasVentas = lineasVentasService.obtenerLineasVentasPorVenta(ventaId);
+        List<LineasVentas> lineasVentas = lineasVentasService.obtenerLineasVentasPorVenta(venta.getId().longValue());
         if (lineasVentas == null || lineasVentas.isEmpty()) {
-            throw new IllegalArgumentException("No hay líneas de venta asociadas a la venta con ID: " + ventaId);
+            throw new IllegalArgumentException("No hay líneas de venta asociadas a la venta con ID: " + venta.getId());
         }
 
         Context context = new Context();
-        context.setVariable("ventaId", ventaId);
+        context.setVariable("ventaId", venta.getId());
         context.setVariable("clienteNombre", venta.getCliente().getNombre() + " " + venta.getCliente().getApellidos());
         context.setVariable("clienteUsuario", venta.getCliente().getUsuario());
         context.setVariable("fechaHora", venta.getFechaHora().toString());

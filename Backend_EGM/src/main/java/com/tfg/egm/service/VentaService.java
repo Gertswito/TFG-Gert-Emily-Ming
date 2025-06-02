@@ -31,17 +31,22 @@ public class VentaService {
     private final LineasVentasService lineasVentasService;
 
     private final ProductoRepository productoRepository;
+    
+    private final NotificacionVentaService notificacionVentaService;
 
     /**
      * Constructor que inyecta los repositorios y servicios necesarios.
+     * 
      * @param ventaRepository repositorio de ventas
      * @param lineasVentasService servicio de líneas de venta
      * @param productoRepository repositorio de productos
+     * @param notificacionVentaService servicio de notificaciones de venta
      */
-    public VentaService(VentaRepository ventaRepository, LineasVentasService lineasVentasService, ProductoRepository productoRepository) {
+    public VentaService(VentaRepository ventaRepository, LineasVentasService lineasVentasService, ProductoRepository productoRepository, NotificacionVentaService notificacionVentaService) {
         this.ventaRepository = ventaRepository;
         this.lineasVentasService = lineasVentasService;
         this.productoRepository = productoRepository;
+        this.notificacionVentaService = notificacionVentaService;
     }
 
     /**
@@ -177,5 +182,13 @@ public class VentaService {
         if (producto.getStock() < lineaVenta.getCantidadPedida()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "stockInsuficiente");
         }
+    }
+
+    /**
+     * Envía un correo al cliente con el pdf de la venta.
+     * @param venta objeto venta a enviar por correo
+     */
+    public void enviarCorreoVenta(Venta venta) {
+        notificacionVentaService.enviarCorreoVenta(venta);
     }
 }

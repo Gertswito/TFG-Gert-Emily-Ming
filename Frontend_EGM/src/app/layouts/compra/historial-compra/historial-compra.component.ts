@@ -84,20 +84,26 @@ export class HistorialCompraComponent implements OnInit {
     }
 
     descargarPDF(ventaId: number): void {
-        this.facturaService.descargarFacturaPDF(ventaId).subscribe({
-            next: (pdfBlob) => {
-                const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-                const url = window.URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `factura_${ventaId}_TiendaFresma.pdf`;
-                link.click();
+        let ventaPDF: IVenta | null = null;
+        this.ventaService.getVenta(ventaId).subscribe((venta) => {
+            ventaPDF = venta || null;
+            if (ventaPDF) {
+                this.facturaService.descargarFacturaPDF(ventaPDF).subscribe({
+                    next: (pdfBlob) => {
+                        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+                        const url = window.URL.createObjectURL(blob);
+                        
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `factura_${ventaId}_Tienda_Fresma.pdf`;
+                        link.click();
 
-                window.URL.revokeObjectURL(url);
-            },
-            error: (err) => {
-                console.error('Error al descargar PDF:', err);
+                        window.URL.revokeObjectURL(url);
+                    },
+                    error: (err) => {
+                        console.error('Error al descargar PDF:', err);
+                    }
+                });
             }
         });
     }

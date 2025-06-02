@@ -32,6 +32,10 @@ export class ClienteService {
     return this.http.post<any>(`${this.resourceUrl}/new`, cliente, { observe: 'response' });
   }
 
+  registrar(cliente: ICliente): Observable<any> { 
+    return this.http.post<any>(`${this.resourceUrl}/registrar`, cliente, { observe: 'response' });
+  }
+
   login(cliente: ICliente): Observable<any> {
     return this.http.post<any>(`${this.resourceUrl}/login`, cliente, { observe: 'response' });
   }

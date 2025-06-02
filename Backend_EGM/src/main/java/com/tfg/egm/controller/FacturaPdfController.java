@@ -1,5 +1,6 @@
 package com.tfg.egm.controller;
 
+import com.tfg.egm.entity.Venta;
 import com.tfg.egm.service.FacturaPdfService;
 
 import org.springframework.http.HttpHeaders;
@@ -30,17 +31,17 @@ public class FacturaPdfController {
     /**
      * Descarga la factura en formato PDF correspondiente al ID de la venta proporcionado.
      *
-     * @param ventaId identificador de la venta
+     * @param venta la venta que contiene la información necesaria para generar la factura
      * @return ResponseEntity con el PDF de la factura y los encabezados adecuados
      */
-    @GetMapping(value = "/{ventaId}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> descargarFactura(@PathVariable Long ventaId) {
-        byte[] pdfBytes = facturaPdfService.generarFacturaPdf(ventaId);
+    @PostMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> descargarFactura(@RequestBody Venta venta) {
+        byte[] pdfBytes = facturaPdfService.generarFacturaPdf(venta);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(ContentDisposition.attachment()
-                .filename("factura_" + ventaId + "_Tienda_Fresma.pdf")
+                .filename("factura_" + venta.getId() + "_Tienda_Fresma.pdf")
                 .build());
 
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);

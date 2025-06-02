@@ -2,6 +2,7 @@ package com.tfg.egm.controller;
 
 import com.tfg.egm.entity.Cliente;
 import com.tfg.egm.service.ClienteService;
+import com.tfg.egm.service.EmailService;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -26,17 +27,25 @@ import java.util.Map;
  * Controlador REST para gestionar los clientes.
  * Permite obtener, buscar, crear, actualizar, eliminar clientes y login.
  */
+/**
+ * Controlador REST para gestionar los clientes.
+ * Permite obtener, buscar, crear, actualizar, eliminar clientes y login.
+ */
 @RestController
 public class ClienteController {
 
     private final ClienteService clienteService;
+    
+    private final EmailService emailService;
 
     /**
-     * Constructor que inyecta el servicio de clientes.
+     * Constructor que inyecta el servicio de clientes y el servicio de email.
      * @param clienteService servicio de clientes
+     * @param emailService servicio de envío de correos electrónicos
      */
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteService clienteService, EmailService emailService) {
         this.clienteService = clienteService;
+        this.emailService = emailService;
     }
 
     /**
@@ -101,6 +110,31 @@ public class ClienteController {
         }
         try {
             Cliente nuevoCliente = clienteService.save(cliente);
+            URI location = new URI("/clientes/new/" + nuevoCliente.getId());
+            return ResponseEntity.created(location).body(nuevoCliente);
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(Map.of("error", ex.getReason()));
+        }
+    }
+
+    /**
+     * Crea un nuevo cliente y le manda un correo.
+     * @param cliente objeto cliente a crear
+     * @return ResponseEntity con el nuevo cliente y la ubicación
+     * @throws URISyntaxException si la URI no es válida
+     */
+    @PostMapping("/clientes/registrar")
+    public ResponseEntity<Object> registrarCliente(@RequestBody Cliente cliente) throws URISyntaxException {
+        if (cliente.getId() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "clienteExiste");
+        }
+        try {
+            Cliente nuevoCliente = clienteService.save(cliente);
+            String asunto = "Bienvenido a Fresma";
+            String nombre = nuevoCliente.getNombre() + " " + nuevoCliente.getApellidos();
+            String cuerpo = String.format("Hola %s,\n\nGracias por registrarte en Tienda Fresma. Tu cuenta ha sido creada correctamente y ya puede iniciar sesión.\n\nAtentamente, el equipo de Tienda Fresma", nombre);
+
+            emailService.enviarCorreo(nuevoCliente.getEmail(), asunto, cuerpo);
             URI location = new URI("/clientes/new/" + nuevoCliente.getId());
             return ResponseEntity.created(location).body(nuevoCliente);
         } catch (ResponseStatusException ex) {
