@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 30px;
+                color: #333;
+            }
+            h1 {
+                border-bottom: 2px solid #0d6efd;
+                padding-bottom: 10px;
+                padding-left: 5px;
+                color: #0d6efd;
+            }
+            h2 {
+                position: absolute;
+                top: 22px;
+                right: 60px;
+            }
+            .hr {
+                margin-bottom: 25px;
+                border: none; 
+                border-top: 2px solid #0d6efd;
+            }
+            .info-section p {
+                margin: 4px 0;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px 15px;
+                text-align: left;
+            }
+            th {
+                background-color: #0d6efd;
+                color: white;
+            }
+            tfoot td {
+                font-weight: bold;
+                font-size: 1.1em;
+            }
+            .footer {
+                margin-top: 30px;
+                font-size: 0.9em;
+                color: #666;
+                border-top: 1px solid #ddd;
+                padding-top: 10px;
+                text-align: center;
+            }
+            .low-light {
+                color: #838383;
+            }
+            .green-txt {
+                color: #159633;
+            }
+            .header-tabla:nth-child(even) {
+                background-color: #efefef; 
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+            tbody tr {
+                page-break-inside: avoid;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>| Tienda Fresma | </h1>
+        <h2>
+            Factura #<span th:text="${ventaId}">123</span>
+        </h2>
+
+        <div class="info-section">
+            <p><strong>Cliente:</strong> <span th:text="${clienteUsuario}">juan123</span> | <span th:text="${clienteNombre}" class="low-light">Juan Pérez</span></p>
+            <p><strong>Fecha y hora:</strong> <span th:text="${fechaHora}">2025-06-02 14:23</span></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Referencia</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${productos}" class="header-tabla">
+                    <td th:text="${p.referencia}">REF123</td>
+                    <td><span th:text="${p.marca}">Marca</span><br/><span th:text="${p.nombre}">Nombre</span></td>
+                    <td><span th:text="${p.cantidadPedida}">1</span>uds</td>
+                    <td th:text="${#numbers.formatDecimal(p.precioUnitario, 1, 'COMMA', 2, 'POINT') + '€'}">10,00€</td>
+                    <td th:text="${#numbers.formatDecimal(p.precioTotal, 1, 'COMMA', 2, 'POINT') + '€'}">10,00€</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" style="text-align: right;">Importe total:</td>
+                    <td th:text="${#numbers.formatDecimal(precioFinal, 1, 'COMMA', 2, 'POINT') + '€'}" class="green-txt">100,00€</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="info-section avoid-break" style="margin-top: 25px;">
+            <hr class="hr" />
+            <p><strong>Dirección de envío:</strong></p>
+            <p><span th:text="${direccion}">Calle Falsa 123, Ciudad, Comunidad</span></p>
+            <p><span th:text="${codigoPostal}">28080</span></p>
+            <p><strong>Método de pago:</strong></p>
+            <p>Tarjeta: <span th:text="${numeroTarjeta}">**** **** **** 1234</span></p>
+            <p>Fecha caducidad: <span th:text="${fechaCaducidad}">06-2025</span></p>
+        </div>
+
+        <div class="footer avoid-break">
+            Gracias por confiar en Tienda Fresma.
+        </div>
+    </body>
+</html>

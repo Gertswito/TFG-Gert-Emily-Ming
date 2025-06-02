@@ -15,6 +15,13 @@
                         <i class="bi bi-calendar-event me-2"></i>
                         {{ venta.fechaHora | date:'dd/MM/yyyy HH:mm' }}
                     </div>
+                    <div>
+                        @if (venta.id) {
+                            <button (click)="descargarPDF(venta.id)" class="btn btn-outline-light">
+                                <i class="bi bi-download"></i>
+                            </button>
+                        }
+                    </div>
                 </div>
 
                 <div (click)="toggleLineas(venta.id!)" class="ver-lineas-container">

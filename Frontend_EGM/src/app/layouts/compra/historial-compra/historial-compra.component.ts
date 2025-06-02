@@ -10,6 +10,7 @@ import { ClienteService } from '../../../entities/cliente/cliente.service';
 import { LineasVentaService } from '../../../entities/lineasVenta/lineasVenta.service';
 import { AuthService } from '../../../auth/auth.service';
 import { IVenta } from '../../../entities/venta/venta.model';
+import { FacturaPDFService } from '../../../factura-pdf/factura-pdf.service';
 
 @Component({
   standalone: true,
@@ -28,6 +29,7 @@ export class HistorialCompraComponent implements OnInit {
     protected lineasVentaService = inject(LineasVentaService);
     protected ventaService = inject(VentaService);
     protected authService = inject(AuthService);
+    protected facturaService = inject(FacturaPDFService);
 
     ngOnInit(): void {
         this.authService.loggedIn$.subscribe((status) => {
@@ -79,5 +81,24 @@ export class HistorialCompraComponent implements OnInit {
     
     isVentaDesplegada(ventaId: number): boolean {
         return this.ventasDesplegadas.has(ventaId);
+    }
+
+    descargarPDF(ventaId: number): void {
+        this.facturaService.descargarFacturaPDF(ventaId).subscribe({
+            next: (pdfBlob) => {
+                const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+                const url = window.URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `factura_${ventaId}_TiendaFresma.pdf`;
+                link.click();
+
+                window.URL.revokeObjectURL(url);
+            },
+            error: (err) => {
+                console.error('Error al descargar PDF:', err);
+            }
+        });
     }
 }
