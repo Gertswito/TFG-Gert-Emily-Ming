@@ -29,7 +29,6 @@ public class FacturaPdfService {
      * Constructor que inyecta las dependencias necesarias para la generación de facturas PDF.
      * 
      * @param templateEngine motor de plantillas Thymeleaf
-     * @param ventaService servicio para obtener información de ventas
      * @param lineasVentasService servicio para obtener las líneas de venta asociadas a una venta
      */
     public FacturaPdfService(SpringTemplateEngine templateEngine, LineasVentasService lineasVentasService) {
