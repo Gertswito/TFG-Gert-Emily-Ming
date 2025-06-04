@@ -29,6 +29,7 @@ export class ProductoCreateComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+        window.scrollTo(0, 0);
         this.loadCategorias();
         this.loadSubcategorias();
         this.crearProductoFormulario = new FormGroup({

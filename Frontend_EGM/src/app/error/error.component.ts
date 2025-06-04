@@ -14,6 +14,7 @@ export class ErrorComponent implements OnInit{
   protected router = inject(Router);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     setTimeout(() => {
       this.router.navigate(['/home']);
     }, 2000);

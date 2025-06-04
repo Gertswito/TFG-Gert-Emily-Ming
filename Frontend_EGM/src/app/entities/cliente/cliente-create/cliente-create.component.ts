@@ -21,6 +21,7 @@ export class ClienteCreateComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
       this.crearClienteFormulario = new FormGroup({
           id: new FormControl(null),
           usuario: new FormControl(null, [Validators.required, Validators.maxLength(50),]),

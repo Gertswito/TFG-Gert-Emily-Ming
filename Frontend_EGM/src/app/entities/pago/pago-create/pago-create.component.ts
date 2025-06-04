@@ -24,6 +24,7 @@ export class PagoCreateComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+        window.scrollTo(0, 0);
         this.loadClientes();
         this.crearPagoFormulario = new FormGroup({
             id: new FormControl(null),

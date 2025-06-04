@@ -21,6 +21,7 @@ export class CategoriaCreateComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+      window.scrollTo(0, 0);
       this.crearCategoriaFormulario = new FormGroup({
         id: new FormControl(null),
         nombre: new FormControl(null, [Validators.required, Validators.maxLength(255)]),

@@ -26,6 +26,7 @@ export class PagoComponent implements OnInit {
   protected router = inject(Router);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.cargarPagos();
   }
 

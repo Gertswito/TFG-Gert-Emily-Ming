@@ -24,6 +24,7 @@ export class DireccionCreateComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+      window.scrollTo(0, 0);
         this.loadClientes();
         this.crearDireccionFormulario = new FormGroup({
             id: new FormControl(null),

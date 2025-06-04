@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   protected clienteService = inject(ClienteService);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.route.queryParams.subscribe(params => {
       this.estaRegistrado = params['registrado'];
       this.necesitaLogin = params['necesitaLogin'];

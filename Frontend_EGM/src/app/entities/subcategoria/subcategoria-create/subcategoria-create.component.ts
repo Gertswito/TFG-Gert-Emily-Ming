@@ -23,6 +23,7 @@ export class SubcategoriaCreateComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+      window.scrollTo(0, 0);
         this.loadCategorias();
         this.crearSubcategoriaFormulario = new FormGroup({
           id: new FormControl(null),

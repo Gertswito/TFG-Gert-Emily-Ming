@@ -26,6 +26,7 @@ export class RegistroComponent implements OnInit {
   protected clienteService = inject(ClienteService);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.registroFormulario = new FormGroup({
       usuario: new FormControl(null, [Validators.required, Validators.maxLength(50),]),
       nombre: new FormControl(null, [Validators.required, Validators.maxLength(50),]),

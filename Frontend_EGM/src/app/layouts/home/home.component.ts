@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   private categoriaService = inject(CategoriaService);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.categoriaService.getAllCategorias().subscribe((res) => {
       this.categoriaList = res || [];
     });

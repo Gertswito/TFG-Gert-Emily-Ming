@@ -7,7 +7,6 @@ import { ICliente } from "../../cliente/cliente.model";
 import { DireccionAjusteComponent } from "../../direccion/direccion-ajuste/direccion-ajuste.component";
 import { PagoAjusteComponent } from "../../pago/pago-ajuste/pago-ajuste.component";
 
-// Add the password validators function at the top of the file, before the @Component decorator
 function passwordMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const newPassword = control.get("newPassword")
@@ -45,7 +44,7 @@ export class ClienteAjustesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Obtener el usuario del token
+    window.scrollTo(0, 0);
     this.usuarioActual = this.authService.getUsuario()
     if (this.usuarioActual) {
       this.loadClienteData(this.usuarioActual)
@@ -102,14 +101,13 @@ export class ClienteAjustesComponent implements OnInit {
   }
 
   updateForm(cliente: ICliente): void {
-    // Actualizar los campos del formulario
     this.clienteForm.patchValue({
       id: cliente.id,
       rol: cliente.rol,
       dni: cliente.dni,
       nombre: cliente.nombre,
       apellidos: cliente.apellidos,
-      usuario: cliente.usuario, // El campo está deshabilitado pero se muestra el valor
+      usuario: cliente.usuario, 
       email: cliente.email,
       telefono: cliente.telefono,
       fechaNac: cliente.fechaNac ? this.formatDate(cliente.fechaNac) : null,
@@ -118,7 +116,7 @@ export class ClienteAjustesComponent implements OnInit {
 
   onSubmit(): void {
     if (this.clienteForm.invalid) {
-      this.markFormGroupTouched(this.clienteForm) // Marca los campos para mostrar errores
+      this.markFormGroupTouched(this.clienteForm) 
       return
     }
 
@@ -132,15 +130,13 @@ export class ClienteAjustesComponent implements OnInit {
       next: (response) => {
         this.loading = false
         this.success = true
-        // Desplazar al inicio de la página para mostrar el mensaje de éxito
         window.scrollTo({ top: 0, behavior: "smooth" })
-        this.clienteForm.get("passwordGroup")?.reset() // Limpiar los campos de contraseña después del cambio
+        this.clienteForm.get("passwordGroup")?.reset() 
       },
       error: (err) => {
         this.loading = false
         this.error = true
         this.errorMessage = err.error?.message || "Error al actualizar los datos."
-        // Desplazar al inicio de la página para mostrar el mensaje de error
         window.scrollTo({ top: 0, behavior: "smooth" })
       },
     })
@@ -151,9 +147,8 @@ export class ClienteAjustesComponent implements OnInit {
       throw new Error("No hay datos del cliente cargados")
     }
 
-    // Crear un nuevo objeto manteniendo las claves de ICliente
     const clienteData: ICliente = {
-      ...this.cliente, // Mantiene las claves originales
+      ...this.cliente, 
       dni: this.clienteForm.value.dni,
       nombre: this.clienteForm.value.nombre,
       apellidos: this.clienteForm.value.apellidos,
@@ -168,14 +163,12 @@ export class ClienteAjustesComponent implements OnInit {
     return clienteData
   }
 
-  // Método auxiliar para formatear fecha para mostrar
   formatDate(date: Date | null): string {
     if (!date) return ""
     const d = new Date(date)
     return d.toISOString().split("T")[0]
   }
 
-  // Método para reiniciar el formulario con los datos originales
   resetForm(): void {
     if (this.usuarioActual) {
       this.loadClienteData(this.usuarioActual)
@@ -186,7 +179,6 @@ export class ClienteAjustesComponent implements OnInit {
     this.error = false
   }
 
-  // Add a helper method to mark all form controls as touched
   markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched()

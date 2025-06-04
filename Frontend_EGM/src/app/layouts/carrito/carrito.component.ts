@@ -31,6 +31,7 @@ export class CarritoComponent implements OnInit {
   private carritoService = inject(CarritoService);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     const usuarioNombre = this.authService.getUsuario();
     if (usuarioNombre) {
       this.clienteService.getCliente(usuarioNombre).subscribe((res) => {

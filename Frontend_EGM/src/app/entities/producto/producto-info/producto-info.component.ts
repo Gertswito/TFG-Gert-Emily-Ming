@@ -31,6 +31,7 @@ export class ProductoInfoComponent implements OnInit {
     private route = inject(ActivatedRoute);
 
     ngOnInit(): void {
+        window.scrollTo(0, 0);
         this.route.queryParams.subscribe(params => {
             const id = params['id'];
 

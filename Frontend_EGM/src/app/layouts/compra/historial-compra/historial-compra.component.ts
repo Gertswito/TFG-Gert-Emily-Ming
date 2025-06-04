@@ -32,6 +32,7 @@ export class HistorialCompraComponent implements OnInit {
     protected facturaService = inject(FacturaPDFService);
 
     ngOnInit(): void {
+        window.scrollTo(0, 0);
         this.authService.loggedIn$.subscribe((status) => {
             if (status) {
                 const usuario = this.authService.getUsuario();
