@@ -6,51 +6,53 @@
         <div class="alert alert-danger">{{ errorMessage }}</div>
     }
     @if (direccionList.length > 0) {
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr class="table-primary">
-                    <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Código postal</th>
-                    <th>Calle</th>
-                    <th>Localidad</th>
-                    <th>Comunidad autónoma</th>
-                    <th>Estado</th>
-                    <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let direccion of direccionList">
-                    <tr>
-                        <td>{{direccion.id}}</td>
-                        <td>{{direccion.cliente?.usuario}}</td>
-                        <td>{{direccion.codigoPostal}}</td>
-                        <td>{{direccion.direccion}}</td>
-                        <td>{{direccion.localidad}}</td>
-                        <td>{{direccion.comunidadAutonoma}}</td>
-                        <td>
-                            @if (direccion.activo) {
-                                <button type="button" class="btn btn-success btn-small w-100" (click)="cambiarEstado(direccion)">Activado</button>
-                            } @else {
-                                <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(direccion)">Desactivado</button>
-                            }
-                        </td>
-                        <td>
-                            <div class="botones-accion">
-                                <a [routerLink]="'/direccion-create'" [queryParams]="{ id: direccion.id }">
-                                    <button class="btn btn-primary me-2" title="Editar Dirección">
-                                        <i class="bi bi-pencil"></i> 
-                                    </button>
-                                </a>
-                                <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
-                                    <i class="bi bi-trash"></i> 
-                                </button>
-                            </div>
-                        </td>
+        <div class="tabla-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Código postal</th>
+                        <th>Calle</th>
+                        <th>Localidad</th>
+                        <th>Comunidad autónoma</th>
+                        <th>Estado</th>
+                        <th class="accion"><button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button></th>
                     </tr>
-                </ng-container>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let direccion of direccionList">
+                        <tr>
+                            <td>{{direccion.id}}</td>
+                            <td>{{direccion.cliente?.usuario}}</td>
+                            <td>{{direccion.codigoPostal}}</td>
+                            <td>{{direccion.direccion}}</td>
+                            <td>{{direccion.localidad}}</td>
+                            <td>{{direccion.comunidadAutonoma}}</td>
+                            <td>
+                                @if (direccion.activo) {
+                                    <button type="button" class="btn btn-success btn-small w-100" (click)="cambiarEstado(direccion)">Activado</button>
+                                } @else {
+                                    <button type="button" class="btn btn-danger btn-small w-100" (click)="cambiarEstado(direccion)">Desactivado</button>
+                                }
+                            </td>
+                            <td>
+                                <div class="botones-accion">
+                                    <a [routerLink]="'/direccion-create'" [queryParams]="{ id: direccion.id }">
+                                        <button class="btn btn-primary me-2" title="Editar Dirección">
+                                            <i class="bi bi-pencil"></i> 
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger" (click)="eliminarDireccion(direccion)" title="Eliminar Dirección">
+                                        <i class="bi bi-trash"></i> 
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
     } @else {
         <div class="w-100 alert alert-warning">No se han encontrado direcciones</div>
         <button type="button" class="btn btn-primary new-btn" (click)="crearNuevo()">Crear nuevo</button>
